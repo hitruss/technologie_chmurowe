@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.7.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -33,15 +33,14 @@ ul.task-list li input[type="checkbox"] {
 <link href="./05-ansible.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -166,8 +165,19 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Spis treści</h2>
+   
+  <ul>
+  <li><a href="#cel-ćwiczenia" id="toc-cel-ćwiczenia" class="nav-link active" data-scroll-target="#cel-ćwiczenia"><span class="header-section-number">8.1</span> Cel ćwiczenia</a></li>
+  <li><a href="#terraform" id="toc-terraform" class="nav-link" data-scroll-target="#terraform"><span class="header-section-number">9</span> 4. Terraform</a>
+  <ul class="collapse">
+  <li><a href="#przykład" id="toc-przykład" class="nav-link" data-scroll-target="#przykład"><span class="header-section-number">9.1</span> Przykład</a></li>
+  </ul></li>
+  <li><a href="#zadanie" id="toc-zadanie" class="nav-link" data-scroll-target="#zadanie"><span class="header-section-number">10</span> 5. Zadanie</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -191,8 +201,26 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="cel-ćwiczenia" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="cel-ćwiczenia"><span class="header-section-number">8.1</span> Cel ćwiczenia</h2>
+<p>Celem ćwiczenia jest zapoznanie studentów z koncepcją <strong>Infrastructure as Code (IaC)</strong> oraz praktyczne wykorzystanie narzędzia <strong>tworzenia (przygotowywania) infrastruktury</strong> (ang. <em>provisioning</em>)- <em>Terraform</em> w środowisku Azure.</p>
+</section>
+<section id="terraform" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> 4. Terraform</h1>
+<section id="przykład" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="przykład"><span class="header-section-number">9.1</span> Przykład</h2>
+<pre class="hcl"><code>provider "azurerm" {
+  features {}
+}</code></pre>
+</section>
+</section>
+<section id="zadanie" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> 5. Zadanie</h1>
+<p>Wdroż serwer WWW: - Ansible - Terraform</p>
+<p>Porównaj podejścia.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -246,14 +274,13 @@ ul.task-list li input[type="checkbox"] {
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

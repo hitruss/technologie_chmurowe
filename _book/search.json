@@ -598,5 +598,175 @@
     "crumbs": [
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>CI/CD - Plan zajęć warsztatowych</span>"
     ]
+  },
+  {
+    "objectID": "05-ansible.html",
+    "href": "05-ansible.html",
+    "title": "7  Ansible",
+    "section": "",
+    "text": "7.1 Cel ćwiczenia\nCelem ćwiczenia jest zapoznanie studentów z koncepcją Infrastructure as Code (IaC) oraz praktyczne wykorzystanie narzędzia zarządzania konfiguracją (ang. configuration management) - Ansible w środowisku Azure.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Ansible</span>"
+    ]
+  },
+  {
+    "objectID": "05-ansible.html#podejście-deklaratywne-opisujemy-co-a-nie-jak",
+    "href": "05-ansible.html#podejście-deklaratywne-opisujemy-co-a-nie-jak",
+    "title": "7  Ansible",
+    "section": "9.1 Podejście Deklaratywne: opisujemy “Co”, a nie “Jak”",
+    "text": "9.1 Podejście Deklaratywne: opisujemy “Co”, a nie “Jak”\nW podejściu IaC,kluczowym pojęciem jest podejście deklaratywne. W przeciwieństwie do tradycyjnego podejścia imperatywnego (gdzie piszesz długie listy skryptów zawierających krok po kroku polecenia: “stwórz maszynę”, “zainstaluj pakiet”, “skonfiguruj sieć”), podejście deklaratywne skupia się na zdefiniowaniu stanu końcowego.\n\n9.1.1 Co to dokładnie oznacza?\nW modelu deklaratywnym mówisz narzędziu: “Chcę, aby na końcu system wyglądał tak i tak”.\n\nDefinicja celu: Zamiast instrukcji, jak wykonać zadanie, dostarczasz “projekt” lub “mapę” tego, co powinno istnieć.\nRola narzędzia: Narzędzie IaC analizuje bieżący stan Twojej infrastruktury, porównuje go z Twoim “projektem” (stanem pożądanym) i automatycznie wykonuje niezbędne kroki, aby “zgrać” stany.\nPrzykład: Jeśli określisz, że w Azure mają istnieć dwa serwery, a w chmurze nie ma żadnego, narzędzie je stworzy. Jeśli jednak jeden z nich już tam jest, narzędzie “zrozumie”, że musi stworzyć tylko jeden, brakujący element.\n\n\n\n9.1.2 Dlaczego deklaratywność jest tak ważna w IaC?\n\nIdempotentność: To fundament deklaratywności. Oznacza, że jeśli uruchomisz swój kod raz, dziesięć lub sto razy – wynik końcowy będzie zawsze identyczny. Jeśli serwer już jest skonfigurowany, narzędzie nie wykona żadnej akcji, co eliminuje ryzyko błędów przy powtarzalnych wdrożeniach.\nŁatwiejsze utrzymanie: Nie musisz pamiętać o kolejności wykonywania poleceń ani o obsłudze błędów w przypadku, gdy serwer był już częściowo skonfigurowany. System “wie”, co należy poprawić, aby osiągnąć założony cel.\nZarządzanie stanem: Dzięki temu, że deklarujesz stan, narzędzia korzystają i mogą zarządzać tzw. “plikiem stanów” (State File), który pełni funkcję Twojego ‘źródła prawdy’ o całej infrastrukturze.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Ansible</span>"
+    ]
+  },
+  {
+    "objectID": "05-ansible.html#podstawowe-zasady-składni-yaml",
+    "href": "05-ansible.html#podstawowe-zasady-składni-yaml",
+    "title": "7  Ansible",
+    "section": "10.1 Podstawowe zasady składni YAML:",
+    "text": "10.1 Podstawowe zasady składni YAML:\n\nOdstępy: W YAML-u wcięcia są kluczowe. Odstępy służą do określenia poziomu zagnieżdżenia danych. Wcięcie może być wykonane spacjami lub tabulatorami, ale nie można ich mieszać. Konwencją jest użycie dwóch lub czterech spacji na każdy poziom wcięcia. Przykład:\n\n    kategoria:\n      podkategoria:\n        - element1\n        - element2\nKlucze i wartości: W YAML-u dane są zapisywane w formie par “klucz-wartość”. Klucz i wartość oddzielone są dwukropkiem i spacją. Przykład:\n    nazwa: John Doe\n    wiek: 30\nListy: Listy w YAML-u są reprezentowane za pomocą myślników i spacji. Przykład:\n    lista:\n      - element1\n      - element2\n      - element3\nObiekty: Obiekty lub słowniki są zagnieżdżane przy użyciu wcięć i zawierają inne pary klucz-wartość. Przykład:\n    osoba:\n      imię: John\n      nazwisko: Doe\n      adres:\n        ulica: 123 Main Street\n        miasto: Exampletown\nKomentarze: Komentarze w YAML-u rozpoczynają się od znaku “#” i można umieszczać je w dowolnym miejscu w pliku. Komentarze są ignorowane przez parser YAML. Przykład:\n    # To jest komentarz\n    nazwa: John Doe\nŁańcuchy znaków: Łańcuchy znaków można umieszczać w cudzysłowach (pojedynczych lub podwójnych) lub bez nich. Przykład:\nzmienna1: \"To jest łańcuch znaków w cudzysłowach\"\nzmienna2: To jest łańcuch znaków bez cudzysłowów\nJest prostszy i bardziej czytelny niż JSON.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Ansible</span>"
+    ]
+  },
+  {
+    "objectID": "05-ansible.html#główne-cechy-wyróżniające-ansible",
+    "href": "05-ansible.html#główne-cechy-wyróżniające-ansible",
+    "title": "7  Ansible",
+    "section": "12.1 Główne cechy wyróżniające Ansible",
+    "text": "12.1 Główne cechy wyróżniające Ansible\nAnsible wyróżnia się na tle konkurencji (takich jak Chef, Puppet czy SaltStack) kilkoma kluczowymi aspektami:\n\nMa bezagentową architekturę (ang. Agentless): To najważniejsza cecha. Większość narzędzi do zarządzania konfiguracją wymaga zainstalowania specjalnego oprogramowania (“agenta”) na każdym zarządzanym serwerze. Ansible tego nie potrzebuje – łączy się z serwerami za pomocą standardowego protokołu SSH (w Linux) lub WinRM (Windows Remote Management w Windows). Dzięki temu wystarczy, że masz dostęp przez SSH do serwera, i Ansible może nim zarządzać.\nIdempotentność: To kluczowa zasada w IaC. Playbooki Ansible są pisane tak, aby wielokrotne uruchomienie tego samego skryptu na serwerze nie prowadziło do konfliktów. Jeśli zdefiniujesz, że pakiet “Nginx” ma być zainstalowany, Ansible sprawdzi czy już tam jest – jeśli tak, nie robi nic. Jeśli go nie ma, zainstaluje go.\nProstota języka (YAML): Zestawy opisujące konfiguracje dla Ansible zwane scenariuszami konfiguracji (ang. playbook), są pisane w formacie YAML, który jest bardzo czytelny nawet dla osób, które nie są programistami.\npliki ze scenariuszami można utrzymywać i wersjonować z użyciem Git: Ponieważ wszystkie definicje (pliki scenariuszy, pliki inwentarza (o których za chwilę)) są plikami tekstowymi (YAML, INI), idealnie nadają się do przechowywania w systemach kontroli wersji typu Git. Dzięki temu każda zmiana w konfiguracji serwerów jest zapisana w historii, można je też poddać procesowi Code Review (przegląd kodu) i w razie awarii łatwo przywrócić do poprzedniego stanu (Rollback).",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Ansible</span>"
+    ]
+  },
+  {
+    "objectID": "05-ansible.html#ansible-podstawy-zarządzania-konfiguracją",
+    "href": "05-ansible.html#ansible-podstawy-zarządzania-konfiguracją",
+    "title": "7  Ansible",
+    "section": "12.2 Ansible: Podstawy zarządzania konfiguracją",
+    "text": "12.2 Ansible: Podstawy zarządzania konfiguracją\nW podejściu IaC Ansible zajmuje miejsce “warstwy konfiguracji” – Terraform tworzy zasoby (np. serwery) i infrastrukturę, Ansible zaś odpowiada za ich konfigurację.\nAnsible a inne, wybrane narzędzia zarządzania konfiguracją\n\n\n\n\n\n\n\n\nCecha\nAnsible\nChef / Puppet\n\n\n\n\nArchitektura\nBezagentowa (SSH)\nAgentowa (wymaga instalacji na nodach)\n\n\nJęzyk\nYAML (prosty)\nRuby / DSL (bardziej złożony)\n\n\nModel pracy\nPush (administrator “pcha” zmiany)\nPull (agenci “pobierają” zmiany z serwera)\n\n\nPróg wejścia\nBardzo niski\nWysoki\n\n\n\n###Podstawy pracy z Ansible\n\n12.2.1 Wymagania wstępne\nJeśli chodzi o infrastrukturę, potrzebne jest:\n\nWęzeł zarządzający (ang. Control Node) - to maszyna na której znajdują się pliki Ansible. Musi posiadać zainstaloway język Python oraz pakiet Ansible.\nWęzły zarządzane (ang. Managed Nodes) Do nich trzeba móc się dostać przez SSH (WinRM) oraz muszą mieć zainstalowany interpreter Pythona (do obsługi modułów Ansible).\n\n\n\n12.2.2 Plik inwentarza\nPlik inwentarza (ang. Inventory) to plik (INI lub YAML), w którym masz “zamapowaną” infrastrukturę. Dzięki niemu Ansible ‘wie’ gdzie wykonać zadania i jakie .\nPrzykładowy plik inwentarza(inventory.ini)\n[webservers]\nserwer-01 ansible_host=10.0.0.1\nserwer-02 ansible_host=10.0.0.2\n\n\n12.2.3 Pliki scenariuszy\nPliki ze scenariuszami konfiguracji (ang. playbook) to pliki zawierające ‘przepis’ na konfigurację zapisany w YAML. Opisuje docelowy stan systemu.\nPrzykład (playbook.yml):\n- name: Konfiguracja serwera WWW\n  hosts: webservers\n  become: yes\n  tasks:\n    - name: Instalacja Nginx\n      apt:\n        name: nginx\n        state: present",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Ansible</span>"
+    ]
+  },
+  {
+    "objectID": "05-ansible.html#moduły-ansible-ręce-twojej-automatyzacji",
+    "href": "05-ansible.html#moduły-ansible-ręce-twojej-automatyzacji",
+    "title": "7  Ansible",
+    "section": "12.3 Moduły Ansible: “Ręce” Twojej automatyzacji",
+    "text": "12.3 Moduły Ansible: “Ręce” Twojej automatyzacji\nModuły to małe, wysoce wyspecjalizowane programy, które Ansible przesyła na serwery docelowe (managed nodes), wykonuje je tam, a następnie usuwa. To właśnie dzięki modułom Ansible jest tak potężny – nie musisz pisać skomplikowanych skryptów Bash; wystarczy wywołać odpowiedni moduł, który zajmie się szczegółami technicznymi.\n\n12.3.1 Czym są moduły?\nKażdy moduł to osobny “narzędzie” do konkretnego zadania: * apt / yum: Zarządzanie pakietami (instalacja, usuwanie). * service: Zarządzanie usługami systemowymi (start, stop, restart). * copy / template: Przesyłanie plików z komputera zarządzającego na serwer. * mysql_user: Zarządzanie bazami danych. * user / group: Zarządzanie kontami użytkowników.\n\n\n12.3.2 Gdzie szukać informacji o modułach?\nDokumentacja Ansible jest niezwykle bogata i podzielona na tzw. Kolekcje (Collections). Ponieważ modułów są tysiące, najłatwiej szukać ich w następujący sposób:\n\n12.3.2.1 1. Oficjalna Dokumentacja (docs.ansible.com)\nTo Twoje główne źródło wiedzy. * Adres: https://docs.ansible.com/ansible/latest/collections/index.html * Jak szukać: Użyj paska wyszukiwania i wpisz nazwę technologii, np. “azure”, “docker” lub “mysql”. * Co znajdziesz: Pełną listę parametrów, przykłady użycia (w formacie YAML) oraz informacje o tym, czy moduł wspiera idempotentność.\n\n\n12.3.2.2 2. Polecenie ansible-doc (w terminalu)\nJeśli pracujesz w konsoli, nie musisz nawet otwierać przeglądarki! Ansible ma wbudowane narzędzie do czytania dokumentacji.\n\nBy wyświetlić lise wszystkich modułów użyj polecenia:\n\n  ansible-doc -l\n\nGdy potrzebujesz szczegółowy opis konkretnego modułu (np. apt):\n\nansible-doc apt\nTo polecenie wyświetli Ci w terminalu dokumentację wraz z przykładami kodu, które możesz skopiować bezpośrednio do swojego pliku scenariusza.\n\n\n12.3.2.3 Jak “poruszać się” w dokumentacji?\nKiedy otworzysz stronę konkretnego modułu, zwróć uwagę na trzy sekcje:\n\nSynopsis: To krótkie wyjaśnienie, do czego służy moduł.\nParameters: To lista ustawień (zazwyczaj szukaj tych, które mają required: true).\nExamples: To zwykle najważniejsza (najbardziej przydatna ;) sekcja. Znajdziesz tam gotowe fragmenty kodu YAML, które pokazują, jak moduł jest używany w prawdziwych scenariuszach.\n\n**Wskazówka praktyczna* Jeśli nie jesteś pewien, jakiego modułu użyć, wpisz w wyszukiwarce: „Ansible [nazwa_technologii] module”. Dzięki temu szybko trafisz do odpowiedniej sekcji w dokumentacji kolekcji, która zajmuje się danym oprogramowaniem (np. kolekcja community.general zawiera dziesiątki przydatnych modułów ogólnego przeznaczenia).",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Ansible</span>"
+    ]
+  },
+  {
+    "objectID": "05-ansible.html#plik-inventory-inventory.ini",
+    "href": "05-ansible.html#plik-inventory-inventory.ini",
+    "title": "7  Ansible",
+    "section": "14.1 1. Plik Inventory (inventory.ini)",
+    "text": "14.1 1. Plik Inventory (inventory.ini)\nPlik ten określa serwery docelowe, na których Ansible ma wykonać instalację.\n[dbservers]\n# Zastąp 192.168.1.50 adresem IP swojego serwera\ndb-server-01 ansible_host=192.168.1.50 ansible_user=ubuntu\n\n[dbservers:vars]\n# Wskazanie interpretera Pythona dla serwerów zdalnych\nansible_python_interpreter=/usr/bin/python3",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Ansible</span>"
+    ]
+  },
+  {
+    "objectID": "05-ansible.html#plik-scenariusza",
+    "href": "05-ansible.html#plik-scenariusza",
+    "title": "7  Ansible",
+    "section": "14.2 2. Plik scenariusza",
+    "text": "14.2 2. Plik scenariusza\nPlaybook (install_mariadb.yml) Playbook deklaruje pożądany stan systemu (zainstalowana baza, uruchomiony serwis, skonfigurowany użytkownik)\n- name: Konfiguracja serwera MariaDB\n  hosts: dbservers\n  become: yes\n  vars:\n    db_root_password: \"TwojeSilneHaslo123!\"\n\n  tasks:\n    - name: Instalacja biblioteki PyMySQL (wymagana dla modułów mysql)\n      apt:\n        name: python3-pymysql\n        state: present\n\n    - name: Instalacja serwera MariaDB\n      apt:\n        name: mariadb-server\n        state: present\n        update_cache: yes\n\n    - name: Upewnij się, że serwis MariaDB jest uruchomiony\n      service:\n        name: mariadb\n        state: started\n        enabled: yes\n\n    - name: Ustaw hasło dla użytkownika root\n      mysql_user:\n        name: root\n        password: \"{{ db_root_password }}\"\n        host: localhost\n        state: present\n        check_implicit_admin: yes\n\n    - name: Usuń anonimowych użytkowników\n      mysql_user:\n        name: ''\n        host_all: yes\n        state: absent\n\n    - name: Usuń bazę danych \"test\"\n      mysql_db:\n        name: test\n        state: absent\nKluczowe aspekty tego rozwiązania:\n\nMożliwość wielokrotnego wykonywania (Idempotentność): Każde uruchomienie tego scenariusza powoduje sprawdzenie, czy stan serwera jest zgodny z założeniami opisanymi w scenariuszu. Jeśli MariaDB jest już poprawnie skonfigurowana, Ansible nie wprowadzi żadnych zmian.\nModuły: Używane są dedykowane moduły Ansible (apt, service, mysql_user), które umożliwiają-wykonują ‘tłumaczenie’ poleceń powłoki (ang. shell).\nAutomatyzacja: Proces instalacji bibliotek (python3-pymysql) jest włączony w ten sam cykl, co konfiguracja bazy, zapewniając gotowość środowiska do pracy od razu po zakończeniu wykonania pliku scenariusza",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Ansible</span>"
+    ]
+  },
+  {
+    "objectID": "06-terraform.html",
+    "href": "06-terraform.html",
+    "title": "8  Terraform",
+    "section": "",
+    "text": "8.1 Cel ćwiczenia\nCelem ćwiczenia jest zapoznanie studentów z koncepcją Infrastructure as Code (IaC) oraz praktyczne wykorzystanie narzędzia tworzenia (przygotowywania) infrastruktury (ang. provisioning)- Terraform w środowisku Azure.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Terraform</span>"
+    ]
+  },
+  {
+    "objectID": "06-terraform.html#przykład",
+    "href": "06-terraform.html#przykład",
+    "title": "8  Terraform",
+    "section": "9.1 Przykład",
+    "text": "9.1 Przykład\nprovider \"azurerm\" {\n  features {}\n}",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Terraform</span>"
+    ]
+  },
+  {
+    "objectID": "05-ansible.html#zarządzanie-konfiguracją",
+    "href": "05-ansible.html#zarządzanie-konfiguracją",
+    "title": "7  Ansible",
+    "section": "7.2 Zarządzanie konfiguracją",
+    "text": "7.2 Zarządzanie konfiguracją\nZarządzanie konfiguracją polega na napisaniu specyficznego kodu okreslającego konfigurację, a następnie skorzystaniu z narzędzia umożliwiającego uruchomienie tego kodu. Kod określa zestaw wytycznych jak mają być skonfigurowane serwery różnych typów. Zarządzanie konfiguracją jest też określane terminem Infrastructure as Code, IaS.\nSą różne narzędzia zarządzania konfiguracją. Może to byc Ansible, Chef, Puppet. Tutaj użyjemy Ansible - nie wymaga używania oprogramowania agenta na konfigurowanym serwerze. Przydaje się serwer z którego ściąga się konfigurację, ale może to być repozytorium git. Wtedy na konfigurowanym serwerze wystarczy pobranie kodu konfiguracji na konfigurowaną maszynę (np. na serwer).\n\n7.2.1 Podejście Deklaratywne: opisujemy “Co”, a nie “Jak”\nW podejściu IaC,kluczowym pojęciem jest podejście deklaratywne. W przeciwieństwie do tradycyjnego podejścia imperatywnego (gdzie piszesz długie listy skryptów zawierających krok po kroku polecenia: “stwórz maszynę”, “zainstaluj pakiet”, “skonfiguruj sieć”), podejście deklaratywne skupia się na zdefiniowaniu stanu końcowego.\n\n7.2.1.1 Co to dokładnie oznacza?\nW modelu deklaratywnym mówisz narzędziu: “Chcę, aby na końcu system wyglądał tak i tak”.\n\nDefinicja celu: Zamiast instrukcji, jak wykonać zadanie, dostarczasz “projekt” lub “mapę” tego, co powinno istnieć.\nRola narzędzia: Narzędzie IaC analizuje bieżący stan Twojej infrastruktury, porównuje go z Twoim “projektem” (stanem pożądanym) i automatycznie wykonuje niezbędne kroki, aby “zgrać” stany.\nPrzykład: Jeśli określisz, że w Azure mają istnieć dwa serwery, a w chmurze nie ma żadnego, narzędzie je stworzy. Jeśli jednak jeden z nich już tam jest, narzędzie “zrozumie”, że musi stworzyć tylko jeden, brakujący element.\n\n\n\n7.2.1.2 Dlaczego deklaratywność jest tak ważna w IaC?\n\nIdempotentność: To fundament deklaratywności. Oznacza, że jeśli uruchomisz swój kod raz, dziesięć lub sto razy – wynik końcowy będzie zawsze identyczny. Jeśli serwer już jest skonfigurowany, narzędzie nie wykona żadnej akcji, co eliminuje ryzyko błędów przy powtarzalnych wdrożeniach.\nŁatwiejsze utrzymanie: Nie musisz pamiętać o kolejności wykonywania poleceń ani o obsłudze błędów w przypadku, gdy serwer był już częściowo skonfigurowany. System “wie”, co należy poprawić, aby osiągnąć założony cel.\nZarządzanie stanem: Dzięki temu, że deklarujesz stan, narzędzia korzystają i mogą zarządzać tzw. “plikiem stanów” (State File), który pełni funkcję Twojego ‘źródła prawdy’ o całej infrastrukturze.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Ansible</span>"
+    ]
+  },
+  {
+    "objectID": "05-ansible.html#yaml",
+    "href": "05-ansible.html#yaml",
+    "title": "7  Ansible",
+    "section": "7.3 YAML",
+    "text": "7.3 YAML\nYAML (Yet Another Markup Language) to język znaczników (markup language) używany głównie do formatowania danych w plikach tekstowych. YAML jest czytelny i prosty, nadaje się do zapisywania danych dotyczących konfiguracji lub odzwierciedlenia hierarchii.\n\n7.3.1 Podstawowe zasady składni YAML:\n\nOdstępy: W YAML-u wcięcia są kluczowe. Odstępy służą do określenia poziomu zagnieżdżenia danych. Wcięcie może być wykonane spacjami lub tabulatorami, ale nie można ich mieszać. Konwencją jest użycie dwóch lub czterech spacji na każdy poziom wcięcia. Przykład:\n\n    kategoria:\n      podkategoria:\n        - element1\n        - element2\nKlucze i wartości: W YAML-u dane są zapisywane w formie par “klucz-wartość”. Klucz i wartość oddzielone są dwukropkiem i spacją. Przykład:\n    nazwa: John Doe\n    wiek: 30\nListy: Listy w YAML-u są reprezentowane za pomocą myślników i spacji. Przykład:\n    lista:\n      - element1\n      - element2\n      - element3\nObiekty: Obiekty lub słowniki są zagnieżdżane przy użyciu wcięć i zawierają inne pary klucz-wartość. Przykład:\n    osoba:\n      imię: John\n      nazwisko: Doe\n      adres:\n        ulica: 123 Main Street\n        miasto: Exampletown\nKomentarze: Komentarze w YAML-u rozpoczynają się od znaku “#” i można umieszczać je w dowolnym miejscu w pliku. Komentarze są ignorowane przez parser YAML. Przykład:\n    # To jest komentarz\n    nazwa: John Doe\nŁańcuchy znaków: Łańcuchy znaków można umieszczać w cudzysłowach (pojedynczych lub podwójnych) lub bez nich. Przykład:\nzmienna1: \"To jest łańcuch znaków w cudzysłowach\"\nzmienna2: To jest łańcuch znaków bez cudzysłowów\nJest prostszy i bardziej czytelny niż JSON.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Ansible</span>"
+    ]
+  },
+  {
+    "objectID": "05-ansible.html#narzędzia-iac",
+    "href": "05-ansible.html#narzędzia-iac",
+    "title": "7  Ansible",
+    "section": "7.4 Narzędzia IaC",
+    "text": "7.4 Narzędzia IaC\nIstnieją różne narzędzia, w ramach zajęć będziemy korzystać z\n\nTerraform – do tworzenie infrastruktury\nAnsible – do zarządzania konfiguracją\n\nPorównanie wybranych narzędzi zarządzania konfiguracją: | Cecha | Ansible | Chef / Puppet | | :— | :— | :— | | Architektura | Bezagentowa (SSH) | Agentowa (wymaga instalacji na nodach) | | Język | YAML (prosty) | Ruby / DSL (bardziej złożony) | | Model pracy | Push (administrator “pcha” zmiany) | Pull (agenci “pobierają” zmiany z serwera) | | Próg wejścia | Bardzo niski | Wysoki |\nW praktyce, w nowoczesnych projektach z użyciem IaC, Terraform (będzie omówiony na następnych zajęciach) i Ansible współpracują ze sobą. Terraform tworzy “szkielet” infrastruktury (wirtualne maszyny, sieci w chmurze), a gdy maszyna jest gotowa, Terraform przekazuje jej adres IP do Ansible, który dokonfigurowuje maszynę zgodnie ze zdefiniowanymi ustawieniami.\nZaczniemy od Ansible żebyś zobaczył/a jak można zautomatyzować konfigurowanie.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Ansible</span>"
+    ]
+  },
+  {
+    "objectID": "05-ansible.html#ansible---informacje-podstawowe",
+    "href": "05-ansible.html#ansible---informacje-podstawowe",
+    "title": "7  Ansible",
+    "section": "7.5 Ansible - informacje podstawowe",
+    "text": "7.5 Ansible - informacje podstawowe\nAnsible to otwartoźródłowe narzędzie do automatyzacji konfigurowania maszyn (nie tylko wirtualnych-można go wykorzystać i dla zasobów lokalnych). Umożliwia zarządzanie konfiguracją (ang. Configuration Management), wdrażanie aplikacji oraz automatyzację zadań administracyjnych. W ekosystemie narzędzi do automatyzacji jest uznawane za standard ze względu na swoją prostotę i architekturę.\nW modelu Infrastructure as Code (IaC), Ansible zajmuje miejsce “warstwy konfiguracji”. Narzędzia typu Terraform służą do tworzenia infrastruktury (tzw. provisioning – np. stawianie serwera w chmurze), Ansible zaś odpowiada za to, co dzieje się na tym serwerze po jego uruchomieniu – instaluje pakiety, konfiguruje usługi (np. Nginx, bazy danych) i ‘pilnuje’, aby system był w pożądanym stanie.\n\n7.5.1 Główne cechy wyróżniające Ansible\nAnsible wyróżnia się na tle konkurencji (takich jak Chef, Puppet czy SaltStack) kilkoma kluczowymi aspektami:\n\nMa bezagentową architekturę (ang. Agentless): To najważniejsza cecha. Większość narzędzi do zarządzania konfiguracją wymaga zainstalowania specjalnego oprogramowania (“agenta”) na każdym zarządzanym serwerze. Ansible tego nie potrzebuje – łączy się z serwerami za pomocą standardowego protokołu SSH (w Linux) lub WinRM (Windows Remote Management w Windows). Dzięki temu wystarczy, że masz dostęp przez SSH do serwera, i Ansible może nim zarządzać.\nIdempotentność: To kluczowa zasada w IaC. Playbooki Ansible są pisane tak, aby wielokrotne uruchomienie tego samego skryptu na serwerze nie prowadziło do konfliktów. Jeśli zdefiniujesz, że pakiet “Nginx” ma być zainstalowany, Ansible sprawdzi czy już tam jest – jeśli tak, nie robi nic. Jeśli go nie ma, zainstaluje go.\nProstota języka (YAML): Zestawy opisujące konfiguracje dla Ansible zwane scenariuszami konfiguracji (ang. playbook), są pisane w formacie YAML, który jest bardzo czytelny nawet dla osób, które nie są programistami.\npliki ze scenariuszami można utrzymywać i wersjonować z użyciem Git: Ponieważ wszystkie definicje (pliki scenariuszy, pliki inwentarza (o których za chwilę)) są plikami tekstowymi (YAML, INI), idealnie nadają się do przechowywania w systemach kontroli wersji typu Git. Dzięki temu każda zmiana w konfiguracji serwerów jest zapisana w historii, można je też poddać procesowi Code Review (przegląd kodu) i w razie awarii łatwo przywrócić do poprzedniego stanu (Rollback).\n\n\n\n7.5.2 Podstawy zarządzania konfiguracją\nW podejściu IaC Ansible zajmuje miejsce “warstwy konfiguracji” – Terraform tworzy zasoby (np. serwery) i infrastrukturę, Ansible zaś odpowiada za ich konfigurację.\nAnsible a inne, wybrane narzędzia zarządzania konfiguracją\n\n\n\n\n\n\n\n\nCecha\nAnsible\nChef / Puppet\n\n\n\n\nArchitektura\nBezagentowa (SSH)\nAgentowa (wymaga instalacji na nodach)\n\n\nJęzyk\nYAML (prosty)\nRuby / DSL (bardziej złożony)\n\n\nModel pracy\nPush (administrator “pcha” zmiany)\nPull (agenci “pobierają” zmiany z serwera)\n\n\nPróg wejścia\nBardzo niski\nWysoki\n\n\n\n\n\n7.5.3 Podstawy pracy z Ansible\n\n7.5.3.1 Wymagania wstępne\nJeśli chodzi o infrastrukturę, potrzebne jest:\n\nWęzeł zarządzający (ang. Control Node) - to maszyna na której znajdują się pliki Ansible. Musi posiadać zainstaloway język Python oraz pakiet Ansible.\nWęzły zarządzane (ang. Managed Nodes) Do nich trzeba móc się dostać przez SSH (WinRM) oraz muszą mieć zainstalowany interpreter Pythona (do obsługi modułów Ansible).\n\n\n\n7.5.3.2 Plik inwentarza\nPlik inwentarza (ang. Inventory) to plik (INI lub YAML), w którym masz “zamapowaną” infrastrukturę. Dzięki niemu Ansible ‘wie’ gdzie wykonać zadania i jakie .\nPrzykładowy plik inwentarza(inventory.ini)\n[webservers]\nserwer-01 ansible_host=10.0.0.1\nserwer-02 ansible_host=10.0.0.2\n\n\n7.5.3.3 Pliki scenariuszy\nPliki ze scenariuszami konfiguracji (ang. playbook) to pliki zawierające ‘przepis’ na konfigurację zapisany w YAML. Opisuje docelowy stan systemu.\nPrzykład (playbook.yml):\n- name: Konfiguracja serwera WWW\n  hosts: webservers\n  become: yes\n  tasks:\n    - name: Instalacja Nginx\n      apt:\n        name: nginx\n        state: present\n\n\n\n7.5.4 Moduły Ansible: “Ręce” Twojej automatyzacji\nModuły to małe, wysoce wyspecjalizowane programy, które Ansible przesyła na serwery docelowe (managed nodes), wykonuje je tam, a następnie usuwa. To właśnie dzięki modułom Ansible jest tak potężny – nie musisz pisać skomplikowanych skryptów Bash; wystarczy wywołać odpowiedni moduł, który zajmie się szczegółami technicznymi.\n\n7.5.4.1 Czym są moduły?\nKażdy moduł to osobny “narzędzie” do konkretnego zadania: * apt / yum: Zarządzanie pakietami (instalacja, usuwanie). * service: Zarządzanie usługami systemowymi (start, stop, restart). * copy / template: Przesyłanie plików z komputera zarządzającego na serwer. * mysql_user: Zarządzanie bazami danych. * user / group: Zarządzanie kontami użytkowników.\n\n\n7.5.4.2 Gdzie szukać informacji o modułach?\nDokumentacja Ansible jest niezwykle bogata i podzielona na tzw. Kolekcje (Collections). Ponieważ modułów są tysiące, najłatwiej szukać ich w następujący sposób:\n\n7.5.4.2.1 1. Oficjalna Dokumentacja (docs.ansible.com)\nTo Twoje główne źródło wiedzy. * Adres: https://docs.ansible.com/ansible/latest/collections/index.html * Jak szukać: Użyj paska wyszukiwania i wpisz nazwę technologii, np. “azure”, “docker” lub “mysql”. * Co znajdziesz: Pełną listę parametrów, przykłady użycia (w formacie YAML) oraz informacje o tym, czy moduł wspiera idempotentność.\n\n\n7.5.4.2.2 2. Polecenie ansible-doc (w terminalu)\nJeśli pracujesz w konsoli, nie musisz nawet otwierać przeglądarki! Ansible ma wbudowane narzędzie do czytania dokumentacji.\n\nBy wyświetlić lise wszystkich modułów użyj polecenia:\n\n  ansible-doc -l\n\nGdy potrzebujesz szczegółowy opis konkretnego modułu (np. apt):\n\nansible-doc apt\nTo polecenie wyświetli Ci w terminalu dokumentację wraz z przykładami kodu, które możesz skopiować bezpośrednio do swojego pliku scenariusza.\n\n\n7.5.4.2.3 Jak “poruszać się” w dokumentacji?\nKiedy otworzysz stronę konkretnego modułu, zwróć uwagę na trzy sekcje:\n\nSynopsis: To krótkie wyjaśnienie, do czego służy moduł.\nParameters: To lista ustawień (zazwyczaj szukaj tych, które mają required: true).\nExamples: To zwykle najważniejsza (najbardziej przydatna ;) sekcja. Znajdziesz tam gotowe fragmenty kodu YAML, które pokazują, jak moduł jest używany w prawdziwych scenariuszach.\n\n**Wskazówka praktyczna* Jeśli nie jesteś pewien, jakiego modułu użyć, wpisz w wyszukiwarce: „Ansible [nazwa_technologii] module”. Dzięki temu szybko trafisz do odpowiedniej sekcji w dokumentacji kolekcji, która zajmuje się danym oprogramowaniem (np. kolekcja community.general zawiera dziesiątki przydatnych modułów ogólnego przeznaczenia).",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Ansible</span>"
+    ]
+  },
+  {
+    "objectID": "05-ansible.html#korzystanie-z-ansible-w-praktyce",
+    "href": "05-ansible.html#korzystanie-z-ansible-w-praktyce",
+    "title": "7  Ansible",
+    "section": "7.6 Korzystanie z Ansible w praktyce",
+    "text": "7.6 Korzystanie z Ansible w praktyce\nUwaga: Ansible jest stale rozwijany, w razie problemów należy sięgnąć do dokumentacji.\nPrzećwicz jeden ze scenariuszy:\nZainstaluj i skonfiguruj Ansible do pracy korzystając z tego lub tego dokumentu. W tym scenariuszu będą Ci potrzebne minimum dwie maszyny wirtualne - jedna, skonfigurowana jako serwer na którym będzie przechowywana konfiguracja i druga - która będzie automatycznie konfigurowana.\nLUB\nZainstaluj i skonfiguruj Ansible do pracy korzystając z Ansible Git Example - Checkout code from Git Repo Securely. W tym scenariuszu potrzebujesz jednej maszyny - kod z konfiguracją ściągasz z repozytorium.\nZmodyfikuj końcowy plik yaml tak, by uzyskać ostatecznie taki efekt jak przy ręcznej instalacji Apache/nginx (poprzednie laboratorium)",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Ansible</span>"
+    ]
+  },
+  {
+    "objectID": "05-ansible.html#przykład---instalacja-i-konfiguracja-mariadb-przy-użyciu-ansible",
+    "href": "05-ansible.html#przykład---instalacja-i-konfiguracja-mariadb-przy-użyciu-ansible",
+    "title": "7  Ansible",
+    "section": "7.7 Przykład - Instalacja i konfiguracja MariaDB przy użyciu Ansible",
+    "text": "7.7 Przykład - Instalacja i konfiguracja MariaDB przy użyciu Ansible\nW tej sekcji masz praktyczny przykład, jak zautomatyzować wdrożenie bazy danych MariaDB. Pamiętaj, że w środowiskach produkcyjnych hasła powinny być zabezpieczone za pomocą narzędzia Ansible Vault.\n\n7.7.1 1. Plik Inventory (inventory.ini)\nPlik ten określa serwery docelowe, na których Ansible ma wykonać instalację.\n[dbservers]\n# Zastąp 192.168.1.50 adresem IP swojego serwera\ndb-server-01 ansible_host=192.168.1.50 ansible_user=ubuntu\n\n[dbservers:vars]\n# Wskazanie interpretera Pythona dla serwerów zdalnych\nansible_python_interpreter=/usr/bin/python3\n\n\n7.7.2 2. Plik scenariusza\nPlaybook (install_mariadb.yml) Playbook deklaruje pożądany stan systemu (zainstalowana baza, uruchomiony serwis, skonfigurowany użytkownik)\n- name: Konfiguracja serwera MariaDB\n  hosts: dbservers\n  become: yes\n  vars:\n    db_root_password: \"TwojeSilneHaslo123!\"\n\n  tasks:\n    - name: Instalacja biblioteki PyMySQL (wymagana dla modułów mysql)\n      apt:\n        name: python3-pymysql\n        state: present\n\n    - name: Instalacja serwera MariaDB\n      apt:\n        name: mariadb-server\n        state: present\n        update_cache: yes\n\n    - name: Upewnij się, że serwis MariaDB jest uruchomiony\n      service:\n        name: mariadb\n        state: started\n        enabled: yes\n\n    - name: Ustaw hasło dla użytkownika root\n      mysql_user:\n        name: root\n        password: \"{{ db_root_password }}\"\n        host: localhost\n        state: present\n        check_implicit_admin: yes\n\n    - name: Usuń anonimowych użytkowników\n      mysql_user:\n        name: ''\n        host_all: yes\n        state: absent\n\n    - name: Usuń bazę danych \"test\"\n      mysql_db:\n        name: test\n        state: absent\nKluczowe aspekty tego rozwiązania:\n\nMożliwość wielokrotnego wykonywania (Idempotentność): Każde uruchomienie tego scenariusza powoduje sprawdzenie, czy stan serwera jest zgodny z założeniami opisanymi w scenariuszu. Jeśli MariaDB jest już poprawnie skonfigurowana, Ansible nie wprowadzi żadnych zmian.\nModuły: Używane są dedykowane moduły Ansible (apt, service, mysql_user), które umożliwiają-wykonują ‘tłumaczenie’ poleceń powłoki (ang. shell).\nAutomatyzacja: Proces instalacji bibliotek (python3-pymysql) jest włączony w ten sam cykl, co konfiguracja bazy, zapewniając gotowość środowiska do pracy od razu po zakończeniu wykonania pliku scenariusza",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Ansible</span>"
+    ]
+  },
+  {
+    "objectID": "05-ansible.html#lektura-uzupełniająca",
+    "href": "05-ansible.html#lektura-uzupełniająca",
+    "title": "7  Ansible",
+    "section": "7.8 Lektura uzupełniająca",
+    "text": "7.8 Lektura uzupełniająca\nDokumentacja Ansible\nComplete guide to Ansible Configuration Management and its Features\nAnsible Made Easy\nNarzędzia zarządzania konfiguracją do zarządzania konfiguracją.\nThe Fundamentals of Infrastructure as Code in Data Engineering",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Ansible</span>"
+    ]
   }
 ]

@@ -1,2 +1,23 @@
 # Terraform
 
+## Cel ćwiczenia
+
+Celem ćwiczenia jest zapoznanie studentów z koncepcją **Infrastructure as Code (IaC)** oraz praktyczne wykorzystanie narzędzia **tworzenia (przygotowywania) infrastruktury** (ang. *provisioning*)- *Terraform* w środowisku Azure.
+
+# 4. Terraform
+
+## Przykład
+
+```hcl
+provider "azurerm" {
+  features {}
+}
+```
+
+# 5. Zadanie
+
+Wdroż serwer WWW:
+- Ansible
+- Terraform
+
+Porównaj podejścia.

@@ -1,2 +1,329 @@
 # Ansible
 
+## Cel ćwiczenia
+
+Celem ćwiczenia jest zapoznanie studentów z koncepcją **Infrastructure as Code (IaC)** oraz praktyczne wykorzystanie narzędzia **zarządzania konfiguracją** (ang. *configuration management*) - *Ansible* w środowisku Azure.
+
+## Zarządzanie konfiguracją
+Zarządzanie konfiguracją polega na napisaniu specyficznego kodu okreslającego konfigurację, a następnie skorzystaniu z narzędzia umożliwiającego uruchomienie tego kodu. Kod określa zestaw wytycznych jak mają być skonfigurowane serwery różnych typów. Zarządzanie konfiguracją jest też określane terminem **Infrastructure as Code, IaS**.
+
+Są różne narzędzia zarządzania konfiguracją. Może to byc Ansible, Chef, Puppet. Tutaj użyjemy Ansible - nie wymaga używania oprogramowania agenta na konfigurowanym serwerze. 
+Przydaje się serwer z którego ściąga się konfigurację, ale może to być repozytorium *git*. Wtedy na konfigurowanym serwerze wystarczy pobranie kodu konfiguracji na konfigurowaną maszynę (np. na serwer).
+
+### Podejście Deklaratywne: opisujemy "Co", a nie "Jak"
+
+W podejściu IaC,kluczowym pojęciem jest **podejście deklaratywne**. W przeciwieństwie do tradycyjnego podejścia imperatywnego (gdzie piszesz długie listy skryptów zawierających krok po kroku polecenia: "stwórz maszynę", "zainstaluj pakiet", "skonfiguruj sieć"), podejście deklaratywne skupia się na zdefiniowaniu **stanu końcowego**.
+
+#### Co to dokładnie oznacza?
+
+W modelu deklaratywnym mówisz narzędziu: **"Chcę, aby na końcu system wyglądał tak i tak"**.
+
+* **Definicja celu:** Zamiast instrukcji, jak wykonać zadanie, dostarczasz "projekt" lub "mapę" tego, co powinno istnieć.
+* **Rola narzędzia:** Narzędzie IaC analizuje bieżący stan Twojej infrastruktury, porównuje go z Twoim "projektem" (stanem pożądanym) i automatycznie wykonuje niezbędne kroki, aby "zgrać" stany.
+* **Przykład:** Jeśli określisz, że w Azure mają istnieć dwa serwery, a w chmurze nie ma żadnego, narzędzie je stworzy. Jeśli jednak jeden z nich już tam jest, narzędzie "zrozumie", że musi stworzyć tylko jeden, brakujący element.
+
+
+
+#### Dlaczego deklaratywność jest tak ważna w IaC?
+
+1. **Idempotentność:** To fundament deklaratywności. Oznacza, że jeśli uruchomisz swój kod raz, dziesięć lub sto razy – wynik końcowy będzie zawsze identyczny. Jeśli serwer już jest skonfigurowany, narzędzie nie wykona żadnej akcji, co eliminuje ryzyko błędów przy powtarzalnych wdrożeniach.
+2. **Łatwiejsze utrzymanie:** Nie musisz pamiętać o kolejności wykonywania poleceń ani o obsłudze błędów w przypadku, gdy serwer był już częściowo skonfigurowany. System "wie", co należy poprawić, aby osiągnąć założony cel.
+3. **Zarządzanie stanem:** Dzięki temu, że deklarujesz stan, narzędzia korzystają i mogą zarządzać tzw. "plikiem stanów" (State File), który pełni funkcję Twojego 'źródła prawdy' o całej infrastrukturze.
+
+## YAML
+
+**YAML** (*Yet Another Markup Language*) to język znaczników (markup language) używany głównie do formatowania danych w plikach tekstowych. YAML jest czytelny i prosty, nadaje się do zapisywania danych dotyczących konfiguracji lub odzwierciedlenia hierarchii.
+
+### Podstawowe zasady składni YAML:
+
+* Odstępy: W YAML-u wcięcia są kluczowe. Odstępy służą do określenia poziomu zagnieżdżenia danych. Wcięcie może być wykonane spacjami lub tabulatorami, ale nie można ich mieszać. Konwencją jest użycie dwóch lub czterech spacji na każdy poziom wcięcia. 
+Przykład:
+
+```
+    kategoria:
+      podkategoria:
+        - element1
+        - element2
+```
+Klucze i wartości: W YAML-u dane są zapisywane w formie par "klucz-wartość". Klucz i wartość oddzielone są dwukropkiem i spacją. 
+Przykład:
+
+```
+    nazwa: John Doe
+    wiek: 30
+```
+Listy: Listy w YAML-u są reprezentowane za pomocą myślników i spacji. 
+Przykład:
+```
+    lista:
+      - element1
+      - element2
+      - element3
+```
+Obiekty: Obiekty lub słowniki są zagnieżdżane przy użyciu wcięć i zawierają inne pary klucz-wartość. 
+Przykład:
+
+```
+    osoba:
+      imię: John
+      nazwisko: Doe
+      adres:
+        ulica: 123 Main Street
+        miasto: Exampletown
+```
+
+Komentarze: Komentarze w YAML-u rozpoczynają się od znaku “#” i można umieszczać je w dowolnym miejscu w pliku. Komentarze są ignorowane przez parser YAML. 
+Przykład:
+
+```
+    # To jest komentarz
+    nazwa: John Doe
+```
+Łańcuchy znaków: Łańcuchy znaków można umieszczać w cudzysłowach (pojedynczych lub podwójnych) lub bez nich. 
+Przykład:
+
+    zmienna1: "To jest łańcuch znaków w cudzysłowach"
+    zmienna2: To jest łańcuch znaków bez cudzysłowów
+
+Jest prostszy i bardziej czytelny niż JSON.
+
+
+## Narzędzia IaC
+Istnieją różne narzędzia, w ramach zajęć będziemy korzystać z 
+
+- Terraform – do tworzenie infrastruktury
+- Ansible – do zarządzania konfiguracją
+
+Porównanie wybranych narzędzi zarządzania konfiguracją:
+| Cecha | Ansible | Chef / Puppet |
+| :--- | :--- | :--- |
+| **Architektura** | Bezagentowa (SSH) | Agentowa (wymaga instalacji na nodach) |
+| **Język** | YAML (prosty) | Ruby / DSL (bardziej złożony) |
+| **Model pracy** | Push (administrator "pcha" zmiany) | Pull (agenci "pobierają" zmiany z serwera) |
+| **Próg wejścia** | Bardzo niski | Wysoki |
+
+
+W praktyce, w nowoczesnych projektach z użyciem IaC, Terraform (będzie omówiony na następnych zajęciach) i Ansible współpracują ze sobą. Terraform tworzy "szkielet" infrastruktury (wirtualne maszyny, sieci w chmurze), a gdy maszyna jest gotowa, Terraform przekazuje jej adres IP do Ansible, który dokonfigurowuje maszynę zgodnie ze zdefiniowanymi ustawieniami.
+
+Zaczniemy od Ansible żebyś zobaczył/a jak można zautomatyzować konfigurowanie. 
+
+## Ansible - informacje podstawowe
+
+Ansible to otwartoźródłowe narzędzie do automatyzacji konfigurowania maszyn (nie tylko wirtualnych-można go wykorzystać i dla zasobów lokalnych). Umożliwia zarządzanie konfiguracją (ang. Configuration Management), wdrażanie aplikacji oraz automatyzację zadań administracyjnych. W ekosystemie narzędzi do automatyzacji jest uznawane za standard ze względu na swoją prostotę i architekturę.
+
+W modelu Infrastructure as Code (IaC), Ansible zajmuje miejsce "warstwy konfiguracji". Narzędzia typu Terraform służą do tworzenia infrastruktury (tzw. provisioning – np. stawianie serwera w chmurze), Ansible zaś odpowiada za to, co dzieje się na tym serwerze po jego uruchomieniu – instaluje pakiety, konfiguruje usługi (np. Nginx, bazy danych) i 'pilnuje', aby system był w pożądanym stanie.
+
+### Główne cechy wyróżniające Ansible
+
+Ansible wyróżnia się na tle konkurencji (takich jak Chef, Puppet czy SaltStack) kilkoma kluczowymi aspektami:
+
+* Ma bezagentową architekturę (ang. Agentless): To najważniejsza cecha. Większość narzędzi do zarządzania konfiguracją wymaga zainstalowania specjalnego oprogramowania ("agenta") na każdym zarządzanym serwerze. Ansible tego nie potrzebuje – łączy się z serwerami za pomocą standardowego protokołu SSH (w Linux) lub WinRM (Windows Remote Management w Windows). Dzięki temu wystarczy, że masz dostęp przez SSH do serwera, i Ansible może nim zarządzać.
+
+* Idempotentność: To kluczowa zasada w IaC. Playbooki Ansible są pisane tak, aby wielokrotne uruchomienie tego samego skryptu na serwerze nie prowadziło do konfliktów. Jeśli zdefiniujesz, że pakiet "Nginx" ma być zainstalowany, Ansible sprawdzi czy już tam jest – jeśli tak, nie robi nic. Jeśli go nie ma, zainstaluje go.
+
+* Prostota języka (YAML): Zestawy opisujące konfiguracje dla Ansible zwane **scenariuszami** konfiguracji (ang. *playbook*), są pisane w formacie YAML, który jest bardzo czytelny nawet dla osób, które nie są programistami.
+
+* pliki ze scenariuszami można utrzymywać i wersjonować z użyciem Git: Ponieważ wszystkie definicje (pliki scenariuszy, pliki inwentarza (o których za chwilę)) są plikami tekstowymi (YAML, INI), idealnie nadają się do przechowywania w systemach kontroli wersji typu Git. Dzięki temu każda zmiana w konfiguracji serwerów jest zapisana w historii, można je też poddać procesowi Code Review (przegląd kodu) i w razie awarii łatwo przywrócić do poprzedniego stanu (Rollback).
+
+
+### Podstawy zarządzania konfiguracją
+
+W podejściu *IaC* Ansible zajmuje miejsce "warstwy konfiguracji" – *Terraform* tworzy zasoby (np. serwery) i infrastrukturę, Ansible zaś odpowiada za ich konfigurację.
+
+Ansible a inne, wybrane narzędzia zarządzania konfiguracją
+
+| Cecha | Ansible | Chef / Puppet |
+| :--- | :--- | :--- |
+| Architektura | Bezagentowa (SSH) | Agentowa (wymaga instalacji na nodach) |
+| Język | YAML (prosty) | Ruby / DSL (bardziej złożony) |
+| Model pracy | Push | Pull |
+| Próg wejścia | Bardzo niski | Wysoki |
+
+### Podstawy pracy z Ansible
+
+#### Wymagania wstępne
+
+Jeśli chodzi o infrastrukturę, potrzebne jest:
+
+* **Węzeł zarządzający** (ang. *Control Node*) - to maszyna na której znajdują się pliki Ansible. Musi posiadać zainstaloway język Python oraz pakiet Ansible.
+* **Węzły zarządzane** (ang. *Managed Nodes*) Do nich trzeba móc się dostać przez SSH (WinRM) oraz muszą mieć zainstalowany interpreter Pythona (do obsługi modułów Ansible).
+
+#### Plik inwentarza 
+Plik inwentarza (ang. *Inventory*) to plik (INI lub YAML), w którym masz "zamapowaną" infrastrukturę. Dzięki niemu Ansible 'wie' gdzie wykonać zadania i jakie .
+
+Przykładowy plik inwentarza(`inventory.ini`)
+
+  ```ini
+  [webservers]
+  serwer-01 ansible_host=10.0.0.1
+  serwer-02 ansible_host=10.0.0.2
+  ```
+#### Pliki scenariuszy
+
+Pliki ze scenariuszami konfiguracji (ang. *playbook*) to pliki zawierające 'przepis' na konfigurację zapisany w YAML. Opisuje docelowy stan systemu.
+
+Przykład (playbook.yml):
+
+```YAML
+- name: Konfiguracja serwera WWW
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: Instalacja Nginx
+      apt:
+        name: nginx
+        state: present
+```
+### Moduły Ansible: "Ręce" Twojej automatyzacji
+
+Moduły to małe, wysoce wyspecjalizowane programy, które Ansible przesyła na serwery docelowe (managed nodes), wykonuje je tam, a następnie usuwa. To właśnie dzięki modułom Ansible jest tak potężny – nie musisz pisać skomplikowanych skryptów Bash; wystarczy wywołać odpowiedni moduł, który zajmie się szczegółami technicznymi.
+
+
+
+#### Czym są moduły?
+Każdy moduł to osobny "narzędzie" do konkretnego zadania:
+* **`apt` / `yum`:** Zarządzanie pakietami (instalacja, usuwanie).
+* **`service`:** Zarządzanie usługami systemowymi (start, stop, restart).
+* **`copy` / `template`:** Przesyłanie plików z komputera zarządzającego na serwer.
+* **`mysql_user`:** Zarządzanie bazami danych.
+* **`user` / `group`:** Zarządzanie kontami użytkowników.
+
+#### Gdzie szukać informacji o modułach?
+
+Dokumentacja Ansible jest niezwykle bogata i podzielona na tzw. **Kolekcje (Collections)**. Ponieważ modułów są tysiące, najłatwiej szukać ich w następujący sposób:
+
+##### 1. Oficjalna Dokumentacja (docs.ansible.com)
+To Twoje główne źródło wiedzy.
+* **Adres:** [https://docs.ansible.com/ansible/latest/collections/index.html](https://docs.ansible.com/ansible/latest/collections/index.html)
+* **Jak szukać:** Użyj paska wyszukiwania i wpisz nazwę technologii, np. "azure", "docker" lub "mysql".
+* **Co znajdziesz:** Pełną listę parametrów, przykłady użycia (w formacie YAML) oraz informacje o tym, czy moduł wspiera idempotentność.
+
+##### 2. Polecenie `ansible-doc` (w terminalu)
+Jeśli pracujesz w konsoli, nie musisz nawet otwierać przeglądarki! Ansible ma wbudowane narzędzie do czytania dokumentacji.
+
+* By wyświetlić lise wszystkich modułów użyj polecenia:
+
+```bash
+  ansible-doc -l
+```
+* Gdy potrzebujesz szczegółowy opis konkretnego modułu (np. `apt`):
+
+```bash
+ansible-doc apt
+```
+To polecenie wyświetli Ci w terminalu dokumentację wraz z przykładami kodu, które możesz skopiować bezpośrednio do swojego pliku scenariusza.
+
+##### Jak "poruszać się" w dokumentacji?
+
+Kiedy otworzysz stronę konkretnego modułu, zwróć uwagę na trzy sekcje:
+
+* *Synopsis*: To krótkie wyjaśnienie, do czego służy moduł.
+
+* *Parameters*: To lista ustawień (zazwyczaj szukaj tych, które mają `required: true`).
+
+* *Examples*: To zwykle najważniejsza (najbardziej przydatna ;) sekcja. Znajdziesz tam gotowe fragmenty kodu YAML, które pokazują, jak moduł jest używany w prawdziwych scenariuszach.
+
+**Wskazówka praktyczna*
+Jeśli nie jesteś pewien, jakiego modułu użyć, wpisz w wyszukiwarce: „Ansible [nazwa_technologii] module”.
+Dzięki temu szybko trafisz do odpowiedniej sekcji w dokumentacji kolekcji, która zajmuje się danym oprogramowaniem (np. kolekcja `community.general` zawiera dziesiątki przydatnych modułów ogólnego przeznaczenia).
+
+
+## Korzystanie z Ansible w praktyce
+
+Uwaga: Ansible jest stale rozwijany, w razie problemów należy sięgnąć do dokumentacji.
+
+Przećwicz jeden ze scenariuszy:
+
+Zainstaluj i skonfiguruj Ansible do pracy korzystając z [tego](https://www.linuxtechi.com/how-to-install-ansible-on-ubuntu/) lub [tego](https://gcore.com/learning/how-to-install-and-configure-ansible-on-ubuntu-part-1/) dokumentu. W tym scenariuszu będą Ci potrzebne minimum dwie maszyny wirtualne - jedna, skonfigurowana jako serwer na którym będzie przechowywana konfiguracja i druga - która będzie automatycznie konfigurowana.
+
+LUB
+
+Zainstaluj i skonfiguruj Ansible do pracy korzystając z [Ansible Git Example - Checkout code from Git Repo Securely](https://www.middlewareinventory.com/blog/ansible-git-example/). W tym scenariuszu potrzebujesz jednej maszyny - kod z konfiguracją ściągasz z repozytorium.
+
+Zmodyfikuj końcowy plik yaml tak, by uzyskać ostatecznie taki efekt jak przy ręcznej instalacji Apache/nginx (poprzednie laboratorium)
+
+## Przykład - Instalacja i konfiguracja MariaDB przy użyciu Ansible
+
+W tej sekcji masz praktyczny przykład, jak zautomatyzować wdrożenie bazy danych MariaDB. Pamiętaj, że w środowiskach produkcyjnych hasła powinny być zabezpieczone za pomocą narzędzia **Ansible Vault**.
+
+### 1. Plik Inventory (inventory.ini)
+Plik ten określa serwery docelowe, na których Ansible ma wykonać instalację.
+
+```ini
+[dbservers]
+# Zastąp 192.168.1.50 adresem IP swojego serwera
+db-server-01 ansible_host=192.168.1.50 ansible_user=ubuntu
+
+[dbservers:vars]
+# Wskazanie interpretera Pythona dla serwerów zdalnych
+ansible_python_interpreter=/usr/bin/python3
+```
+### 2. Plik scenariusza
+
+Playbook (install_mariadb.yml)
+Playbook deklaruje pożądany stan systemu (zainstalowana baza, uruchomiony serwis, skonfigurowany użytkownik)
+```YAML
+- name: Konfiguracja serwera MariaDB
+  hosts: dbservers
+  become: yes
+  vars:
+    db_root_password: "TwojeSilneHaslo123!"
+
+  tasks:
+    - name: Instalacja biblioteki PyMySQL (wymagana dla modułów mysql)
+      apt:
+        name: python3-pymysql
+        state: present
+
+    - name: Instalacja serwera MariaDB
+      apt:
+        name: mariadb-server
+        state: present
+        update_cache: yes
+
+    - name: Upewnij się, że serwis MariaDB jest uruchomiony
+      service:
+        name: mariadb
+        state: started
+        enabled: yes
+
+    - name: Ustaw hasło dla użytkownika root
+      mysql_user:
+        name: root
+        password: "{{ db_root_password }}"
+        host: localhost
+        state: present
+        check_implicit_admin: yes
+
+    - name: Usuń anonimowych użytkowników
+      mysql_user:
+        name: ''
+        host_all: yes
+        state: absent
+
+    - name: Usuń bazę danych "test"
+      mysql_db:
+        name: test
+        state: absent
+```
+
+Kluczowe aspekty tego rozwiązania:
+
+* Możliwość wielokrotnego wykonywania (Idempotentność): Każde uruchomienie tego scenariusza powoduje sprawdzenie, czy stan serwera jest zgodny z założeniami opisanymi w scenariuszu. Jeśli MariaDB jest już poprawnie skonfigurowana, Ansible nie wprowadzi żadnych zmian.
+
+* Moduły: Używane są dedykowane moduły Ansible (`apt`, `service`, `mysql_user`), które umożliwiają-wykonują 'tłumaczenie' poleceń powłoki (ang. shell).
+
+* Automatyzacja: Proces instalacji bibliotek (`python3-pymysql`) jest włączony w ten sam cykl, co konfiguracja bazy, zapewniając gotowość środowiska do pracy od razu po zakończeniu wykonania pliku scenariusza
+
+
+## Lektura uzupełniająca
+
+[Dokumentacja Ansible](https://docs.ansible.com/ansible/latest/index.html)
+
+[Complete guide to Ansible Configuration Management and its Features](https://www.xenonstack.com/blog/ansible)
+
+[Ansible Made Easy](https://dev.to/damola12345/ansible-made-easy-4k9p)
+
+[Narzędzia zarządzania konfiguracją](https://www.upguard.com/blog/configuration-management-tools) do zarządzania konfiguracją.
+
+[The Fundamentals of Infrastructure as Code in Data Engineering](https://medium.com/@community_md101/the-fundamentals-of-infrastructure-as-code-in-data-engineering-5e2fd4ade6f7)

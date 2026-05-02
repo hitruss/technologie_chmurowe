@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.7.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -34,15 +69,14 @@ ul.task-list li input[type="checkbox"] {
 <link href="./03-ci_cd.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -167,8 +201,37 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Spis treści</h2>
+   
+  <ul>
+  <li><a href="#cel-ćwiczenia" id="toc-cel-ćwiczenia" class="nav-link active" data-scroll-target="#cel-ćwiczenia"><span class="header-section-number">7.1</span> Cel ćwiczenia</a></li>
+  <li><a href="#zarządzanie-konfiguracją" id="toc-zarządzanie-konfiguracją" class="nav-link" data-scroll-target="#zarządzanie-konfiguracją"><span class="header-section-number">7.2</span> Zarządzanie konfiguracją</a>
+  <ul class="collapse">
+  <li><a href="#podejście-deklaratywne-opisujemy-co-a-nie-jak" id="toc-podejście-deklaratywne-opisujemy-co-a-nie-jak" class="nav-link" data-scroll-target="#podejście-deklaratywne-opisujemy-co-a-nie-jak"><span class="header-section-number">7.2.1</span> Podejście Deklaratywne: opisujemy “Co”, a nie “Jak”</a></li>
+  </ul></li>
+  <li><a href="#yaml" id="toc-yaml" class="nav-link" data-scroll-target="#yaml"><span class="header-section-number">7.3</span> YAML</a>
+  <ul class="collapse">
+  <li><a href="#podstawowe-zasady-składni-yaml" id="toc-podstawowe-zasady-składni-yaml" class="nav-link" data-scroll-target="#podstawowe-zasady-składni-yaml"><span class="header-section-number">7.3.1</span> Podstawowe zasady składni YAML:</a></li>
+  </ul></li>
+  <li><a href="#narzędzia-iac" id="toc-narzędzia-iac" class="nav-link" data-scroll-target="#narzędzia-iac"><span class="header-section-number">7.4</span> Narzędzia IaC</a></li>
+  <li><a href="#ansible---informacje-podstawowe" id="toc-ansible---informacje-podstawowe" class="nav-link" data-scroll-target="#ansible---informacje-podstawowe"><span class="header-section-number">7.5</span> Ansible - informacje podstawowe</a>
+  <ul class="collapse">
+  <li><a href="#główne-cechy-wyróżniające-ansible" id="toc-główne-cechy-wyróżniające-ansible" class="nav-link" data-scroll-target="#główne-cechy-wyróżniające-ansible"><span class="header-section-number">7.5.1</span> Główne cechy wyróżniające Ansible</a></li>
+  <li><a href="#podstawy-zarządzania-konfiguracją" id="toc-podstawy-zarządzania-konfiguracją" class="nav-link" data-scroll-target="#podstawy-zarządzania-konfiguracją"><span class="header-section-number">7.5.2</span> Podstawy zarządzania konfiguracją</a></li>
+  <li><a href="#podstawy-pracy-z-ansible" id="toc-podstawy-pracy-z-ansible" class="nav-link" data-scroll-target="#podstawy-pracy-z-ansible"><span class="header-section-number">7.5.3</span> Podstawy pracy z Ansible</a></li>
+  <li><a href="#moduły-ansible-ręce-twojej-automatyzacji" id="toc-moduły-ansible-ręce-twojej-automatyzacji" class="nav-link" data-scroll-target="#moduły-ansible-ręce-twojej-automatyzacji"><span class="header-section-number">7.5.4</span> Moduły Ansible: “Ręce” Twojej automatyzacji</a></li>
+  </ul></li>
+  <li><a href="#korzystanie-z-ansible-w-praktyce" id="toc-korzystanie-z-ansible-w-praktyce" class="nav-link" data-scroll-target="#korzystanie-z-ansible-w-praktyce"><span class="header-section-number">7.6</span> Korzystanie z Ansible w praktyce</a></li>
+  <li><a href="#przykład---instalacja-i-konfiguracja-mariadb-przy-użyciu-ansible" id="toc-przykład---instalacja-i-konfiguracja-mariadb-przy-użyciu-ansible" class="nav-link" data-scroll-target="#przykład---instalacja-i-konfiguracja-mariadb-przy-użyciu-ansible"><span class="header-section-number">7.7</span> Przykład - Instalacja i konfiguracja MariaDB przy użyciu Ansible</a>
+  <ul class="collapse">
+  <li><a href="#plik-inventory-inventory.ini" id="toc-plik-inventory-inventory.ini" class="nav-link" data-scroll-target="#plik-inventory-inventory.ini"><span class="header-section-number">7.7.1</span> 1. Plik Inventory (inventory.ini)</a></li>
+  <li><a href="#plik-scenariusza" id="toc-plik-scenariusza" class="nav-link" data-scroll-target="#plik-scenariusza"><span class="header-section-number">7.7.2</span> 2. Plik scenariusza</a></li>
+  </ul></li>
+  <li><a href="#lektura-uzupełniająca" id="toc-lektura-uzupełniająca" class="nav-link" data-scroll-target="#lektura-uzupełniająca"><span class="header-section-number">7.8</span> Lektura uzupełniająca</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -192,8 +255,296 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="cel-ćwiczenia" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="cel-ćwiczenia"><span class="header-section-number">7.1</span> Cel ćwiczenia</h2>
+<p>Celem ćwiczenia jest zapoznanie studentów z koncepcją <strong>Infrastructure as Code (IaC)</strong> oraz praktyczne wykorzystanie narzędzia <strong>zarządzania konfiguracją</strong> (ang. <em>configuration management</em>) - <em>Ansible</em> w środowisku Azure.</p>
+</section>
+<section id="zarządzanie-konfiguracją" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="zarządzanie-konfiguracją"><span class="header-section-number">7.2</span> Zarządzanie konfiguracją</h2>
+<p>Zarządzanie konfiguracją polega na napisaniu specyficznego kodu okreslającego konfigurację, a następnie skorzystaniu z narzędzia umożliwiającego uruchomienie tego kodu. Kod określa zestaw wytycznych jak mają być skonfigurowane serwery różnych typów. Zarządzanie konfiguracją jest też określane terminem <strong>Infrastructure as Code, IaS</strong>.</p>
+<p>Są różne narzędzia zarządzania konfiguracją. Może to byc Ansible, Chef, Puppet. Tutaj użyjemy Ansible - nie wymaga używania oprogramowania agenta na konfigurowanym serwerze. Przydaje się serwer z którego ściąga się konfigurację, ale może to być repozytorium <em>git</em>. Wtedy na konfigurowanym serwerze wystarczy pobranie kodu konfiguracji na konfigurowaną maszynę (np. na serwer).</p>
+<section id="podejście-deklaratywne-opisujemy-co-a-nie-jak" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="podejście-deklaratywne-opisujemy-co-a-nie-jak"><span class="header-section-number">7.2.1</span> Podejście Deklaratywne: opisujemy “Co”, a nie “Jak”</h3>
+<p>W podejściu IaC,kluczowym pojęciem jest <strong>podejście deklaratywne</strong>. W przeciwieństwie do tradycyjnego podejścia imperatywnego (gdzie piszesz długie listy skryptów zawierających krok po kroku polecenia: “stwórz maszynę”, “zainstaluj pakiet”, “skonfiguruj sieć”), podejście deklaratywne skupia się na zdefiniowaniu <strong>stanu końcowego</strong>.</p>
+<section id="co-to-dokładnie-oznacza" class="level4" data-number="7.2.1.1">
+<h4 data-number="7.2.1.1" class="anchored" data-anchor-id="co-to-dokładnie-oznacza"><span class="header-section-number">7.2.1.1</span> Co to dokładnie oznacza?</h4>
+<p>W modelu deklaratywnym mówisz narzędziu: <strong>“Chcę, aby na końcu system wyglądał tak i tak”</strong>.</p>
+<ul>
+<li><strong>Definicja celu:</strong> Zamiast instrukcji, jak wykonać zadanie, dostarczasz “projekt” lub “mapę” tego, co powinno istnieć.</li>
+<li><strong>Rola narzędzia:</strong> Narzędzie IaC analizuje bieżący stan Twojej infrastruktury, porównuje go z Twoim “projektem” (stanem pożądanym) i automatycznie wykonuje niezbędne kroki, aby “zgrać” stany.</li>
+<li><strong>Przykład:</strong> Jeśli określisz, że w Azure mają istnieć dwa serwery, a w chmurze nie ma żadnego, narzędzie je stworzy. Jeśli jednak jeden z nich już tam jest, narzędzie “zrozumie”, że musi stworzyć tylko jeden, brakujący element.</li>
+</ul>
+</section>
+<section id="dlaczego-deklaratywność-jest-tak-ważna-w-iac" class="level4" data-number="7.2.1.2">
+<h4 data-number="7.2.1.2" class="anchored" data-anchor-id="dlaczego-deklaratywność-jest-tak-ważna-w-iac"><span class="header-section-number">7.2.1.2</span> Dlaczego deklaratywność jest tak ważna w IaC?</h4>
+<ol type="1">
+<li><strong>Idempotentność:</strong> To fundament deklaratywności. Oznacza, że jeśli uruchomisz swój kod raz, dziesięć lub sto razy – wynik końcowy będzie zawsze identyczny. Jeśli serwer już jest skonfigurowany, narzędzie nie wykona żadnej akcji, co eliminuje ryzyko błędów przy powtarzalnych wdrożeniach.</li>
+<li><strong>Łatwiejsze utrzymanie:</strong> Nie musisz pamiętać o kolejności wykonywania poleceń ani o obsłudze błędów w przypadku, gdy serwer był już częściowo skonfigurowany. System “wie”, co należy poprawić, aby osiągnąć założony cel.</li>
+<li><strong>Zarządzanie stanem:</strong> Dzięki temu, że deklarujesz stan, narzędzia korzystają i mogą zarządzać tzw. “plikiem stanów” (State File), który pełni funkcję Twojego ‘źródła prawdy’ o całej infrastrukturze.</li>
+</ol>
+</section>
+</section>
+</section>
+<section id="yaml" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="yaml"><span class="header-section-number">7.3</span> YAML</h2>
+<p><strong>YAML</strong> (<em>Yet Another Markup Language</em>) to język znaczników (markup language) używany głównie do formatowania danych w plikach tekstowych. YAML jest czytelny i prosty, nadaje się do zapisywania danych dotyczących konfiguracji lub odzwierciedlenia hierarchii.</p>
+<section id="podstawowe-zasady-składni-yaml" class="level3" data-number="7.3.1">
+<h3 data-number="7.3.1" class="anchored" data-anchor-id="podstawowe-zasady-składni-yaml"><span class="header-section-number">7.3.1</span> Podstawowe zasady składni YAML:</h3>
+<ul>
+<li>Odstępy: W YAML-u wcięcia są kluczowe. Odstępy służą do określenia poziomu zagnieżdżenia danych. Wcięcie może być wykonane spacjami lub tabulatorami, ale nie można ich mieszać. Konwencją jest użycie dwóch lub czterech spacji na każdy poziom wcięcia. Przykład:</li>
+</ul>
+<pre><code>    kategoria:
+      podkategoria:
+        - element1
+        - element2</code></pre>
+<p>Klucze i wartości: W YAML-u dane są zapisywane w formie par “klucz-wartość”. Klucz i wartość oddzielone są dwukropkiem i spacją. Przykład:</p>
+<pre><code>    nazwa: John Doe
+    wiek: 30</code></pre>
+<p>Listy: Listy w YAML-u są reprezentowane za pomocą myślników i spacji. Przykład:</p>
+<pre><code>    lista:
+      - element1
+      - element2
+      - element3</code></pre>
+<p>Obiekty: Obiekty lub słowniki są zagnieżdżane przy użyciu wcięć i zawierają inne pary klucz-wartość. Przykład:</p>
+<pre><code>    osoba:
+      imię: John
+      nazwisko: Doe
+      adres:
+        ulica: 123 Main Street
+        miasto: Exampletown</code></pre>
+<p>Komentarze: Komentarze w YAML-u rozpoczynają się od znaku “#” i można umieszczać je w dowolnym miejscu w pliku. Komentarze są ignorowane przez parser YAML. Przykład:</p>
+<pre><code>    # To jest komentarz
+    nazwa: John Doe</code></pre>
+<p>Łańcuchy znaków: Łańcuchy znaków można umieszczać w cudzysłowach (pojedynczych lub podwójnych) lub bez nich. Przykład:</p>
+<pre><code>zmienna1: "To jest łańcuch znaków w cudzysłowach"
+zmienna2: To jest łańcuch znaków bez cudzysłowów</code></pre>
+<p>Jest prostszy i bardziej czytelny niż JSON.</p>
+</section>
+</section>
+<section id="narzędzia-iac" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="narzędzia-iac"><span class="header-section-number">7.4</span> Narzędzia IaC</h2>
+<p>Istnieją różne narzędzia, w ramach zajęć będziemy korzystać z</p>
+<ul>
+<li>Terraform – do tworzenie infrastruktury</li>
+<li>Ansible – do zarządzania konfiguracją</li>
+</ul>
+<p>Porównanie wybranych narzędzi zarządzania konfiguracją: | Cecha | Ansible | Chef / Puppet | | :— | :— | :— | | <strong>Architektura</strong> | Bezagentowa (SSH) | Agentowa (wymaga instalacji na nodach) | | <strong>Język</strong> | YAML (prosty) | Ruby / DSL (bardziej złożony) | | <strong>Model pracy</strong> | Push (administrator “pcha” zmiany) | Pull (agenci “pobierają” zmiany z serwera) | | <strong>Próg wejścia</strong> | Bardzo niski | Wysoki |</p>
+<p>W praktyce, w nowoczesnych projektach z użyciem IaC, Terraform (będzie omówiony na następnych zajęciach) i Ansible współpracują ze sobą. Terraform tworzy “szkielet” infrastruktury (wirtualne maszyny, sieci w chmurze), a gdy maszyna jest gotowa, Terraform przekazuje jej adres IP do Ansible, który dokonfigurowuje maszynę zgodnie ze zdefiniowanymi ustawieniami.</p>
+<p>Zaczniemy od Ansible żebyś zobaczył/a jak można zautomatyzować konfigurowanie.</p>
+</section>
+<section id="ansible---informacje-podstawowe" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="ansible---informacje-podstawowe"><span class="header-section-number">7.5</span> Ansible - informacje podstawowe</h2>
+<p>Ansible to otwartoźródłowe narzędzie do automatyzacji konfigurowania maszyn (nie tylko wirtualnych-można go wykorzystać i dla zasobów lokalnych). Umożliwia zarządzanie konfiguracją (ang. Configuration Management), wdrażanie aplikacji oraz automatyzację zadań administracyjnych. W ekosystemie narzędzi do automatyzacji jest uznawane za standard ze względu na swoją prostotę i architekturę.</p>
+<p>W modelu Infrastructure as Code (IaC), Ansible zajmuje miejsce “warstwy konfiguracji”. Narzędzia typu Terraform służą do tworzenia infrastruktury (tzw. provisioning – np. stawianie serwera w chmurze), Ansible zaś odpowiada za to, co dzieje się na tym serwerze po jego uruchomieniu – instaluje pakiety, konfiguruje usługi (np. Nginx, bazy danych) i ‘pilnuje’, aby system był w pożądanym stanie.</p>
+<section id="główne-cechy-wyróżniające-ansible" class="level3" data-number="7.5.1">
+<h3 data-number="7.5.1" class="anchored" data-anchor-id="główne-cechy-wyróżniające-ansible"><span class="header-section-number">7.5.1</span> Główne cechy wyróżniające Ansible</h3>
+<p>Ansible wyróżnia się na tle konkurencji (takich jak Chef, Puppet czy SaltStack) kilkoma kluczowymi aspektami:</p>
+<ul>
+<li><p>Ma bezagentową architekturę (ang. Agentless): To najważniejsza cecha. Większość narzędzi do zarządzania konfiguracją wymaga zainstalowania specjalnego oprogramowania (“agenta”) na każdym zarządzanym serwerze. Ansible tego nie potrzebuje – łączy się z serwerami za pomocą standardowego protokołu SSH (w Linux) lub WinRM (Windows Remote Management w Windows). Dzięki temu wystarczy, że masz dostęp przez SSH do serwera, i Ansible może nim zarządzać.</p></li>
+<li><p>Idempotentność: To kluczowa zasada w IaC. Playbooki Ansible są pisane tak, aby wielokrotne uruchomienie tego samego skryptu na serwerze nie prowadziło do konfliktów. Jeśli zdefiniujesz, że pakiet “Nginx” ma być zainstalowany, Ansible sprawdzi czy już tam jest – jeśli tak, nie robi nic. Jeśli go nie ma, zainstaluje go.</p></li>
+<li><p>Prostota języka (YAML): Zestawy opisujące konfiguracje dla Ansible zwane <strong>scenariuszami</strong> konfiguracji (ang. <em>playbook</em>), są pisane w formacie YAML, który jest bardzo czytelny nawet dla osób, które nie są programistami.</p></li>
+<li><p>pliki ze scenariuszami można utrzymywać i wersjonować z użyciem Git: Ponieważ wszystkie definicje (pliki scenariuszy, pliki inwentarza (o których za chwilę)) są plikami tekstowymi (YAML, INI), idealnie nadają się do przechowywania w systemach kontroli wersji typu Git. Dzięki temu każda zmiana w konfiguracji serwerów jest zapisana w historii, można je też poddać procesowi Code Review (przegląd kodu) i w razie awarii łatwo przywrócić do poprzedniego stanu (Rollback).</p></li>
+</ul>
+</section>
+<section id="podstawy-zarządzania-konfiguracją" class="level3" data-number="7.5.2">
+<h3 data-number="7.5.2" class="anchored" data-anchor-id="podstawy-zarządzania-konfiguracją"><span class="header-section-number">7.5.2</span> Podstawy zarządzania konfiguracją</h3>
+<p>W podejściu <em>IaC</em> Ansible zajmuje miejsce “warstwy konfiguracji” – <em>Terraform</em> tworzy zasoby (np. serwery) i infrastrukturę, Ansible zaś odpowiada za ich konfigurację.</p>
+<p>Ansible a inne, wybrane narzędzia zarządzania konfiguracją</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Cecha</th>
+<th style="text-align: left;">Ansible</th>
+<th style="text-align: left;">Chef / Puppet</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Architektura</strong></td>
+<td style="text-align: left;">Bezagentowa (SSH)</td>
+<td style="text-align: left;">Agentowa (wymaga instalacji na nodach)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Język</strong></td>
+<td style="text-align: left;">YAML (prosty)</td>
+<td style="text-align: left;">Ruby / DSL (bardziej złożony)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Model pracy</strong></td>
+<td style="text-align: left;">Push (administrator “pcha” zmiany)</td>
+<td style="text-align: left;">Pull (agenci “pobierają” zmiany z serwera)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Próg wejścia</strong></td>
+<td style="text-align: left;">Bardzo niski</td>
+<td style="text-align: left;">Wysoki</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="podstawy-pracy-z-ansible" class="level3" data-number="7.5.3">
+<h3 data-number="7.5.3" class="anchored" data-anchor-id="podstawy-pracy-z-ansible"><span class="header-section-number">7.5.3</span> Podstawy pracy z Ansible</h3>
+<section id="wymagania-wstępne" class="level4" data-number="7.5.3.1">
+<h4 data-number="7.5.3.1" class="anchored" data-anchor-id="wymagania-wstępne"><span class="header-section-number">7.5.3.1</span> Wymagania wstępne</h4>
+<p>Jeśli chodzi o infrastrukturę, potrzebne jest:</p>
+<ul>
+<li><strong>Węzeł zarządzający</strong> (ang. <em>Control Node</em>) - to maszyna na której znajdują się pliki Ansible. Musi posiadać zainstaloway język Python oraz pakiet Ansible.</li>
+<li><strong>Węzły zarządzane</strong> (ang. <em>Managed Nodes</em>) Do nich trzeba móc się dostać przez SSH (WinRM) oraz muszą mieć zainstalowany interpreter Pythona (do obsługi modułów Ansible).</li>
+</ul>
+</section>
+<section id="plik-inwentarza" class="level4" data-number="7.5.3.2">
+<h4 data-number="7.5.3.2" class="anchored" data-anchor-id="plik-inwentarza"><span class="header-section-number">7.5.3.2</span> Plik inwentarza</h4>
+<p>Plik inwentarza (ang. <em>Inventory</em>) to plik (INI lub YAML), w którym masz “zamapowaną” infrastrukturę. Dzięki niemu Ansible ‘wie’ gdzie wykonać zadania i jakie .</p>
+<p>Przykładowy plik inwentarza(<code>inventory.ini</code>)</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode ini code-with-copy"><code class="sourceCode ini"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[webservers]</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="dt">serwer-01 ansible_host</span><span class="ot">=</span><span class="st">10.0.0.1</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="dt">serwer-02 ansible_host</span><span class="ot">=</span><span class="st">10.0.0.2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="pliki-scenariuszy" class="level4" data-number="7.5.3.3">
+<h4 data-number="7.5.3.3" class="anchored" data-anchor-id="pliki-scenariuszy"><span class="header-section-number">7.5.3.3</span> Pliki scenariuszy</h4>
+<p>Pliki ze scenariuszami konfiguracji (ang. <em>playbook</em>) to pliki zawierające ‘przepis’ na konfigurację zapisany w YAML. Opisuje docelowy stan systemu.</p>
+<p>Przykład (playbook.yml):</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Konfiguracja serwera WWW</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">hosts</span><span class="kw">:</span><span class="at"> webservers</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">become</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">tasks</span><span class="kw">:</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Instalacja Nginx</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">apt</span><span class="kw">:</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">name</span><span class="kw">:</span><span class="at"> nginx</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="moduły-ansible-ręce-twojej-automatyzacji" class="level3" data-number="7.5.4">
+<h3 data-number="7.5.4" class="anchored" data-anchor-id="moduły-ansible-ręce-twojej-automatyzacji"><span class="header-section-number">7.5.4</span> Moduły Ansible: “Ręce” Twojej automatyzacji</h3>
+<p>Moduły to małe, wysoce wyspecjalizowane programy, które Ansible przesyła na serwery docelowe (managed nodes), wykonuje je tam, a następnie usuwa. To właśnie dzięki modułom Ansible jest tak potężny – nie musisz pisać skomplikowanych skryptów Bash; wystarczy wywołać odpowiedni moduł, który zajmie się szczegółami technicznymi.</p>
+<section id="czym-są-moduły" class="level4" data-number="7.5.4.1">
+<h4 data-number="7.5.4.1" class="anchored" data-anchor-id="czym-są-moduły"><span class="header-section-number">7.5.4.1</span> Czym są moduły?</h4>
+<p>Każdy moduł to osobny “narzędzie” do konkretnego zadania: * <strong><code>apt</code> / <code>yum</code>:</strong> Zarządzanie pakietami (instalacja, usuwanie). * <strong><code>service</code>:</strong> Zarządzanie usługami systemowymi (start, stop, restart). * <strong><code>copy</code> / <code>template</code>:</strong> Przesyłanie plików z komputera zarządzającego na serwer. * <strong><code>mysql_user</code>:</strong> Zarządzanie bazami danych. * <strong><code>user</code> / <code>group</code>:</strong> Zarządzanie kontami użytkowników.</p>
+</section>
+<section id="gdzie-szukać-informacji-o-modułach" class="level4" data-number="7.5.4.2">
+<h4 data-number="7.5.4.2" class="anchored" data-anchor-id="gdzie-szukać-informacji-o-modułach"><span class="header-section-number">7.5.4.2</span> Gdzie szukać informacji o modułach?</h4>
+<p>Dokumentacja Ansible jest niezwykle bogata i podzielona na tzw. <strong>Kolekcje (Collections)</strong>. Ponieważ modułów są tysiące, najłatwiej szukać ich w następujący sposób:</p>
+<section id="oficjalna-dokumentacja-docs.ansible.com" class="level5" data-number="7.5.4.2.1">
+<h5 data-number="7.5.4.2.1" class="anchored" data-anchor-id="oficjalna-dokumentacja-docs.ansible.com"><span class="header-section-number">7.5.4.2.1</span> 1. Oficjalna Dokumentacja (docs.ansible.com)</h5>
+<p>To Twoje główne źródło wiedzy. * <strong>Adres:</strong> <a href="https://docs.ansible.com/ansible/latest/collections/index.html">https://docs.ansible.com/ansible/latest/collections/index.html</a> * <strong>Jak szukać:</strong> Użyj paska wyszukiwania i wpisz nazwę technologii, np. “azure”, “docker” lub “mysql”. * <strong>Co znajdziesz:</strong> Pełną listę parametrów, przykłady użycia (w formacie YAML) oraz informacje o tym, czy moduł wspiera idempotentność.</p>
+</section>
+<section id="polecenie-ansible-doc-w-terminalu" class="level5" data-number="7.5.4.2.2">
+<h5 data-number="7.5.4.2.2" class="anchored" data-anchor-id="polecenie-ansible-doc-w-terminalu"><span class="header-section-number">7.5.4.2.2</span> 2. Polecenie <code>ansible-doc</code> (w terminalu)</h5>
+<p>Jeśli pracujesz w konsoli, nie musisz nawet otwierać przeglądarki! Ansible ma wbudowane narzędzie do czytania dokumentacji.</p>
+<ul>
+<li>By wyświetlić lise wszystkich modułów użyj polecenia:</li>
+</ul>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>  <span class="ex">ansible-doc</span> <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Gdy potrzebujesz szczegółowy opis konkretnego modułu (np. <code>apt</code>):</li>
+</ul>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ansible-doc</span> apt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To polecenie wyświetli Ci w terminalu dokumentację wraz z przykładami kodu, które możesz skopiować bezpośrednio do swojego pliku scenariusza.</p>
+</section>
+<section id="jak-poruszać-się-w-dokumentacji" class="level5" data-number="7.5.4.2.3">
+<h5 data-number="7.5.4.2.3" class="anchored" data-anchor-id="jak-poruszać-się-w-dokumentacji"><span class="header-section-number">7.5.4.2.3</span> Jak “poruszać się” w dokumentacji?</h5>
+<p>Kiedy otworzysz stronę konkretnego modułu, zwróć uwagę na trzy sekcje:</p>
+<ul>
+<li><p><em>Synopsis</em>: To krótkie wyjaśnienie, do czego służy moduł.</p></li>
+<li><p><em>Parameters</em>: To lista ustawień (zazwyczaj szukaj tych, które mają <code>required: true</code>).</p></li>
+<li><p><em>Examples</em>: To zwykle najważniejsza (najbardziej przydatna ;) sekcja. Znajdziesz tam gotowe fragmenty kodu YAML, które pokazują, jak moduł jest używany w prawdziwych scenariuszach.</p></li>
+</ul>
+<p>**Wskazówka praktyczna* Jeśli nie jesteś pewien, jakiego modułu użyć, wpisz w wyszukiwarce: „Ansible [nazwa_technologii] module”. Dzięki temu szybko trafisz do odpowiedniej sekcji w dokumentacji kolekcji, która zajmuje się danym oprogramowaniem (np. kolekcja <code>community.general</code> zawiera dziesiątki przydatnych modułów ogólnego przeznaczenia).</p>
+</section>
+</section>
+</section>
+</section>
+<section id="korzystanie-z-ansible-w-praktyce" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="korzystanie-z-ansible-w-praktyce"><span class="header-section-number">7.6</span> Korzystanie z Ansible w praktyce</h2>
+<p>Uwaga: Ansible jest stale rozwijany, w razie problemów należy sięgnąć do dokumentacji.</p>
+<p>Przećwicz jeden ze scenariuszy:</p>
+<p>Zainstaluj i skonfiguruj Ansible do pracy korzystając z <a href="https://www.linuxtechi.com/how-to-install-ansible-on-ubuntu/">tego</a> lub <a href="https://gcore.com/learning/how-to-install-and-configure-ansible-on-ubuntu-part-1/">tego</a> dokumentu. W tym scenariuszu będą Ci potrzebne minimum dwie maszyny wirtualne - jedna, skonfigurowana jako serwer na którym będzie przechowywana konfiguracja i druga - która będzie automatycznie konfigurowana.</p>
+<p>LUB</p>
+<p>Zainstaluj i skonfiguruj Ansible do pracy korzystając z <a href="https://www.middlewareinventory.com/blog/ansible-git-example/">Ansible Git Example - Checkout code from Git Repo Securely</a>. W tym scenariuszu potrzebujesz jednej maszyny - kod z konfiguracją ściągasz z repozytorium.</p>
+<p>Zmodyfikuj końcowy plik yaml tak, by uzyskać ostatecznie taki efekt jak przy ręcznej instalacji Apache/nginx (poprzednie laboratorium)</p>
+</section>
+<section id="przykład---instalacja-i-konfiguracja-mariadb-przy-użyciu-ansible" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="przykład---instalacja-i-konfiguracja-mariadb-przy-użyciu-ansible"><span class="header-section-number">7.7</span> Przykład - Instalacja i konfiguracja MariaDB przy użyciu Ansible</h2>
+<p>W tej sekcji masz praktyczny przykład, jak zautomatyzować wdrożenie bazy danych MariaDB. Pamiętaj, że w środowiskach produkcyjnych hasła powinny być zabezpieczone za pomocą narzędzia <strong>Ansible Vault</strong>.</p>
+<section id="plik-inventory-inventory.ini" class="level3" data-number="7.7.1">
+<h3 data-number="7.7.1" class="anchored" data-anchor-id="plik-inventory-inventory.ini"><span class="header-section-number">7.7.1</span> 1. Plik Inventory (inventory.ini)</h3>
+<p>Plik ten określa serwery docelowe, na których Ansible ma wykonać instalację.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode ini code-with-copy"><code class="sourceCode ini"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[dbservers]</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Zastąp 192.168.1.50 adresem IP swojego serwera</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="dt">db-server-01 ansible_host</span><span class="ot">=</span><span class="st">192.168.1.50 ansible_user=ubuntu</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="kw">[dbservers:vars]</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Wskazanie interpretera Pythona dla serwerów zdalnych</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="dt">ansible_python_interpreter</span><span class="ot">=</span><span class="st">/usr/bin/python3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="plik-scenariusza" class="level3" data-number="7.7.2">
+<h3 data-number="7.7.2" class="anchored" data-anchor-id="plik-scenariusza"><span class="header-section-number">7.7.2</span> 2. Plik scenariusza</h3>
+<p>Playbook (install_mariadb.yml) Playbook deklaruje pożądany stan systemu (zainstalowana baza, uruchomiony serwis, skonfigurowany użytkownik)</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Konfiguracja serwera MariaDB</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">hosts</span><span class="kw">:</span><span class="at"> dbservers</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">become</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">vars</span><span class="kw">:</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">db_root_password</span><span class="kw">:</span><span class="at"> </span><span class="st">"TwojeSilneHaslo123!"</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">tasks</span><span class="kw">:</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Instalacja biblioteki PyMySQL (wymagana dla modułów mysql)</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">apt</span><span class="kw">:</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">name</span><span class="kw">:</span><span class="at"> python3-pymysql</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Instalacja serwera MariaDB</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">apt</span><span class="kw">:</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">name</span><span class="kw">:</span><span class="at"> mariadb-server</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">update_cache</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Upewnij się, że serwis MariaDB jest uruchomiony</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">service</span><span class="kw">:</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">name</span><span class="kw">:</span><span class="at"> mariadb</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> started</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">enabled</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Ustaw hasło dla użytkownika root</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">mysql_user</span><span class="kw">:</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">name</span><span class="kw">:</span><span class="at"> root</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">password</span><span class="kw">:</span><span class="at"> </span><span class="st">"{{ db_root_password }}"</span></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">host</span><span class="kw">:</span><span class="at"> localhost</span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">check_implicit_admin</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Usuń anonimowych użytkowników</span></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">mysql_user</span><span class="kw">:</span></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">''</span></span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">host_all</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> absent</span></span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Usuń bazę danych "test"</span></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">mysql_db</span><span class="kw">:</span></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">name</span><span class="kw">:</span><span class="at"> test</span></span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> absent</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Kluczowe aspekty tego rozwiązania:</p>
+<ul>
+<li><p>Możliwość wielokrotnego wykonywania (Idempotentność): Każde uruchomienie tego scenariusza powoduje sprawdzenie, czy stan serwera jest zgodny z założeniami opisanymi w scenariuszu. Jeśli MariaDB jest już poprawnie skonfigurowana, Ansible nie wprowadzi żadnych zmian.</p></li>
+<li><p>Moduły: Używane są dedykowane moduły Ansible (<code>apt</code>, <code>service</code>, <code>mysql_user</code>), które umożliwiają-wykonują ‘tłumaczenie’ poleceń powłoki (ang. shell).</p></li>
+<li><p>Automatyzacja: Proces instalacji bibliotek (<code>python3-pymysql</code>) jest włączony w ten sam cykl, co konfiguracja bazy, zapewniając gotowość środowiska do pracy od razu po zakończeniu wykonania pliku scenariusza</p></li>
+</ul>
+</section>
+</section>
+<section id="lektura-uzupełniająca" class="level2" data-number="7.8">
+<h2 data-number="7.8" class="anchored" data-anchor-id="lektura-uzupełniająca"><span class="header-section-number">7.8</span> Lektura uzupełniająca</h2>
+<p><a href="https://docs.ansible.com/ansible/latest/index.html">Dokumentacja Ansible</a></p>
+<p><a href="https://www.xenonstack.com/blog/ansible">Complete guide to Ansible Configuration Management and its Features</a></p>
+<p><a href="https://dev.to/damola12345/ansible-made-easy-4k9p">Ansible Made Easy</a></p>
+<p><a href="https://www.upguard.com/blog/configuration-management-tools">Narzędzia zarządzania konfiguracją</a> do zarządzania konfiguracją.</p>
+<p><a href="https://medium.com/@community_md101/the-fundamentals-of-infrastructure-as-code-in-data-engineering-5e2fd4ade6f7">The Fundamentals of Infrastructure as Code in Data Engineering</a></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -247,14 +598,13 @@ ul.task-list li input[type="checkbox"] {
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
