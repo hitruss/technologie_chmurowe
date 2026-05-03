@@ -2,22 +2,401 @@
 
 ## Cel ćwiczenia
 
-Celem ćwiczenia jest zapoznanie studentów z koncepcją **Infrastructure as Code (IaC)** oraz praktyczne wykorzystanie narzędzia **tworzenia (przygotowywania) infrastruktury** (ang. *provisioning*)- *Terraform* w środowisku Azure.
+Celem ćwiczenia jest zapoznanie studentów z narzędziem do tworzenia infrastruktury (ang. provisioning) - Terraform - w środowisku chmurowym Azure.
 
-# 4. Terraform
+## Tworzenie infrastruktury (Provisioning)
+Podczas gdy zarządzanie konfiguracją (jak Ansible) zajmuje się konfigurowaniem już działających maszyn, tworzenie infrastruktury (ang. *provisioning*) dotyczy budowania "szkieletu" systemu. W tym modelu kod definiuje, jakie zasoby mają zostać utworzone u dostawcy chmurowego: ile maszyn wirtualnych potrzebujemy, jaką mają mieć sieć, jakie dyski i jakie reguły zapory (firewall).
 
-## Przykład
+### Podejście Deklaratywne w Terraform
+Podobnie jak w Ansible, Terraform używa podejścia deklaratywnego. W plikach konfiguracyjnych (rozszerzenie `.tf`) opisujesz pożądany stan końcowy całej infrastruktury. Terraform nie wykonuje poleceń typu "utwórz serwer", lecz dąży do tego, aby stan rzeczywisty w chmurze (Azure) był zgodny z tym, co zapisałeś w kodzie.
 
-```hcl
+### Zarządzanie stanem (State File)
+Kluczowym elementem odróżniającym Terraform od prostych skryptów jest **plik stanów** (ang. *state file*) (`terraform.tfstate`).
+
+*Co to jest?* To plik JSON, w którym Terraform przechowuje "mapę" stworzonej przez siebie infrastruktury oraz powiązania między Twoim kodem a rzeczywistymi ID zasobów w Azure.
+
+*Dlaczego jest ważny?* Dzięki niemu Terraform wie, co już istnieje. Jeśli zmodyfikujesz kod, Terraform porówna go ze stanem zapisanym w pliku `.tfstate` i uwzględni tylko te zmiany, które muszą zostać wprowadzone (np. dodanie nowego dysku do istniejącej maszyny), zamiast tworzyć wszystko od nowa.
+
+## Język HCL (HashiCorp Configuration Language)
+
+Terraform używa języka HCL, który jest specjalnie zaprojektowany do opisu infrastruktury. Jest bardzo czytelny, wspiera komentarze i pozwala na łatwe budowanie hierarchicznych zależności między zasobami.
+
+Podstawowe elementy HCL:
+
+* Dostawca (Provider): Blok definiujący, z jakim dostawcą chmurowym współpracujemy (np. `azurerm` dla Azure).
+
+* Zasoby (Resource): Definicja konkretnego komponentu (np. maszyny wirtualnej, sieci).
+
+* Zmienne (Variable): Zmienne, które pozwalają parametryzować kod (np. wielkość maszyny, lokalizacja).
+
+* Wyjście (Output): Informacje zwracane przez Terraform po wdrożeniu (np. publiczny adres IP serwera).
+
+Przykład bloku zasobu:
+
+```terraform
+resource "azurerm_resource_group" "przyklad" {
+  name     = "moja-grupa-zasobow"
+  location = "West Europe"
+}
+
+```
+## Terraform - informacje podstawowe
+
+Terraform to narzędzie typu open source, które umożliwia definiowanie i udostępnianie infrastruktury jako kodu. Jest narzędziem "multicloud" - działa w wielu chmurach – ten sam język HCL pozwala zarządzać zasobami w Azure, AWS, Google Cloud, a nawet w środowiskach lokalnych (VMware).
+
+### Główne cechy wyróżniające Terraform:
+
+* **Deklaratywność**: Definiujesz stan końcowy, Terraform zajmuje się procesem wdrożenia.
+
+* **Analiza zmian (Plan)**: Przed wdrożeniem możesz wywołać polecenie `terraform plan`, aby zobaczyć, jakie zmiany zostaną wprowadzone w Twojej infrastrukturze bez faktycznego uruchamiania narzędzia.
+
+* **Zależności**: Terraform automatycznie wykrywa zależności między zasobami. Jeśli chcesz stworzyć maszynę wirtualną wewnątrz sieci, Terraform sam 'wie', że najpierw musi stworzyć sieć.
+
+* **Wersjonowanie**: Cała infrastruktura zapisana w plikach `.tf` może być w pełni zarządzana w systemie Git.
+
+### Podstawy pracy z Terraform
+
+#### Cykl życia
+
+Praca z Terraform opiera się na czterech podstawowych krokach:
+
+* `terraform init` – inicjalizacja projektu (pobranie wtyczek dla dostawcy, np. Azure).
+
+* `terraform plan` – wyświetlenie listy zmian, które zostaną wprowadzone.
+
+* `terraform apply` – rzeczywiste wdrożenie zmian w chmurze.
+
+* `terraform destroy` – usunięcie wszystkich zasobów zdefiniowanych w kodzie.
+
+#### Stan w Terraform
+
+**Stan** (ang. *state*) w Terraform to kluczowy element. Jest odpowiedzialny za śledzenie i przechowywanie informacji o rzeczywistym stanie infrastruktury oraz pozwala na dokładne zarządzanie nią poprzez kod. Stan jest istotny dla Terraform, ponieważ umożliwia narzędziu identyfikowanie zmian między zamierzonym a rzeczywistym stanem infrastruktury, co pozwala na bezpieczne wdrażanie aktualizacji i modyfikacji.
+
+Co warto wiedzieć na temat stanu w Terraform:
+
+* Plik stanu: Terraform przechowuje plik stanu, który zapisuje w formie binarnej w lokalnym katalogu projektu. Plik ten ma nazwę `terraform.tfstate` i zawiera informacje na temat wszystkich zasobów infrastruktury zarządzanych przez Terraform w danym projekcie. Plik stanu jest generowany automatycznie po wykonaniu operacji inicjalizacji i wdrażania.
+
+* Zawartość pliku stanu: Plik stanu zawiera informacje takie jak ID zasobów, ich bieżący stan, relacje między zasobami, a także dane wrażliwe, takie jak hasła i klucze prywatne (które są zaszyfrowane). Stan jest w pełni deklaratywny, co oznacza, że jest to reprezentacja faktycznego stanu infrastruktury.
+
+* Znaczenie stanu: Stan jest używany przez Terraform do porównywania rzeczywistego stanu z zamierzonym stanem opisanym w plikach konfiguracyjnych (np. `.tf`). Dzięki temu Terraform wie, jakie zmiany trzeba wprowadzić, aby dopasować rzeczywisty stan do zamierzonego stanu.
+
+* Operacje na stanie:
+        `terraform init`: Inicjalizuje projekt Terraform i tworzy plik stanu.
+        `terraform apply`: Wdraża zmiany w infrastrukturze zgodnie z plikiem konfiguracji i aktualizuje plik stanu.
+        `terraform plan`: Generuje plan zmian, ale nie wprowadza ich.
+        `terraform refresh`: Aktualizuje stan o rzeczywisty stan infrastruktury bez wprowadzania zmian.
+        `terraform destroy`: Usuwa wszystkie zasoby zdefiniowane w pliku konfiguracji.
+
+Przechowywanie stanu: Plik stanu można przechowywać w różnych miejscach, w zależności od potrzeb projektu. Popularne opcje to przechowywanie stanu w systemach kontroli wersji (z wykorzystaniem backendów takich jak S3, Azure Blob Storage itp.) lub w usługach zarządzania stanem oferowanych przez Terraform Enterprise lub Terraform Cloud.
+
+**UWAGA!** Bezpieczeństwo: Plik stanu zawiera wrażliwe dane, dlatego należy zachować ostrożność w jego przechowywaniu i udostępnianiu. Warto dbać o zabezpieczenia dostępu do pliku stanu, np. poprzez odpowiednie uprawnienia.
+
+Stan w Terraform jest istotnym elementem, który umożliwia tworzenie, zarządzanie i aktualizację infrastruktury w sposób bezpieczny i zgodny z zamierzeniami projektu. Dzięki niemu Terraform może efektywnie zarządzać dynamiczną infrastrukturą i pomagać w unikaniu błędów oraz zapewnieniu spójności w zarządzaniu zasobami IT.
+
+## Przykład - utworzenie maszyny wirtualnej w Azure
+
+``` hcl
 provider "azurerm" {
   features {}
 }
+
+resource "azurerm_virtual_machine" "vm" {
+  name                  = "web-server-vm"
+  location              = "West Europe"
+  resource_group_name   = "my-rg"
+  vm_size               = "Standard_DS1_v2"
+  # ... konfiguracja sieci i obrazu ...
+}
+```
+## Przykład: uruchamianie maszyny wirtualnej z serwerem Ubuntu na Oracle Virtual Box
+
+Aby uruchomić maszynę wirtualną na lokalnym hipernadzorcy, takim jak Oracle VirtualBox, za pomocą Terraform, musisz skorzystać z dedykowanego dostawcy Najpopularniejszym rozwiązaniem społecznościowym jest `Terraform Provider for VirtualBox`.
+
+Oto jak podejść do tego zadania krok po kroku.
+
+1. Wymagania wstępne
+Zainstalowany VirtualBox na komputerze.
+
+Terraform CLI zainstalowany w systemie.
+
+Plik obrazu ISO systemu Ubuntu (np. ubuntu-22.04-live-server-amd64.iso) pobrany na dysk.
+
+2. Konfiguracja Terraform (main.tf)
+Poniższy przykład tworzy maszynę wirtualną w VirtualBox
+
+```hcl
+terraform {
+  required_providers {
+    virtualbox = {
+      source = "shekeriev/virtualbox"
+      version = "0.0.4"
+    }
+  }
+}
+
+provider "virtualbox" {
+  delay = 60
+}
+
+resource "virtualbox_vm" "ubuntu_vm" {
+  name   = "ubuntu-server-iac"
+  image  = "https://releases.ubuntu.com/22.04.3/ubuntu-22.04.3-live-server-amd64.iso"
+  cpus   = 2
+  memory = "2048 mib"
+
+  network_adapter {
+    type           = "nat"
+    device         = "IntelPro1000MTServer"
+    host_interface = "vboxnet0"
+  }
+}
+
+output "IPAddr" {
+  value = element(virtualbox_vm.ubuntu_vm.*.network_adapter.0.ipv4_address, 1)
+}
+```
+Następnie otwórz terminal w folderze z plikiem `main.tf` i wpisz:
+
+``` bash 
+terraform init
+```
+Sprawdź co Terraform zrobi:
+
+``` bash 
+terraform plan
+```
+Przeglądnij wynik.
+Jeśli wszystko ok, przejdź do tworzenia maszyny:
+``` bash 
+terraform apply
+```
+Terraform powinien automatycznie pobrać obraz ISO (jeśli jest podany URL) i uruchomić maszynę w VirtualBox.
+
+### Kluczowe różnice w porównaniu do chmury (Azure/AWS)
+
+* Provider: W chmurze używasz `azurerm` (lub `aws` czy innej opcji). W VirtualBox korzystasz z providera społecznościowego, który komunikuje się z lokalnym API VirtualBoxa (często przez narzędzie VBoxManage).
+
+* State File: Plik `.tfstate` nadal przechowuje stan maszyny lokalnie na Twoim dysku.
+
+* Brak jest sieciowego API: W przeciwieństwie do Azure, gdzie sieć definiujesz w kodzie (VNet), w VirtualBox musisz często skonfigurować interfejsy sieciowe (np. vboxnet0) ręcznie w programie VirtualBox przed uruchomieniem Terraform.
+
+***Czy to jest "Infrastructure as Code"?***
+
+Tak, nawet w środowisku lokalnym! Dzięki takiemu podejściu możesz:
+
+* Szybko postawić identyczne środowisko testowe na komputerze programisty.
+
+* Zarządzać zasobami (CPU, RAM) w sposób deklaratywny.
+
+* Używać tego samego procesu `init -> plan -> apply`, który jest standardem w chmurze (wypróbowanie "lokalnie" jest świetnym poligonem doświadczalnym).
+
+Wskazówka: Jeśli chcesz, aby maszyna była od razu "gotowa do pracy" (zainstalowane pakiety), po wykonaniu `terraform apply` możesz użyć Ansible, wskazując adres IP maszyny (zwrócony w `output "IPAddr"`) i uruchomić wcześniej przygotowany plik scenariusza. Terraform uruchomi maszynę, a Ansible ją skonfiguruje.
+
+## Ćwiczenie
+
+Uruchom serwer WWW oparty na `Apache` korzystając z Terraform i Ansible.
+Zmodyfikuj pliki tak, by  serwerem był `nginx`.
+Możesz spróbować na VirtualBox, możesz w dowolnej chmurze.
+
+Porównaj nakład pracy w stosunku do "ręcznej" instalacji maszyny i serwera www.
+
+
+## Tandem: Terraform i Ansible
+
+Terraform i Ansible współpracują ze sobą:
+
+* Terraform tworzy "szkielet" infrastruktury (wirtualne maszyny, sieci w Azure).
+
+* Terraform przekazuje adresy IP nowo powstałych maszyn do Ansible (często przy użyciu tzw. *dynamic inventory*).
+
+* Ansible jest uruchamiany na maszynach i konfiguruje na nich konkretne oprogramowanie (np. instaluje serwer WWW, bazy danych).
+
+### Przykład: "od zera do działającej bazy danych"
+
+Wykorzystanie Terraform (budowa infrastruktury) oraz Ansible (konfiguracja) na przykładzie automatyzacji tworzenia i konfigurowania zasobu: serwer Ubuntu + MariaDB (Terraform + Ansible).
+
+#### Krok 1: Inicjalizacja infrastruktury (Terraform)
+Najpierw tworzymy maszynę wirtualną w Azure (lub lokalnym VirtualBox). Poniżej przykład dla Azure.
+
+* Utwórz plik `main.tf`:
+
+```hcl 
+provider "azurerm" { features {} }
+
+resource "azurerm_linux_virtual_machine" "db_vm" {
+  name                = "db-server"
+  resource_group_name = "twoja-grupa"
+  location            = "West Europe"
+  size                = "Standard_B1s"
+  admin_username      = "azureuser"
+  # ... (dodaj konfigurację sieci i kluczy SSH) ...
+}
+```
+* Uruchom wdrożenie
+
+```bash
+terraform init
+terraform apply
+```
+Zanotuj publiczny adres IP maszyny.
+
+#### Krok 2: Przygotowanie pliku inwentarza dla Ansible
+
+Stwórz plik `inventory.ini`, dzięki któremu Ansible będziewiedział gdzie 'znajduje się' Twoja nowa maszyna.
+
+``` ini
+[dbservers]
+db-server-01 ansible_host=TWOJ_ADRES_IP_Z_TERRAFORM ansible_user=azureuser
+```
+#### Krok 3: Tworzenie pliku scenariusza konfiguracji dla Ansible
+Stwórz plik `db_setup.yml` (playbook) który zainstaluje i skonfiguruje podstawowe zabezpieczenia dla `MariaDB`.
+
+```YAML
+- name: Konfiguracja MariaDB na Ubuntu
+  hosts: dbservers
+  become: yes
+  vars:
+    db_root_password: "SilneHaslo123!"
+
+  tasks:
+    - name: Aktualizacja cache apt
+      apt: update_cache=yes
+
+    - name: Instalacja niezbędnych bibliotek
+      apt: name=python3-pymysql state=present
+
+    - name: Instalacja serwera MariaDB
+      apt: name=mariadb-server state=present
+
+    - name: Upewnij się, że MariaDB działa
+      service: name=mariadb state=started enabled=yes
+
+    - name: Ustaw hasło roota
+      mysql_user:
+        name: root
+        password: "{{ db_root_password }}"
+        host: localhost
+        state: present
+        check_implicit_admin: yes
+```
+#### Krok 4: Uruchomienie
+
+W terminalu wykonaj polecenie, które "wyśle" Twoją konfigurację na serwer:
+
+```bash
+ansible-playbook -i inventory.ini db_setup.yml
+```
+**Podsumowanie**
+
+* Terraform "zadbał" o to, by maszyna fizycznie zaistniała (Provisioning).
+
+* Ansible (poprzez protokół SSH) zalogował się do niej, zainstalował pakiety, skonfigurował bazę i ustawił hasła (Configuration Management).
+
+Całość nadaje się do wielokrotnego, powtarzalnego użycia (idempotentność): jeśli uruchomisz `ansible-playbook` drugi raz, Ansible sprawdzi, czy MariaDB już jest zainstalowane – jeśli tak, nie zrobi nic (dzięki czemu to rozwiązanie jest bezpieczne - nic nie zostaje np. nadpisane). Jest również powtarzalne - możesz utworzyć bliźniaczo skonfigurowaną maszynę.
+
+***Co, jeśli coś pójdzie nie tak?***
+
+* Jeśli maszyna nie odpowiada: Sprawdź reguły sieciowe (Network Security Group) w Azure – port 22 (SSH) musi być otwarty.
+
+* Jeśli moduł `mysql_user` zgłasza błąd, upewnij się, że zainstalowana jest biblioteka `python3-pymysql` (zadanie nr 2 w Playbooku).
+
+Wskazówka: Użyj `ansible-doc mysql_user`, aby sprawdzić wszystkie dostępne opcje tego modułu.
+
+#### W jaki sposób automatycznie przekazac adres IP?
+
+##### Najprościej - Terraform Local File
+Terraform może wygenerować plik `inventory.ini` automatycznie po zakończeniu tworzenia infrastruktury. Jest to bardzo czytelne i łatwe do zrozumienia.
+
+Aby to zrobić, w pliku `main.tf` dodaj zasób `local_file`:
+
+```hcl
+# Definicja zasobu tworzącego plik dla Ansible
+resource "local_file" "ansible_inventory" {
+  filename = "${path.module}/inventory.ini"
+  content  = <<EOT
+[dbservers]
+db-server-01 ansible_host=${azurerm_linux_virtual_machine.db_vm.public_ip_address} ansible_user=azureuser
+EOT
+}
+```
+Co tu się dzieje?
+
+1. Terraform tworzy maszynę wirtualną `db_vm`.
+
+2. Terraform pobiera jej adres IP (`azurerm_linux_virtual_machine.db_vm.public_ip_address`).
+
+3. Terraform automatycznie zapisuje plik `inventory.ini` w tym samym katalogu, w którym pracujesz.
+
+4. Gdy uruchomisz `ansible-playbook -i inventory.ini ...`, Ansible użyje adresu IP, który właśnie został "wstrzyknięty" przez Terraform.
+
+##### Metoda Dynamicznego inwentarza
+
+Ansible posiada tzw. Dynamiczne inwentarze (ang. *Dynamic Inventory*). Zamiast pisać plik `.ini`, Ansible może odpytać API chmury (np. Azure) o to, jakie maszyny aktualnie istnieją.
+
+Jak to działa: Instalujesz wtyczkę `azure.azcollection`.
+
+I następnie:
+
+1. Terraform tworzy zasoby w Azure i nadaje im konkretny tag, np. `role=db-server`.
+
+2. Ansible wywołuje skrypt (`ansible-inventory --graph`), który łączy się z API Azure.
+
+3. Skrypt filtruje zasoby po tagu `role=db-server` i automatycznie dodaje znalezione adresy IP do pamięci Ansible.
+
+
+##### Metoda "Output" i zmienne środowiskowe
+Możesz również wyciągnąć adres IP za pomocą komendy `terraform output` i przekazać go bezpośrednio do Ansible w linii poleceń.
+
+W Terraform dodajesz `output`:
+
+```hcl
+output "vm_ip" {
+  value = azurerm_linux_virtual_machine.db_vm.public_ip_address
+}
 ```
 
-# 5. Zadanie
+Uruchamiasz Ansible z przekazaniem zmiennej:
 
-Wdroż serwer WWW:
-- Ansible
-- Terraform
+```bash
+# Komenda pobierająca IP z Terraform
+IP=$(terraform output -raw vm_ip)
 
-Porównaj podejścia.
+# Uruchomienie Ansible z tym IP
+ansible-playbook -i "$IP," playbook.yml
+```
+
+(**Uwaga**: Przecinek po `$IP` w Ansible oznacza, że to pojedynczy adres, a nie ścieżka do pliku).
+
+#### Którą metodę wybrać?
+
+* Do nauki i małych projektów: Wybierz metodę z `local_file`. Jest niezwykle prosta, plik `inventory.ini` jest widoczny, można go sprawdzić przed uruchomieniem Ansible i daje pełną kontrolę.
+
+* W profesjonalnych systemach: Wybierz metodę "Dynamic Inventory", ponieważ infrastruktura w chmurze jest dynamiczna – maszyny mogą być tworzone i usuwane automatycznie (autoskalowanie), więc statyczny plik może nie zawsze nadążyć za zmianami.
+
+
+## Lektura uzupełniająca
+
+* [Oficjalna dokumentacja Terraform (Azure Provider)](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs)
+
+* [Virtualbox provider](https://registry.terraform.io/providers/terra-farm/virtualbox/latest/docs)
+
+* [HashiCorp Learn - Terraform](https://learn.hashicorp.com/terraform) – Interaktywne samouczki prowadzące od instalacji po zaawansowane wdrożenia.
+
+* [Terraform Registry](https://registry.terraform.io/) – Najważniejsze źródło dokumentacji dla wszystkich providerów (np. Azure, AWS, Oracle VirtualBox). Tutaj znajdziesz parametry każdego dostępnego zasobu.
+
+* [Język Terraform (HCL)](https://developer.hashicorp.com/terraform/language) – Oficjalna dokumentacja składni, funkcji i struktury języka HCL.
+
+* [Terraform Best Practices](https://www.terraform-best-practices.com/) – Nieoficjalne repozytorium wiedzy o strukturze katalogów, nazewnictwie i unikaniu błędów w kodzie.
+
+* [Roadmap.sh - DevOps](https://roadmap.sh/devops) – Ścieżka nauki wskazująca miejsce Terraform w ekosystemie narzędzi DevOps.
+
+## Wskazówka praktyczne - praca z kodem IaC
+
+1. Aby szybciej pracować z kodem, zainstaluj odpowiednie wtyczki do swojego IDE:
+np dla **VS Code:** Zainstaluj rozszerzenie "HashiCorp Terraform" – oferuje ono autouzupełnianie, podświetlanie składni i sprawdzanie błędów (ang. *linting*) w czasie rzeczywistym.
+
+2. **`terraform fmt`:** Używaj tego polecenia w terminalu przed zapisaniem kodu – automatycznie sformatuje Twój plik `main.tf` zgodnie ze standardami HashiCorp.
+
+
+
+

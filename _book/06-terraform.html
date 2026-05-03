@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -171,11 +206,29 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#cel-ćwiczenia" id="toc-cel-ćwiczenia" class="nav-link active" data-scroll-target="#cel-ćwiczenia"><span class="header-section-number">8.1</span> Cel ćwiczenia</a></li>
-  <li><a href="#terraform" id="toc-terraform" class="nav-link" data-scroll-target="#terraform"><span class="header-section-number">9</span> 4. Terraform</a>
+  <li><a href="#tworzenie-infrastruktury-provisioning" id="toc-tworzenie-infrastruktury-provisioning" class="nav-link" data-scroll-target="#tworzenie-infrastruktury-provisioning"><span class="header-section-number">8.2</span> Tworzenie infrastruktury (Provisioning)</a>
   <ul class="collapse">
-  <li><a href="#przykład" id="toc-przykład" class="nav-link" data-scroll-target="#przykład"><span class="header-section-number">9.1</span> Przykład</a></li>
+  <li><a href="#podejście-deklaratywne-w-terraform" id="toc-podejście-deklaratywne-w-terraform" class="nav-link" data-scroll-target="#podejście-deklaratywne-w-terraform"><span class="header-section-number">8.2.1</span> Podejście Deklaratywne w Terraform</a></li>
+  <li><a href="#zarządzanie-stanem-state-file" id="toc-zarządzanie-stanem-state-file" class="nav-link" data-scroll-target="#zarządzanie-stanem-state-file"><span class="header-section-number">8.2.2</span> Zarządzanie stanem (State File)</a></li>
   </ul></li>
-  <li><a href="#zadanie" id="toc-zadanie" class="nav-link" data-scroll-target="#zadanie"><span class="header-section-number">10</span> 5. Zadanie</a></li>
+  <li><a href="#język-hcl-hashicorp-configuration-language" id="toc-język-hcl-hashicorp-configuration-language" class="nav-link" data-scroll-target="#język-hcl-hashicorp-configuration-language"><span class="header-section-number">8.3</span> Język HCL (HashiCorp Configuration Language)</a></li>
+  <li><a href="#terraform---informacje-podstawowe" id="toc-terraform---informacje-podstawowe" class="nav-link" data-scroll-target="#terraform---informacje-podstawowe"><span class="header-section-number">8.4</span> Terraform - informacje podstawowe</a>
+  <ul class="collapse">
+  <li><a href="#główne-cechy-wyróżniające-terraform" id="toc-główne-cechy-wyróżniające-terraform" class="nav-link" data-scroll-target="#główne-cechy-wyróżniające-terraform"><span class="header-section-number">8.4.1</span> Główne cechy wyróżniające Terraform:</a></li>
+  <li><a href="#podstawy-pracy-z-terraform" id="toc-podstawy-pracy-z-terraform" class="nav-link" data-scroll-target="#podstawy-pracy-z-terraform"><span class="header-section-number">8.4.2</span> Podstawy pracy z Terraform</a></li>
+  </ul></li>
+  <li><a href="#przykład---utworzenie-maszyny-wirtualnej-w-azure" id="toc-przykład---utworzenie-maszyny-wirtualnej-w-azure" class="nav-link" data-scroll-target="#przykład---utworzenie-maszyny-wirtualnej-w-azure"><span class="header-section-number">8.5</span> Przykład - utworzenie maszyny wirtualnej w Azure</a></li>
+  <li><a href="#przykład-uruchamianie-maszyny-wirtualnej-z-serwerem-ubuntu-na-oracle-virtual-box" id="toc-przykład-uruchamianie-maszyny-wirtualnej-z-serwerem-ubuntu-na-oracle-virtual-box" class="nav-link" data-scroll-target="#przykład-uruchamianie-maszyny-wirtualnej-z-serwerem-ubuntu-na-oracle-virtual-box"><span class="header-section-number">8.6</span> Przykład: uruchamianie maszyny wirtualnej z serwerem Ubuntu na Oracle Virtual Box</a>
+  <ul class="collapse">
+  <li><a href="#kluczowe-różnice-w-porównaniu-do-chmury-azureaws" id="toc-kluczowe-różnice-w-porównaniu-do-chmury-azureaws" class="nav-link" data-scroll-target="#kluczowe-różnice-w-porównaniu-do-chmury-azureaws"><span class="header-section-number">8.6.1</span> Kluczowe różnice w porównaniu do chmury (Azure/AWS)</a></li>
+  </ul></li>
+  <li><a href="#ćwiczenie" id="toc-ćwiczenie" class="nav-link" data-scroll-target="#ćwiczenie"><span class="header-section-number">8.7</span> Ćwiczenie</a></li>
+  <li><a href="#tandem-terraform-i-ansible" id="toc-tandem-terraform-i-ansible" class="nav-link" data-scroll-target="#tandem-terraform-i-ansible"><span class="header-section-number">8.8</span> Tandem: Terraform i Ansible</a>
+  <ul class="collapse">
+  <li><a href="#przykład-od-zera-do-działającej-bazy-danych" id="toc-przykład-od-zera-do-działającej-bazy-danych" class="nav-link" data-scroll-target="#przykład-od-zera-do-działającej-bazy-danych"><span class="header-section-number">8.8.1</span> Przykład: “od zera do działającej bazy danych”</a></li>
+  </ul></li>
+  <li><a href="#lektura-uzupełniająca" id="toc-lektura-uzupełniająca" class="nav-link" data-scroll-target="#lektura-uzupełniająca"><span class="header-section-number">8.9</span> Lektura uzupełniająca</a></li>
+  <li><a href="#wskazówka-praktyczne---praca-z-kodem-iac" id="toc-wskazówka-praktyczne---praca-z-kodem-iac" class="nav-link" data-scroll-target="#wskazówka-praktyczne---praca-z-kodem-iac"><span class="header-section-number">8.10</span> Wskazówka praktyczne - praca z kodem IaC</a></li>
   </ul>
 </nav>
     </div>
@@ -203,21 +256,325 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="cel-ćwiczenia" class="level2" data-number="8.1">
 <h2 data-number="8.1" class="anchored" data-anchor-id="cel-ćwiczenia"><span class="header-section-number">8.1</span> Cel ćwiczenia</h2>
-<p>Celem ćwiczenia jest zapoznanie studentów z koncepcją <strong>Infrastructure as Code (IaC)</strong> oraz praktyczne wykorzystanie narzędzia <strong>tworzenia (przygotowywania) infrastruktury</strong> (ang. <em>provisioning</em>)- <em>Terraform</em> w środowisku Azure.</p>
+<p>Celem ćwiczenia jest zapoznanie studentów z narzędziem do tworzenia infrastruktury (ang. provisioning) - Terraform - w środowisku chmurowym Azure.</p>
 </section>
-<section id="terraform" class="level1" data-number="9">
-<h1 data-number="9"><span class="header-section-number">9</span> 4. Terraform</h1>
-<section id="przykład" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="przykład"><span class="header-section-number">9.1</span> Przykład</h2>
+<section id="tworzenie-infrastruktury-provisioning" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="tworzenie-infrastruktury-provisioning"><span class="header-section-number">8.2</span> Tworzenie infrastruktury (Provisioning)</h2>
+<p>Podczas gdy zarządzanie konfiguracją (jak Ansible) zajmuje się konfigurowaniem już działających maszyn, tworzenie infrastruktury (ang. <em>provisioning</em>) dotyczy budowania “szkieletu” systemu. W tym modelu kod definiuje, jakie zasoby mają zostać utworzone u dostawcy chmurowego: ile maszyn wirtualnych potrzebujemy, jaką mają mieć sieć, jakie dyski i jakie reguły zapory (firewall).</p>
+<section id="podejście-deklaratywne-w-terraform" class="level3" data-number="8.2.1">
+<h3 data-number="8.2.1" class="anchored" data-anchor-id="podejście-deklaratywne-w-terraform"><span class="header-section-number">8.2.1</span> Podejście Deklaratywne w Terraform</h3>
+<p>Podobnie jak w Ansible, Terraform używa podejścia deklaratywnego. W plikach konfiguracyjnych (rozszerzenie <code>.tf</code>) opisujesz pożądany stan końcowy całej infrastruktury. Terraform nie wykonuje poleceń typu “utwórz serwer”, lecz dąży do tego, aby stan rzeczywisty w chmurze (Azure) był zgodny z tym, co zapisałeś w kodzie.</p>
+</section>
+<section id="zarządzanie-stanem-state-file" class="level3" data-number="8.2.2">
+<h3 data-number="8.2.2" class="anchored" data-anchor-id="zarządzanie-stanem-state-file"><span class="header-section-number">8.2.2</span> Zarządzanie stanem (State File)</h3>
+<p>Kluczowym elementem odróżniającym Terraform od prostych skryptów jest <strong>plik stanów</strong> (ang. <em>state file</em>) (<code>terraform.tfstate</code>).</p>
+<p><em>Co to jest?</em> To plik JSON, w którym Terraform przechowuje “mapę” stworzonej przez siebie infrastruktury oraz powiązania między Twoim kodem a rzeczywistymi ID zasobów w Azure.</p>
+<p><em>Dlaczego jest ważny?</em> Dzięki niemu Terraform wie, co już istnieje. Jeśli zmodyfikujesz kod, Terraform porówna go ze stanem zapisanym w pliku <code>.tfstate</code> i uwzględni tylko te zmiany, które muszą zostać wprowadzone (np. dodanie nowego dysku do istniejącej maszyny), zamiast tworzyć wszystko od nowa.</p>
+</section>
+</section>
+<section id="język-hcl-hashicorp-configuration-language" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="język-hcl-hashicorp-configuration-language"><span class="header-section-number">8.3</span> Język HCL (HashiCorp Configuration Language)</h2>
+<p>Terraform używa języka HCL, który jest specjalnie zaprojektowany do opisu infrastruktury. Jest bardzo czytelny, wspiera komentarze i pozwala na łatwe budowanie hierarchicznych zależności między zasobami.</p>
+<p>Podstawowe elementy HCL:</p>
+<ul>
+<li><p>Dostawca (Provider): Blok definiujący, z jakim dostawcą chmurowym współpracujemy (np. <code>azurerm</code> dla Azure).</p></li>
+<li><p>Zasoby (Resource): Definicja konkretnego komponentu (np. maszyny wirtualnej, sieci).</p></li>
+<li><p>Zmienne (Variable): Zmienne, które pozwalają parametryzować kod (np. wielkość maszyny, lokalizacja).</p></li>
+<li><p>Wyjście (Output): Informacje zwracane przez Terraform po wdrożeniu (np. publiczny adres IP serwera).</p></li>
+</ul>
+<p>Przykład bloku zasobu:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode terraform code-with-copy"><code class="sourceCode terraform"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">resource</span> <span class="st">"azurerm_resource_group"</span> <span class="st">"przyklad"</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  name     <span class="op">=</span> <span class="st">"moja-grupa-zasobow"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  location <span class="op">=</span> <span class="st">"West Europe"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="terraform---informacje-podstawowe" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="terraform---informacje-podstawowe"><span class="header-section-number">8.4</span> Terraform - informacje podstawowe</h2>
+<p>Terraform to narzędzie typu open source, które umożliwia definiowanie i udostępnianie infrastruktury jako kodu. Jest narzędziem “multicloud” - działa w wielu chmurach – ten sam język HCL pozwala zarządzać zasobami w Azure, AWS, Google Cloud, a nawet w środowiskach lokalnych (VMware).</p>
+<section id="główne-cechy-wyróżniające-terraform" class="level3" data-number="8.4.1">
+<h3 data-number="8.4.1" class="anchored" data-anchor-id="główne-cechy-wyróżniające-terraform"><span class="header-section-number">8.4.1</span> Główne cechy wyróżniające Terraform:</h3>
+<ul>
+<li><p><strong>Deklaratywność</strong>: Definiujesz stan końcowy, Terraform zajmuje się procesem wdrożenia.</p></li>
+<li><p><strong>Analiza zmian (Plan)</strong>: Przed wdrożeniem możesz wywołać polecenie <code>terraform plan</code>, aby zobaczyć, jakie zmiany zostaną wprowadzone w Twojej infrastrukturze bez faktycznego uruchamiania narzędzia.</p></li>
+<li><p><strong>Zależności</strong>: Terraform automatycznie wykrywa zależności między zasobami. Jeśli chcesz stworzyć maszynę wirtualną wewnątrz sieci, Terraform sam ‘wie’, że najpierw musi stworzyć sieć.</p></li>
+<li><p><strong>Wersjonowanie</strong>: Cała infrastruktura zapisana w plikach <code>.tf</code> może być w pełni zarządzana w systemie Git.</p></li>
+</ul>
+</section>
+<section id="podstawy-pracy-z-terraform" class="level3" data-number="8.4.2">
+<h3 data-number="8.4.2" class="anchored" data-anchor-id="podstawy-pracy-z-terraform"><span class="header-section-number">8.4.2</span> Podstawy pracy z Terraform</h3>
+<section id="cykl-życia" class="level4" data-number="8.4.2.1">
+<h4 data-number="8.4.2.1" class="anchored" data-anchor-id="cykl-życia"><span class="header-section-number">8.4.2.1</span> Cykl życia</h4>
+<p>Praca z Terraform opiera się na czterech podstawowych krokach:</p>
+<ul>
+<li><p><code>terraform init</code> – inicjalizacja projektu (pobranie wtyczek dla dostawcy, np. Azure).</p></li>
+<li><p><code>terraform plan</code> – wyświetlenie listy zmian, które zostaną wprowadzone.</p></li>
+<li><p><code>terraform apply</code> – rzeczywiste wdrożenie zmian w chmurze.</p></li>
+<li><p><code>terraform destroy</code> – usunięcie wszystkich zasobów zdefiniowanych w kodzie.</p></li>
+</ul>
+</section>
+<section id="stan-w-terraform" class="level4" data-number="8.4.2.2">
+<h4 data-number="8.4.2.2" class="anchored" data-anchor-id="stan-w-terraform"><span class="header-section-number">8.4.2.2</span> Stan w Terraform</h4>
+<p><strong>Stan</strong> (ang. <em>state</em>) w Terraform to kluczowy element. Jest odpowiedzialny za śledzenie i przechowywanie informacji o rzeczywistym stanie infrastruktury oraz pozwala na dokładne zarządzanie nią poprzez kod. Stan jest istotny dla Terraform, ponieważ umożliwia narzędziu identyfikowanie zmian między zamierzonym a rzeczywistym stanem infrastruktury, co pozwala na bezpieczne wdrażanie aktualizacji i modyfikacji.</p>
+<p>Co warto wiedzieć na temat stanu w Terraform:</p>
+<ul>
+<li><p>Plik stanu: Terraform przechowuje plik stanu, który zapisuje w formie binarnej w lokalnym katalogu projektu. Plik ten ma nazwę <code>terraform.tfstate</code> i zawiera informacje na temat wszystkich zasobów infrastruktury zarządzanych przez Terraform w danym projekcie. Plik stanu jest generowany automatycznie po wykonaniu operacji inicjalizacji i wdrażania.</p></li>
+<li><p>Zawartość pliku stanu: Plik stanu zawiera informacje takie jak ID zasobów, ich bieżący stan, relacje między zasobami, a także dane wrażliwe, takie jak hasła i klucze prywatne (które są zaszyfrowane). Stan jest w pełni deklaratywny, co oznacza, że jest to reprezentacja faktycznego stanu infrastruktury.</p></li>
+<li><p>Znaczenie stanu: Stan jest używany przez Terraform do porównywania rzeczywistego stanu z zamierzonym stanem opisanym w plikach konfiguracyjnych (np. <code>.tf</code>). Dzięki temu Terraform wie, jakie zmiany trzeba wprowadzić, aby dopasować rzeczywisty stan do zamierzonego stanu.</p></li>
+<li><p>Operacje na stanie: <code>terraform init</code>: Inicjalizuje projekt Terraform i tworzy plik stanu. <code>terraform apply</code>: Wdraża zmiany w infrastrukturze zgodnie z plikiem konfiguracji i aktualizuje plik stanu. <code>terraform plan</code>: Generuje plan zmian, ale nie wprowadza ich. <code>terraform refresh</code>: Aktualizuje stan o rzeczywisty stan infrastruktury bez wprowadzania zmian. <code>terraform destroy</code>: Usuwa wszystkie zasoby zdefiniowane w pliku konfiguracji.</p></li>
+</ul>
+<p>Przechowywanie stanu: Plik stanu można przechowywać w różnych miejscach, w zależności od potrzeb projektu. Popularne opcje to przechowywanie stanu w systemach kontroli wersji (z wykorzystaniem backendów takich jak S3, Azure Blob Storage itp.) lub w usługach zarządzania stanem oferowanych przez Terraform Enterprise lub Terraform Cloud.</p>
+<p><strong>UWAGA!</strong> Bezpieczeństwo: Plik stanu zawiera wrażliwe dane, dlatego należy zachować ostrożność w jego przechowywaniu i udostępnianiu. Warto dbać o zabezpieczenia dostępu do pliku stanu, np. poprzez odpowiednie uprawnienia.</p>
+<p>Stan w Terraform jest istotnym elementem, który umożliwia tworzenie, zarządzanie i aktualizację infrastruktury w sposób bezpieczny i zgodny z zamierzeniami projektu. Dzięki niemu Terraform może efektywnie zarządzać dynamiczną infrastrukturą i pomagać w unikaniu błędów oraz zapewnieniu spójności w zarządzaniu zasobami IT.</p>
+</section>
+</section>
+</section>
+<section id="przykład---utworzenie-maszyny-wirtualnej-w-azure" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="przykład---utworzenie-maszyny-wirtualnej-w-azure"><span class="header-section-number">8.5</span> Przykład - utworzenie maszyny wirtualnej w Azure</h2>
 <pre class="hcl"><code>provider "azurerm" {
   features {}
+}
+
+resource "azurerm_virtual_machine" "vm" {
+  name                  = "web-server-vm"
+  location              = "West Europe"
+  resource_group_name   = "my-rg"
+  vm_size               = "Standard_DS1_v2"
+  # ... konfiguracja sieci i obrazu ...
 }</code></pre>
 </section>
+<section id="przykład-uruchamianie-maszyny-wirtualnej-z-serwerem-ubuntu-na-oracle-virtual-box" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="przykład-uruchamianie-maszyny-wirtualnej-z-serwerem-ubuntu-na-oracle-virtual-box"><span class="header-section-number">8.6</span> Przykład: uruchamianie maszyny wirtualnej z serwerem Ubuntu na Oracle Virtual Box</h2>
+<p>Aby uruchomić maszynę wirtualną na lokalnym hipernadzorcy, takim jak Oracle VirtualBox, za pomocą Terraform, musisz skorzystać z dedykowanego dostawcy Najpopularniejszym rozwiązaniem społecznościowym jest <code>Terraform Provider for VirtualBox</code>.</p>
+<p>Oto jak podejść do tego zadania krok po kroku.</p>
+<ol type="1">
+<li>Wymagania wstępne Zainstalowany VirtualBox na komputerze.</li>
+</ol>
+<p>Terraform CLI zainstalowany w systemie.</p>
+<p>Plik obrazu ISO systemu Ubuntu (np. ubuntu-22.04-live-server-amd64.iso) pobrany na dysk.</p>
+<ol start="2" type="1">
+<li>Konfiguracja Terraform (main.tf) Poniższy przykład tworzy maszynę wirtualną w VirtualBox</li>
+</ol>
+<pre class="hcl"><code>terraform {
+  required_providers {
+    virtualbox = {
+      source = "shekeriev/virtualbox"
+      version = "0.0.4"
+    }
+  }
+}
+
+provider "virtualbox" {
+  delay = 60
+}
+
+resource "virtualbox_vm" "ubuntu_vm" {
+  name   = "ubuntu-server-iac"
+  image  = "https://releases.ubuntu.com/22.04.3/ubuntu-22.04.3-live-server-amd64.iso"
+  cpus   = 2
+  memory = "2048 mib"
+
+  network_adapter {
+    type           = "nat"
+    device         = "IntelPro1000MTServer"
+    host_interface = "vboxnet0"
+  }
+}
+
+output "IPAddr" {
+  value = element(virtualbox_vm.ubuntu_vm.*.network_adapter.0.ipv4_address, 1)
+}</code></pre>
+<p>Następnie otwórz terminal w folderze z plikiem <code>main.tf</code> i wpisz:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">terraform</span> init</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Sprawdź co Terraform zrobi:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">terraform</span> plan</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Przeglądnij wynik. Jeśli wszystko ok, przejdź do tworzenia maszyny:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">terraform</span> apply</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Terraform powinien automatycznie pobrać obraz ISO (jeśli jest podany URL) i uruchomić maszynę w VirtualBox.</p>
+<section id="kluczowe-różnice-w-porównaniu-do-chmury-azureaws" class="level3" data-number="8.6.1">
+<h3 data-number="8.6.1" class="anchored" data-anchor-id="kluczowe-różnice-w-porównaniu-do-chmury-azureaws"><span class="header-section-number">8.6.1</span> Kluczowe różnice w porównaniu do chmury (Azure/AWS)</h3>
+<ul>
+<li><p>Provider: W chmurze używasz <code>azurerm</code> (lub <code>aws</code> czy innej opcji). W VirtualBox korzystasz z providera społecznościowego, który komunikuje się z lokalnym API VirtualBoxa (często przez narzędzie VBoxManage).</p></li>
+<li><p>State File: Plik <code>.tfstate</code> nadal przechowuje stan maszyny lokalnie na Twoim dysku.</p></li>
+<li><p>Brak jest sieciowego API: W przeciwieństwie do Azure, gdzie sieć definiujesz w kodzie (VNet), w VirtualBox musisz często skonfigurować interfejsy sieciowe (np. vboxnet0) ręcznie w programie VirtualBox przed uruchomieniem Terraform.</p></li>
+</ul>
+<p><strong><em>Czy to jest “Infrastructure as Code”?</em></strong></p>
+<p>Tak, nawet w środowisku lokalnym! Dzięki takiemu podejściu możesz:</p>
+<ul>
+<li><p>Szybko postawić identyczne środowisko testowe na komputerze programisty.</p></li>
+<li><p>Zarządzać zasobami (CPU, RAM) w sposób deklaratywny.</p></li>
+<li><p>Używać tego samego procesu <code>init -&gt; plan -&gt; apply</code>, który jest standardem w chmurze (wypróbowanie “lokalnie” jest świetnym poligonem doświadczalnym).</p></li>
+</ul>
+<p>Wskazówka: Jeśli chcesz, aby maszyna była od razu “gotowa do pracy” (zainstalowane pakiety), po wykonaniu <code>terraform apply</code> możesz użyć Ansible, wskazując adres IP maszyny (zwrócony w <code>output "IPAddr"</code>) i uruchomić wcześniej przygotowany plik scenariusza. Terraform uruchomi maszynę, a Ansible ją skonfiguruje.</p>
 </section>
-<section id="zadanie" class="level1" data-number="10">
-<h1 data-number="10"><span class="header-section-number">10</span> 5. Zadanie</h1>
-<p>Wdroż serwer WWW: - Ansible - Terraform</p>
-<p>Porównaj podejścia.</p>
+</section>
+<section id="ćwiczenie" class="level2" data-number="8.7">
+<h2 data-number="8.7" class="anchored" data-anchor-id="ćwiczenie"><span class="header-section-number">8.7</span> Ćwiczenie</h2>
+<p>Uruchom serwer WWW oparty na <code>Apache</code> korzystając z Terraform i Ansible. Zmodyfikuj pliki tak, by serwerem był <code>nginx</code>. Możesz spróbować na VirtualBox, możesz w dowolnej chmurze.</p>
+<p>Porównaj nakład pracy w stosunku do “ręcznej” instalacji maszyny i serwera www.</p>
+</section>
+<section id="tandem-terraform-i-ansible" class="level2" data-number="8.8">
+<h2 data-number="8.8" class="anchored" data-anchor-id="tandem-terraform-i-ansible"><span class="header-section-number">8.8</span> Tandem: Terraform i Ansible</h2>
+<p>Terraform i Ansible współpracują ze sobą:</p>
+<ul>
+<li><p>Terraform tworzy “szkielet” infrastruktury (wirtualne maszyny, sieci w Azure).</p></li>
+<li><p>Terraform przekazuje adresy IP nowo powstałych maszyn do Ansible (często przy użyciu tzw. <em>dynamic inventory</em>).</p></li>
+<li><p>Ansible jest uruchamiany na maszynach i konfiguruje na nich konkretne oprogramowanie (np. instaluje serwer WWW, bazy danych).</p></li>
+</ul>
+<section id="przykład-od-zera-do-działającej-bazy-danych" class="level3" data-number="8.8.1">
+<h3 data-number="8.8.1" class="anchored" data-anchor-id="przykład-od-zera-do-działającej-bazy-danych"><span class="header-section-number">8.8.1</span> Przykład: “od zera do działającej bazy danych”</h3>
+<p>Wykorzystanie Terraform (budowa infrastruktury) oraz Ansible (konfiguracja) na przykładzie automatyzacji tworzenia i konfigurowania zasobu: serwer Ubuntu + MariaDB (Terraform + Ansible).</p>
+<section id="krok-1-inicjalizacja-infrastruktury-terraform" class="level4" data-number="8.8.1.1">
+<h4 data-number="8.8.1.1" class="anchored" data-anchor-id="krok-1-inicjalizacja-infrastruktury-terraform"><span class="header-section-number">8.8.1.1</span> Krok 1: Inicjalizacja infrastruktury (Terraform)</h4>
+<p>Najpierw tworzymy maszynę wirtualną w Azure (lub lokalnym VirtualBox). Poniżej przykład dla Azure.</p>
+<ul>
+<li>Utwórz plik <code>main.tf</code>:</li>
+</ul>
+<pre class="hcl"><code>provider "azurerm" { features {} }
+
+resource "azurerm_linux_virtual_machine" "db_vm" {
+  name                = "db-server"
+  resource_group_name = "twoja-grupa"
+  location            = "West Europe"
+  size                = "Standard_B1s"
+  admin_username      = "azureuser"
+  # ... (dodaj konfigurację sieci i kluczy SSH) ...
+}</code></pre>
+<ul>
+<li>Uruchom wdrożenie</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">terraform</span> init</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">terraform</span> apply</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Zanotuj publiczny adres IP maszyny.</p>
+</section>
+<section id="krok-2-przygotowanie-pliku-inwentarza-dla-ansible" class="level4" data-number="8.8.1.2">
+<h4 data-number="8.8.1.2" class="anchored" data-anchor-id="krok-2-przygotowanie-pliku-inwentarza-dla-ansible"><span class="header-section-number">8.8.1.2</span> Krok 2: Przygotowanie pliku inwentarza dla Ansible</h4>
+<p>Stwórz plik <code>inventory.ini</code>, dzięki któremu Ansible będziewiedział gdzie ‘znajduje się’ Twoja nowa maszyna.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode ini code-with-copy"><code class="sourceCode ini"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[dbservers]</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="dt">db-server-01 ansible_host</span><span class="ot">=</span><span class="st">TWOJ_ADRES_IP_Z_TERRAFORM ansible_user=azureuser</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="krok-3-tworzenie-pliku-scenariusza-konfiguracji-dla-ansible" class="level4" data-number="8.8.1.3">
+<h4 data-number="8.8.1.3" class="anchored" data-anchor-id="krok-3-tworzenie-pliku-scenariusza-konfiguracji-dla-ansible"><span class="header-section-number">8.8.1.3</span> Krok 3: Tworzenie pliku scenariusza konfiguracji dla Ansible</h4>
+<p>Stwórz plik <code>db_setup.yml</code> (playbook) który zainstaluje i skonfiguruje podstawowe zabezpieczenia dla <code>MariaDB</code>.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Konfiguracja MariaDB na Ubuntu</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">hosts</span><span class="kw">:</span><span class="at"> dbservers</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">become</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">vars</span><span class="kw">:</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">db_root_password</span><span class="kw">:</span><span class="at"> </span><span class="st">"SilneHaslo123!"</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">tasks</span><span class="kw">:</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Aktualizacja cache apt</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">apt</span><span class="kw">:</span><span class="at"> update_cache=yes</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Instalacja niezbędnych bibliotek</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">apt</span><span class="kw">:</span><span class="at"> name=python3-pymysql state=present</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Instalacja serwera MariaDB</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">apt</span><span class="kw">:</span><span class="at"> name=mariadb-server state=present</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Upewnij się, że MariaDB działa</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">service</span><span class="kw">:</span><span class="at"> name=mariadb state=started enabled=yes</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Ustaw hasło roota</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">mysql_user</span><span class="kw">:</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">name</span><span class="kw">:</span><span class="at"> root</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">password</span><span class="kw">:</span><span class="at"> </span><span class="st">"{{ db_root_password }}"</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">host</span><span class="kw">:</span><span class="at"> localhost</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">check_implicit_admin</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="krok-4-uruchomienie" class="level4" data-number="8.8.1.4">
+<h4 data-number="8.8.1.4" class="anchored" data-anchor-id="krok-4-uruchomienie"><span class="header-section-number">8.8.1.4</span> Krok 4: Uruchomienie</h4>
+<p>W terminalu wykonaj polecenie, które “wyśle” Twoją konfigurację na serwer:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ansible-playbook</span> <span class="at">-i</span> inventory.ini db_setup.yml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Podsumowanie</strong></p>
+<ul>
+<li><p>Terraform “zadbał” o to, by maszyna fizycznie zaistniała (Provisioning).</p></li>
+<li><p>Ansible (poprzez protokół SSH) zalogował się do niej, zainstalował pakiety, skonfigurował bazę i ustawił hasła (Configuration Management).</p></li>
+</ul>
+<p>Całość nadaje się do wielokrotnego, powtarzalnego użycia (idempotentność): jeśli uruchomisz <code>ansible-playbook</code> drugi raz, Ansible sprawdzi, czy MariaDB już jest zainstalowane – jeśli tak, nie zrobi nic (dzięki czemu to rozwiązanie jest bezpieczne - nic nie zostaje np. nadpisane). Jest również powtarzalne - możesz utworzyć bliźniaczo skonfigurowaną maszynę.</p>
+<p><strong><em>Co, jeśli coś pójdzie nie tak?</em></strong></p>
+<ul>
+<li><p>Jeśli maszyna nie odpowiada: Sprawdź reguły sieciowe (Network Security Group) w Azure – port 22 (SSH) musi być otwarty.</p></li>
+<li><p>Jeśli moduł <code>mysql_user</code> zgłasza błąd, upewnij się, że zainstalowana jest biblioteka <code>python3-pymysql</code> (zadanie nr 2 w Playbooku).</p></li>
+</ul>
+<p>Wskazówka: Użyj <code>ansible-doc mysql_user</code>, aby sprawdzić wszystkie dostępne opcje tego modułu.</p>
+</section>
+<section id="w-jaki-sposób-automatycznie-przekazac-adres-ip" class="level4" data-number="8.8.1.5">
+<h4 data-number="8.8.1.5" class="anchored" data-anchor-id="w-jaki-sposób-automatycznie-przekazac-adres-ip"><span class="header-section-number">8.8.1.5</span> W jaki sposób automatycznie przekazac adres IP?</h4>
+<section id="najprościej---terraform-local-file" class="level5" data-number="8.8.1.5.1">
+<h5 data-number="8.8.1.5.1" class="anchored" data-anchor-id="najprościej---terraform-local-file"><span class="header-section-number">8.8.1.5.1</span> Najprościej - Terraform Local File</h5>
+<p>Terraform może wygenerować plik <code>inventory.ini</code> automatycznie po zakończeniu tworzenia infrastruktury. Jest to bardzo czytelne i łatwe do zrozumienia.</p>
+<p>Aby to zrobić, w pliku <code>main.tf</code> dodaj zasób <code>local_file</code>:</p>
+<pre class="hcl"><code># Definicja zasobu tworzącego plik dla Ansible
+resource "local_file" "ansible_inventory" {
+  filename = "${path.module}/inventory.ini"
+  content  = &lt;&lt;EOT
+[dbservers]
+db-server-01 ansible_host=${azurerm_linux_virtual_machine.db_vm.public_ip_address} ansible_user=azureuser
+EOT
+}</code></pre>
+<p>Co tu się dzieje?</p>
+<ol type="1">
+<li><p>Terraform tworzy maszynę wirtualną <code>db_vm</code>.</p></li>
+<li><p>Terraform pobiera jej adres IP (<code>azurerm_linux_virtual_machine.db_vm.public_ip_address</code>).</p></li>
+<li><p>Terraform automatycznie zapisuje plik <code>inventory.ini</code> w tym samym katalogu, w którym pracujesz.</p></li>
+<li><p>Gdy uruchomisz <code>ansible-playbook -i inventory.ini ...</code>, Ansible użyje adresu IP, który właśnie został “wstrzyknięty” przez Terraform.</p></li>
+</ol>
+</section>
+<section id="metoda-dynamicznego-inwentarza" class="level5" data-number="8.8.1.5.2">
+<h5 data-number="8.8.1.5.2" class="anchored" data-anchor-id="metoda-dynamicznego-inwentarza"><span class="header-section-number">8.8.1.5.2</span> Metoda Dynamicznego inwentarza</h5>
+<p>Ansible posiada tzw. Dynamiczne inwentarze (ang. <em>Dynamic Inventory</em>). Zamiast pisać plik <code>.ini</code>, Ansible może odpytać API chmury (np. Azure) o to, jakie maszyny aktualnie istnieją.</p>
+<p>Jak to działa: Instalujesz wtyczkę <code>azure.azcollection</code>.</p>
+<p>I następnie:</p>
+<ol type="1">
+<li><p>Terraform tworzy zasoby w Azure i nadaje im konkretny tag, np. <code>role=db-server</code>.</p></li>
+<li><p>Ansible wywołuje skrypt (<code>ansible-inventory --graph</code>), który łączy się z API Azure.</p></li>
+<li><p>Skrypt filtruje zasoby po tagu <code>role=db-server</code> i automatycznie dodaje znalezione adresy IP do pamięci Ansible.</p></li>
+</ol>
+</section>
+<section id="metoda-output-i-zmienne-środowiskowe" class="level5" data-number="8.8.1.5.3">
+<h5 data-number="8.8.1.5.3" class="anchored" data-anchor-id="metoda-output-i-zmienne-środowiskowe"><span class="header-section-number">8.8.1.5.3</span> Metoda “Output” i zmienne środowiskowe</h5>
+<p>Możesz również wyciągnąć adres IP za pomocą komendy <code>terraform output</code> i przekazać go bezpośrednio do Ansible w linii poleceń.</p>
+<p>W Terraform dodajesz <code>output</code>:</p>
+<pre class="hcl"><code>output "vm_ip" {
+  value = azurerm_linux_virtual_machine.db_vm.public_ip_address
+}</code></pre>
+<p>Uruchamiasz Ansible z przekazaniem zmiennej:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Komenda pobierająca IP z Terraform</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="va">IP</span><span class="op">=</span><span class="va">$(</span><span class="ex">terraform</span> output <span class="at">-raw</span> vm_ip<span class="va">)</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Uruchomienie Ansible z tym IP</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="ex">ansible-playbook</span> <span class="at">-i</span> <span class="st">"</span><span class="va">$IP</span><span class="st">,"</span> playbook.yml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>(<strong>Uwaga</strong>: Przecinek po <code>$IP</code> w Ansible oznacza, że to pojedynczy adres, a nie ścieżka do pliku).</p>
+</section>
+</section>
+<section id="którą-metodę-wybrać" class="level4" data-number="8.8.1.6">
+<h4 data-number="8.8.1.6" class="anchored" data-anchor-id="którą-metodę-wybrać"><span class="header-section-number">8.8.1.6</span> Którą metodę wybrać?</h4>
+<ul>
+<li><p>Do nauki i małych projektów: Wybierz metodę z <code>local_file</code>. Jest niezwykle prosta, plik <code>inventory.ini</code> jest widoczny, można go sprawdzić przed uruchomieniem Ansible i daje pełną kontrolę.</p></li>
+<li><p>W profesjonalnych systemach: Wybierz metodę “Dynamic Inventory”, ponieważ infrastruktura w chmurze jest dynamiczna – maszyny mogą być tworzone i usuwane automatycznie (autoskalowanie), więc statyczny plik może nie zawsze nadążyć za zmianami.</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="lektura-uzupełniająca" class="level2" data-number="8.9">
+<h2 data-number="8.9" class="anchored" data-anchor-id="lektura-uzupełniająca"><span class="header-section-number">8.9</span> Lektura uzupełniająca</h2>
+<ul>
+<li><p><a href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs">Oficjalna dokumentacja Terraform (Azure Provider)</a></p></li>
+<li><p><a href="https://registry.terraform.io/providers/terra-farm/virtualbox/latest/docs">Virtualbox provider</a></p></li>
+<li><p><a href="https://learn.hashicorp.com/terraform">HashiCorp Learn - Terraform</a> – Interaktywne samouczki prowadzące od instalacji po zaawansowane wdrożenia.</p></li>
+<li><p><a href="https://registry.terraform.io/">Terraform Registry</a> – Najważniejsze źródło dokumentacji dla wszystkich providerów (np. Azure, AWS, Oracle VirtualBox). Tutaj znajdziesz parametry każdego dostępnego zasobu.</p></li>
+<li><p><a href="https://developer.hashicorp.com/terraform/language">Język Terraform (HCL)</a> – Oficjalna dokumentacja składni, funkcji i struktury języka HCL.</p></li>
+<li><p><a href="https://www.terraform-best-practices.com/">Terraform Best Practices</a> – Nieoficjalne repozytorium wiedzy o strukturze katalogów, nazewnictwie i unikaniu błędów w kodzie.</p></li>
+<li><p><a href="https://roadmap.sh/devops">Roadmap.sh - DevOps</a> – Ścieżka nauki wskazująca miejsce Terraform w ekosystemie narzędzi DevOps.</p></li>
+</ul>
+</section>
+<section id="wskazówka-praktyczne---praca-z-kodem-iac" class="level2" data-number="8.10">
+<h2 data-number="8.10" class="anchored" data-anchor-id="wskazówka-praktyczne---praca-z-kodem-iac"><span class="header-section-number">8.10</span> Wskazówka praktyczne - praca z kodem IaC</h2>
+<ol type="1">
+<li><p>Aby szybciej pracować z kodem, zainstaluj odpowiednie wtyczki do swojego IDE: np dla <strong>VS Code:</strong> Zainstaluj rozszerzenie “HashiCorp Terraform” – oferuje ono autouzupełnianie, podświetlanie składni i sprawdzanie błędów (ang. <em>linting</em>) w czasie rzeczywistym.</p></li>
+<li><p><strong><code>terraform fmt</code>:</strong> Używaj tego polecenia w terminalu przed zapisaniem kodu – automatycznie sformatuje Twój plik <code>main.tf</code> zgodnie ze standardami HashiCorp.</p></li>
+</ol>
 
 
 </section>

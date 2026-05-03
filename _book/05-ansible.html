@@ -365,22 +365,22 @@ zmienna2: To jest łańcuch znaków bez cudzysłowów</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><strong>Architektura</strong></td>
+<td style="text-align: left;">Architektura</td>
 <td style="text-align: left;">Bezagentowa (SSH)</td>
 <td style="text-align: left;">Agentowa (wymaga instalacji na nodach)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><strong>Język</strong></td>
+<td style="text-align: left;">Język</td>
 <td style="text-align: left;">YAML (prosty)</td>
 <td style="text-align: left;">Ruby / DSL (bardziej złożony)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><strong>Model pracy</strong></td>
-<td style="text-align: left;">Push (administrator “pcha” zmiany)</td>
-<td style="text-align: left;">Pull (agenci “pobierają” zmiany z serwera)</td>
+<td style="text-align: left;">Model pracy</td>
+<td style="text-align: left;">Push</td>
+<td style="text-align: left;">Pull</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><strong>Próg wejścia</strong></td>
+<td style="text-align: left;">Próg wejścia</td>
 <td style="text-align: left;">Bardzo niski</td>
 <td style="text-align: left;">Wysoki</td>
 </tr>
@@ -456,6 +456,37 @@ zmienna2: To jest łańcuch znaków bez cudzysłowów</code></pre>
 </ul>
 <p>**Wskazówka praktyczna* Jeśli nie jesteś pewien, jakiego modułu użyć, wpisz w wyszukiwarce: „Ansible [nazwa_technologii] module”. Dzięki temu szybko trafisz do odpowiedniej sekcji w dokumentacji kolekcji, która zajmuje się danym oprogramowaniem (np. kolekcja <code>community.general</code> zawiera dziesiątki przydatnych modułów ogólnego przeznaczenia).</p>
 </section>
+<section id="moduły-vs-wtyczki-plugins-co-jest-czym" class="level5" data-number="7.5.4.2.4">
+<h5 data-number="7.5.4.2.4" class="anchored" data-anchor-id="moduły-vs-wtyczki-plugins-co-jest-czym"><span class="header-section-number">7.5.4.2.4</span> Moduły vs Wtyczki (Plugins) – co jest czym?</h5>
+<p>W dokumentacji Ansible często spotkasz te dwa terminy. Choć brzmią podobnie, pełnią zupełnie inne role w procesie automatyzacji.</p>
+<section id="moduły-modules-wykonawcy" class="level6" data-number="7.5.4.2.4.1">
+<h6 data-number="7.5.4.2.4.1" class="anchored" data-anchor-id="moduły-modules-wykonawcy"><span class="header-section-number">7.5.4.2.4.1</span> 1. Moduły (Modules) – “Wykonawcy”</h6>
+<p>Moduły to małe programy, które Ansible przesyła na maszyny zarządzane, docelowe (tzw. <em>managed node</em>), wykonuje je tam, a po zakończeniu pracy usuwa. To one bezpośrednio zmieniają stan maszyny.</p>
+<ul>
+<li><strong>Gdzie działają:</strong> Na maszynie docelowej.</li>
+<li><strong>Przykłady:</strong> <code>apt</code>, <code>copy</code>, <code>mysql_user</code>, <code>service</code>.</li>
+<li><strong>Kiedy ich używasz:</strong> Zawsze, gdy chcesz coś zmienić w systemie (np. zainstalować pakiet lub skonfigurować usługę).</li>
+</ul>
+</section>
+<section id="wtyczki-plugins-rozszerzenia" class="level6" data-number="7.5.4.2.4.2">
+<h6 data-number="7.5.4.2.4.2" class="anchored" data-anchor-id="wtyczki-plugins-rozszerzenia"><span class="header-section-number">7.5.4.2.4.2</span> 2. Wtyczki (Plugins) – “Rozszerzenia”</h6>
+<p>Wtyczki rozszerzają funkcjonalność samego Ansible na maszynie zarządzającej (<em>control node</em>). Nie są one przesyłane na maszyny docelowe, lecz działają lokalnie, zmieniając sposób, w jaki Ansible przetwarza dane.</p>
+<ul>
+<li><strong>Gdzie działają:</strong> Na Twoim komputerze (maszynie, z której uruchamiasz pliki scenariusza).</li>
+<li><strong>Najważniejszy typ: Inventory Plugins:</strong> To one rozwiązują np. problem “zanotowania IP”. Pozwalają Ansible połączyć się z API chmury (np. Azure), pobrać listę maszyn i automatycznie utworzyć z nich inwentarz.</li>
+<li><strong>Inne typy:</strong> <em>Lookup plugins</em> (do pobierania danych z plików/baz) lub <em>Filter plugins</em> (do obróbki danych wewnątrz playbooków).</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="gdzie-szukać-informacji" class="level4" data-number="7.5.4.3">
+<h4 data-number="7.5.4.3" class="anchored" data-anchor-id="gdzie-szukać-informacji"><span class="header-section-number">7.5.4.3</span> Gdzie szukać informacji?</h4>
+<p>W dokumentacji Ansible (np. <code>docs.ansible.com</code>) każda kolekcja zawiera oddzielne sekcje dla obu typów:</p>
+<ol type="1">
+<li><strong>Szukaj Modułów:</strong> Jeśli musisz zainstalować oprogramowanie lub skonfigurować użytkowników – sprawdzaj sekcję <strong>Modules</strong>.</li>
+<li><strong>Szukaj Wtyczek (Plugins):</strong> Jeśli chcesz zintegrować Ansible z chmurą, pobrać dane dynamicznie lub zmienić sposób, w jaki Ansible czyta pliki konfiguracyjne – sprawdzaj sekcję <strong>Plugins</strong> (a w szczególności <em>Inventory plugins</em>).</li>
+</ol>
+<p><strong>Pamiętaj:</strong> Jeśli w laboratorium masz problem z “ręcznym przepisywaniem IP”, nie szukaj rozwiązania w modułach. Rozwiązaniem Twojego problemu jest właśnie <strong>Inventory Plugin</strong> (wtyczka inwentarzowa), która po odpowiedniej konfiguracji zrobi to automatycznie za Ciebie.</p>
 </section>
 </section>
 </section>

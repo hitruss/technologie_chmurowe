@@ -227,6 +227,34 @@ Kiedy otworzysz stronę konkretnego modułu, zwróć uwagę na trzy sekcje:
 Jeśli nie jesteś pewien, jakiego modułu użyć, wpisz w wyszukiwarce: „Ansible [nazwa_technologii] module”.
 Dzięki temu szybko trafisz do odpowiedniej sekcji w dokumentacji kolekcji, która zajmuje się danym oprogramowaniem (np. kolekcja `community.general` zawiera dziesiątki przydatnych modułów ogólnego przeznaczenia).
 
+##### Moduły vs Wtyczki (Plugins) – co jest czym?
+
+W dokumentacji Ansible często spotkasz te dwa terminy. Choć brzmią podobnie, pełnią zupełnie inne role w procesie automatyzacji.
+
+###### 1. Moduły (Modules) – "Wykonawcy"
+Moduły to małe programy, które Ansible przesyła na maszyny zarządzane, docelowe (tzw. *managed node*), wykonuje je tam, a po zakończeniu pracy usuwa. To one bezpośrednio zmieniają stan maszyny.
+
+* **Gdzie działają:** Na maszynie docelowej.
+* **Przykłady:** `apt`, `copy`, `mysql_user`, `service`.
+* **Kiedy ich używasz:** Zawsze, gdy chcesz coś zmienić w systemie (np. zainstalować pakiet lub skonfigurować usługę).
+
+###### 2. Wtyczki (Plugins) – "Rozszerzenia"
+Wtyczki rozszerzają funkcjonalność samego Ansible na maszynie zarządzającej (*control node*). Nie są one przesyłane na maszyny docelowe, lecz działają lokalnie, zmieniając sposób, w jaki Ansible przetwarza dane.
+
+* **Gdzie działają:** Na Twoim komputerze (maszynie, z której uruchamiasz pliki scenariusza).
+* **Najważniejszy typ: Inventory Plugins:** To one rozwiązują np. problem "zanotowania IP". Pozwalają Ansible połączyć się z API chmury (np. Azure), pobrać listę maszyn i automatycznie utworzyć z nich inwentarz.
+* **Inne typy:** *Lookup plugins* (do pobierania danych z plików/baz) lub *Filter plugins* (do obróbki danych wewnątrz playbooków).
+
+
+#### Gdzie szukać informacji?
+W dokumentacji Ansible (np. `docs.ansible.com`) każda kolekcja zawiera oddzielne sekcje dla obu typów:
+
+1. **Szukaj Modułów:** Jeśli musisz zainstalować oprogramowanie lub skonfigurować użytkowników – sprawdzaj sekcję **Modules**.
+2. **Szukaj Wtyczek (Plugins):** Jeśli chcesz zintegrować Ansible z chmurą, pobrać dane dynamicznie lub zmienić sposób, w jaki Ansible czyta pliki konfiguracyjne – sprawdzaj sekcję **Plugins** (a w szczególności *Inventory plugins*).
+
+**Pamiętaj:**
+Jeśli w laboratorium masz problem z "ręcznym przepisywaniem IP", nie szukaj rozwiązania w modułach. Rozwiązaniem Twojego problemu jest właśnie **Inventory Plugin** (wtyczka inwentarzowa), która po odpowiedniej konfiguracji zrobi to automatycznie za Ciebie.
+
 
 ## Korzystanie z Ansible w praktyce
 
