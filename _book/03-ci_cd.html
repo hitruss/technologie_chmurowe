@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.6.42">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -21,9 +21,8 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -34,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -67,17 +66,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="./">
 <link href="./05-ansible.html" rel="next">
 <link href="./02a-azure.html" rel="prev">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-8da5b4427184b79ecddefad3d342027e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -109,7 +106,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body class="nav-sidebar floating quarto-light">
+<body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -385,7 +382,7 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <p><strong>Step:</strong> - Pojedyncza akcja: uruchom komendę, wykonaj gotową akcję</p>
 <p><strong>Runner:</strong> - Maszyna wirtualna która wykonuje workflow (Ubuntu, Windows, macOS)</p>
 <p><strong>Przykład struktury:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> CI Pipeline</span><span class="co">            # Nazwa workflow</span></span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> CI Pipeline</span><span class="co">            # Nazwa workflow</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">push</span><span class="kw">,</span><span class="at"> pull_request</span><span class="kw">]</span><span class="co">     # Trigger</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">jobs</span><span class="kw">:</span><span class="co">                        # Lista jobów</span></span>
@@ -393,7 +390,7 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span><span class="co">   # Runner</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span><span class="co">                   # Kroki</span></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v3</span><span class="co">     # Gotowa akcja</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">run</span><span class="kw">:</span><span class="at"> npm test</span><span class="co">                 # Komenda</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">run</span><span class="kw">:</span><span class="at"> npm test</span><span class="co">                 # Komenda</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <hr>
 </section>
 </section>
@@ -414,7 +411,7 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <h3 data-number="6.3.2" class="anchored" data-anchor-id="krok-1-przygotowanie-repozytorium"><span class="header-section-number">6.3.2</span> Krok 1: Przygotowanie repozytorium</h3>
 <p><strong>1.1. Stwórz nowe repo na GitHub:</strong> - Przejdź na https://github.com i zaloguj się - Kliknij “+” -&gt; <strong>“New repository”</strong> - <strong>Repository name:</strong> <code>azure_app_2</code> (lub inna nazwa) - <strong>Visibility:</strong> Public (więcej darmowych minut Actions) - <strong>Create repository</strong></p>
 <p><strong>1.2. Pobierz azure_app_2 z repo technologie_chmurowe i zamień na nowe repo</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sklonuj projekt</span></span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sklonuj projekt</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/lwawrowski/technologie_chmurowe.git</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># przejdź do tego repo</span></span>
@@ -427,16 +424,16 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote add new-origin https://github.com/<span class="op">&lt;</span>link do repo<span class="op">&gt;</span></span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># push do nowego repo - teraz powinien być tam tylko folder azure_app_2</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push new-origin azure_app_2:main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push new-origin azure_app_2:main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>1.3. Sprawdź czy projekt jest na GitHub:</strong> - Odśwież stronę repozytorium - Powinieneś zobaczyć foldery: <code>backend/</code>, <code>frontend/</code>, <code>nginx/</code></p>
 <p><strong>1.4. Pobierz projekt z GitHub</strong></p>
 <ul>
 <li>przejdź do lokalizacji gdzie chcesz dodać nowy projekt</li>
 <li>Pobierz z repozytorium https lub ssh</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a></span>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># sklonuj repo lokalnie</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/<span class="op">&lt;</span>uzytkownik<span class="op">&gt;</span>/<span class="op">&lt;</span>nazwa projektu<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/<span class="op">&lt;</span>uzytkownik<span class="op">&gt;</span>/<span class="op">&lt;</span>nazwa projektu<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <hr>
 </section>
 <section id="krok-2-dodanie-testów-jednostkowych-do-backendu" class="level3" data-number="6.3.3">
@@ -450,12 +447,12 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
     ├── __init__.py
     └── test_api.py     # Testy jednostkowe</code></pre>
 <p><strong>2.2. Utwórz folder testów:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> backend/tests</span>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> backend/tests</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># utwórz __init__ zeby pytest znalazł testy</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> backend/tests/__init__.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> backend/tests/__init__.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>2.3. Utwórz plik <code>backend/tests/test_api.py</code>:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pytest</span>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pytest</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> unittest.mock <span class="im">import</span> MagicMock, patch</span>
@@ -516,14 +513,14 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">len</span>(data[<span class="st">'users'</span>]) <span class="op">==</span> <span class="dv">2</span></span>
 <span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> data[<span class="st">'users'</span>][<span class="dv">0</span>][<span class="st">'name'</span>] <span class="op">==</span> <span class="st">'Jan'</span></span>
 <span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> data[<span class="st">'users'</span>][<span class="dv">1</span>][<span class="st">'name'</span>] <span class="op">==</span> <span class="st">'Anna'</span></span>
-<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>    </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>2.4. Dodaj pytest do requirements:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dodaj na końcu backend/requirements.txt</span></span>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dodaj na końcu backend/requirements.txt</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"pytest==7.4.3"</span> <span class="op">&gt;&gt;</span> backend/requirements.txt</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"pytest-cov==4.1.0"</span> <span class="op">&gt;&gt;</span> backend/requirements.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"pytest-cov==4.1.0"</span> <span class="op">&gt;&gt;</span> backend/requirements.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>2.5. Przetestuj lokalnie (opcjonalnie):</strong></p>
 <p><strong>Opcja A: Z Dockerem (rekomendowane - nie instaluje nic na komputerze):</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Zbuduj obraz backendu (pamiętaj o wcześniejszym uruchomieniu docker desktop)</span></span>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Zbuduj obraz backendu (pamiętaj o wcześniejszym uruchomieniu docker desktop)</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-t</span> backend-test ./backend</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Uruchom testy w kontenerze</span></span>
@@ -533,16 +530,16 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># tests/test_api.py::test_import PASSED                                    [ 25%]</span></span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co"># tests/test_api.py::test_basic_math PASSED                                [ 50%]</span></span>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># tests/test_api.py::test_string_operations PASSED                         [ 75%]</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># tests/test_api.py::test_flask_app_exists PASSED                          [100%]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># tests/test_api.py::test_flask_app_exists PASSED                          [100%]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <hr>
 </section>
 <section id="krok-3-pierwszy-workflow-ci" class="level3" data-number="6.3.4">
 <h3 data-number="6.3.4" class="anchored" data-anchor-id="krok-3-pierwszy-workflow-ci"><span class="header-section-number">6.3.4</span> Krok 3: Pierwszy workflow CI</h3>
 <p><strong>3.1. Utwórz strukturę folderów dla GitHub Actions:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># W głównym katalogu projektu (azure-app-cicd/)</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> .github/workflows</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># W głównym katalogu projektu (azure-app-cicd/)</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> .github/workflows</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>3.2. Utwórz plik <code>.github/workflows/ci.yml</code>:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> CI - Backend Tests</span></span>
+<div class="sourceCode" id="cb13"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> CI - Backend Tests</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Kiedy uruchomić workflow</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
@@ -584,11 +581,11 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Test Summary</span></span>
 <span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">if</span><span class="kw">:</span><span class="at"> always()</span></span>
 <span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>          echo "✅ Backend tests completed!"</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>          echo "✅ Backend tests completed!"</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>3.3. Commit i push:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Add CI workflow for backend tests"</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <hr>
 </section>
 <section id="krok-4-sprawdzenie-wyniku" class="level3" data-number="6.3.5">
@@ -597,9 +594,9 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <p><strong>4.2. Obserwuj wykonanie:</strong> - Kliknij na nazwę workflow - Kliknij na job <strong>“Test Backend API”</strong> - Zobacz poszczególne kroki wykonywane live!</p>
 <p><strong>4.3. Weryfikacja:</strong> - ✅ Wszystkie kroki zielone? <strong>Sukces!</strong> - ❌ Coś czerwone? Kliknij i zobacz logi błędu</p>
 <p><strong>4.4. Badge statusu (opcjonalnie):</strong> Dodaj do <code>README.md</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Azure App CI/CD</span></span>
+<div class="sourceCode" id="cb15"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Azure App CI/CD</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="al">![CI Status](https://github.com/TWOJA-NAZWA/NAZWA-PROJEKTU/workflows/CI%20-%20Backend%20Tests/badge.svg)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="al">![CI Status](https://github.com/TWOJA-NAZWA/NAZWA-PROJEKTU/workflows/CI%20-%20Backend%20Tests/badge.svg)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <hr>
 </section>
 <section id="eksperyment-symulacja-błędu" class="level3" data-number="6.3.6">
@@ -608,38 +605,38 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <ol type="1">
 <li>Zmień test w <code>backend/tests/test_api.py</code> - zmodyfikuj <code>test_hello_endpoint</code>:</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_hello_endpoint(client):</span>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_hello_endpoint(client):</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test endpointa /api/hello - sprawdza czy API odpowiada poprawnie"""</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> client.get(<span class="st">'/api/hello'</span>)</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> response.status_code <span class="op">==</span> <span class="dv">200</span></span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> response.get_json()</span>
 <span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> data[<span class="st">'message'</span>] <span class="op">==</span> <span class="st">'Wrong Message!'</span>  <span class="co"># ⬅️ Celowy błąd!</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> data[<span class="st">'status'</span>] <span class="op">==</span> <span class="st">'success'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> data[<span class="st">'status'</span>] <span class="op">==</span> <span class="st">'success'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="2" type="1">
 <li>Przetestuj lokalnie z Dockerem (opcjonalnie):</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-t</span> backend-test ./backend</span>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-t</span> backend-test ./backend</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> backend-test pytest tests/ <span class="at">-v</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Powinieneś zobaczyć błąd: AssertionError</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Powinieneś zobaczyć błąd: AssertionError</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="3" type="1">
 <li>Commit i push:</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add backend/tests/test_api.py</span>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add backend/tests/test_api.py</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Test: symulacja błędu w testach"</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="4" type="1">
 <li><p>Przejdź do <strong>Actions</strong> → sprawdź że workflow <strong>failuje ❌</strong></p></li>
 <li><p>Napraw i push ponownie:</p></li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_hello_endpoint(client):</span>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_hello_endpoint(client):</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test endpointa /api/hello - sprawdza czy API odpowiada poprawnie"""</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> client.get(<span class="st">'/api/hello'</span>)</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> response.status_code <span class="op">==</span> <span class="dv">200</span></span>
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> response.get_json()</span>
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> data[<span class="st">'message'</span>] <span class="op">==</span> <span class="st">'Hello World from Backend!'</span>  <span class="co"># ✅ Naprawione</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> data[<span class="st">'status'</span>] <span class="op">==</span> <span class="st">'success'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> data[<span class="st">'status'</span>] <span class="op">==</span> <span class="st">'success'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <hr>
 </section>
 </section>
@@ -651,7 +648,7 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <section id="krok-1-utworzenie-azure-container-registry-jeśli-jeszcze-nie-masz" class="level3" data-number="6.4.2">
 <h3 data-number="6.4.2" class="anchored" data-anchor-id="krok-1-utworzenie-azure-container-registry-jeśli-jeszcze-nie-masz"><span class="header-section-number">6.4.2</span> Krok 1: Utworzenie Azure Container Registry (jeśli jeszcze nie masz)</h3>
 <p><strong>Przez Azure CLI:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Zaloguj się do Azure</span></span>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Zaloguj się do Azure</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> login</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Utwórz ACR (wybierz unikalną nazwę)</span></span>
@@ -665,7 +662,7 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> acr update <span class="at">--name</span> <span class="op">&lt;</span>twojanazvvaacr<span class="op">&gt;</span> --admin-enabled true</span>
 <span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Pobierz credentials (ZAPISZ JE!)</span></span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> acr credential show <span class="at">--name</span> <span class="op">&lt;</span>twojanazvvaacr<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> acr credential show <span class="at">--name</span> <span class="op">&lt;</span>twojanazvvaacr<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <hr>
 </section>
 <section id="krok-2-dodanie-secrets-do-github" class="level3" data-number="6.4.3">
@@ -682,7 +679,7 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <section id="krok-3-workflow-budowania-i-push-do-acr" class="level3" data-number="6.4.4">
 <h3 data-number="6.4.4" class="anchored" data-anchor-id="krok-3-workflow-budowania-i-push-do-acr"><span class="header-section-number">6.4.4</span> Krok 3: Workflow budowania i push do ACR</h3>
 <p><strong>3.1. Utwórz nowy plik <code>.github/workflows/docker-build.yml</code>:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Docker Build &amp; Push</span></span>
+<div class="sourceCode" id="cb21"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Docker Build &amp; Push</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span><span class="co"> #uruchamianie</span></span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">push</span><span class="kw">:</span><span class="co"> # przy pushowaniu </span></span>
@@ -754,12 +751,12 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <span id="cb21-70"><a href="#cb21-70" aria-hidden="true" tabindex="-1"></a>          echo "✅ All images pushed to ACR!"</span>
 <span id="cb21-71"><a href="#cb21-71" aria-hidden="true" tabindex="-1"></a>          echo "Backend: ${{ secrets.ACR_LOGIN_SERVER }}/azure-app-backend:latest"</span>
 <span id="cb21-72"><a href="#cb21-72" aria-hidden="true" tabindex="-1"></a>          echo "Frontend: ${{ secrets.ACR_LOGIN_SERVER }}/azure-app-frontend:latest"</span>
-<span id="cb21-73"><a href="#cb21-73" aria-hidden="true" tabindex="-1"></a>          echo "Nginx: ${{ secrets.ACR_LOGIN_SERVER }}/azure-app-nginx:latest"</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb21-73"><a href="#cb21-73" aria-hidden="true" tabindex="-1"></a>          echo "Nginx: ${{ secrets.ACR_LOGIN_SERVER }}/azure-app-nginx:latest"</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <hr>
 <p><strong>3.2. Commit i push:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .github/workflows/docker-build.yml</span>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .github/workflows/docker-build.yml</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Add Docker build and push workflow"</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>3.3. Sprawdź wykonanie:</strong> - GitHub → <strong>“Actions”</strong> → workflow <strong>“Docker Build &amp; Push”</strong></p>
 <hr>
 </section>
@@ -767,13 +764,13 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <h3 data-number="6.4.5" class="anchored" data-anchor-id="krok-4-weryfikacja-w-azure"><span class="header-section-number">6.4.5</span> Krok 4: Weryfikacja w Azure</h3>
 <p><strong>4.1. Sprawdź czy obrazy są w ACR:</strong></p>
 <p><strong>Przez CLI:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Wylistuj obrazy w ACR</span></span>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Wylistuj obrazy w ACR</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> acr repository list <span class="at">--name</span> <span class="op">&lt;</span>twojanazvvaacr<span class="op">&gt;</span> --output table</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Powinieneś zobaczyć:</span></span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># azure-app-backend</span></span>
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co"># azure-app-frontend</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co"># azure-app-nginx</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co"># azure-app-nginx</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>Przez Portal:</strong> 1. Azure Portal → Twój ACR 2. <strong>“Services”</strong> → <strong>“Repositories”</strong> 3. Powinieneś zobaczyć 3 repozytoria z obrazami 4. Kliknij na obraz → zobacz tagi (<code>latest</code>, <code>&lt;commit-sha&gt;</code>)</p>
 <hr>
 </section>
@@ -858,7 +855,7 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <section id="krok-6-przygotuj-plik-compose-do-app-service" class="level2" data-number="6.10">
 <h2 data-number="6.10" class="anchored" data-anchor-id="krok-6-przygotuj-plik-compose-do-app-service"><span class="header-section-number">6.10</span> Krok 6: Przygotuj plik compose do App Service</h2>
 <p>Utwórz w repo plik <code>docker-compose.appservice.yml</code> z taką zawartością:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">'3.8'</span></span>
+<div class="sourceCode" id="cb24"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">'3.8'</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">backend</span><span class="kw">:</span></span>
@@ -877,14 +874,14 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">"80:80"</span></span>
 <span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">depends_on</span><span class="kw">:</span></span>
 <span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> backend</span></span>
-<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> frontend</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> frontend</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Ważne: - zamień <code>&lt;twoj-acr&gt;</code> na prawdziwą nazwę ACR, - zostaw obrazy <code>azure-app-backend</code>, <code>azure-app-frontend</code>, <code>azure-app-nginx</code>, bo tak były zbudowane w ćwiczeniu 2, - wystawiony port ma być tylko na <code>nginx</code>, - to jest zgodne z routingiem z nginx.conf.</p>
 <hr>
 </section>
 <section id="krok-7-workflow-deploymentu" class="level2" data-number="6.11">
 <h2 data-number="6.11" class="anchored" data-anchor-id="krok-7-workflow-deploymentu"><span class="header-section-number">6.11</span> Krok 7: Workflow deploymentu</h2>
 <p>Utwórz plik <code>.github/workflows/deploy.yml</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Deploy to Azure App Service</span></span>
+<div class="sourceCode" id="cb25"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Deploy to Azure App Service</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">workflow_run</span><span class="kw">:</span></span>
@@ -909,15 +906,15 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
 <span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">app-name</span><span class="kw">:</span><span class="at"> ${{ secrets.AZURE_WEBAPP_NAME }}</span></span>
 <span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">publish-profile</span><span class="kw">:</span><span class="at"> ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}</span></span>
-<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">configuration-file</span><span class="kw">:</span><span class="at"> docker-compose.appservice.yml</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">configuration-file</span><span class="kw">:</span><span class="at"> docker-compose.appservice.yml</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Dlaczego tak: - workflow odpala się po sukcesie z ćwiczenia 2, - nie używa <code>azure/login</code>, - nie potrzebuje <code>AZURE_CREDENTIALS</code>, - nie potrzebuje <code>Service Principal</code>.</p>
 <hr>
 </section>
 <section id="krok-8-commit-i-push" class="level2" data-number="6.12">
 <h2 data-number="6.12" class="anchored" data-anchor-id="krok-8-commit-i-push"><span class="header-section-number">6.12</span> Krok 8: Commit i push</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add docker-compose.appservice.yml .github/workflows/deploy.yml</span>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add docker-compose.appservice.yml .github/workflows/deploy.yml</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Add App Service deployment workflow"</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <hr>
 </section>
 <section id="krok-9-weryfikacja" class="level2" data-number="6.13">
@@ -928,7 +925,7 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <p>Health check sprawdzisz pod:</p>
 <pre class="text"><code>https://&lt;twoja-aplikacja&gt;.azurewebsites.net/api/health</code></pre>
 <p>To powinno zwrócić odpowiedź zgodną z app.py:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"status"</span><span class="fu">:</span><span class="st">"healthy"</span><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">"status"</span><span class="fu">:</span><span class="st">"healthy"</span><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <hr>
 </section>
 <section id="typowe-problemy" class="level2" data-number="6.14">
@@ -1008,25 +1005,25 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <blockquote class="blockquote">
 <p>To polecenie otwiera przeglądarkę i loguje Ciebie do Azure. Bez tego Azure CLI nie będzie miał dostępu do Twoich zasobów na Azure.</p>
 </blockquote>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> login</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> account show <span class="at">-o</span> table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> login</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> account show <span class="at">-o</span> table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="2" type="1">
 <li>Utwórz Resource Group (folder logiczny na Azure):</li>
 </ol>
 <blockquote class="blockquote">
 <p>Resource Group to pojemnik dla wszystkich zasobów (ACR, baza danych, App Service itp). Wszystkie zasoby w tym ćwiczeniu będą w tej grupie i będzie je łatwiej zarządzać/usuwać na koniec.</p>
 </blockquote>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> group create <span class="at">-n</span> technologie-chmurowe-rg <span class="at">-l</span> polandcentral</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> group create <span class="at">-n</span> technologie-chmurowe-rg <span class="at">-l</span> polandcentral</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="3" type="1">
 <li>Utwórz Azure Container Registry (prywatne repozytorium dla obrazów Docker):</li>
 </ol>
 <blockquote class="blockquote">
 <p>ACR (Azure Container Registry) to prywatne repozytorium do przechowywania obrazów Docker. GitHub Actions będzie budować obrazy i wysyłać je tutaj, potem App Service będzie je pobierać. Bez ACR nie moglibyśmy automatycznie budzować i deployować. - <code>--admin-enabled true</code> - włącza admin dostęp (login z username/password zamiast managed identity) - <code>--sku Basic</code> - najtańszy tier, wystarczy dla projektu</p>
 </blockquote>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="va">ACR_NAME</span><span class="op">=</span>twojunikalnyacr123</span>
+<div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="va">ACR_NAME</span><span class="op">=</span>twojunikalnyacr123</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> acr create <span class="at">-g</span> technologie-chmurowe-rg <span class="at">-n</span> <span class="va">$ACR_NAME</span> <span class="at">--sku</span> Basic <span class="at">--admin-enabled</span> true</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> acr show <span class="at">-g</span> technologie-chmurowe-rg <span class="at">-n</span> <span class="va">$ACR_NAME</span> <span class="at">--query</span> loginServer <span class="at">-o</span> tsv</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> acr credential show <span class="at">-n</span> <span class="va">$ACR_NAME</span> <span class="at">-o</span> json</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> acr credential show <span class="at">-n</span> <span class="va">$ACR_NAME</span> <span class="at">-o</span> json</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Zapisz: - loginServer, np. twojunikalnyacr123.azurecr.io (adres repozytorium) - username (login do ACR) - passwords[0].value (hasło do ACR)</p>
 <hr>
 <p><strong>2. Utwórz PostgreSQL (zarządzana baza danych w chmurze)</strong></p>
@@ -1043,7 +1040,7 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <li><code>--version 16</code> - wersja PostgreSQL</li>
 </ul>
 </blockquote>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="va">PG_SERVER</span><span class="op">=</span>tcpg<span class="va">$RANDOM</span></span>
+<div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="va">PG_SERVER</span><span class="op">=</span>tcpg<span class="va">$RANDOM</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="va">PG_ADMIN</span><span class="op">=</span>pgadminuser</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="va">PG_PASS</span><span class="op">=</span><span class="st">'MocneHaslo123!'</span></span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1057,25 +1054,25 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">--tier</span> Burstable <span class="dt">\</span></span>
 <span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">--version</span> 16 <span class="dt">\</span></span>
 <span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">--storage-size</span> 32 <span class="dt">\</span></span>
-<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">--public-access</span> 0.0.0.0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">--public-access</span> 0.0.0.0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="2" type="1">
 <li>Utwórz bazę danych w serwere:</li>
 </ol>
 <blockquote class="blockquote">
 <p>Backend będzie klocować dane do bazy utworzonej w serwerie (nie globalnie w serwerie, ale w konkretnej bazie).</p>
 </blockquote>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> postgres flexible-server db create <span class="dt">\</span></span>
+<div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> postgres flexible-server db create <span class="dt">\</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-g</span> technologie-chmurowe-rg <span class="dt">\</span></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-s</span> <span class="va">$PG_SERVER</span> <span class="dt">\</span></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-d</span> appdb</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-d</span> appdb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="3" type="1">
 <li>Zbuduj CONNECTION STRING (DATABASE_URL):</li>
 </ol>
 <blockquote class="blockquote">
 <p>To jest zmienną środowiskową którą Backend będzie czytać - zawiera wszystkie informacje do połączenia z bazą (host, port, username, password). Będziesz to wklejać do GitHub Secrets i App Service Settings.</p>
 </blockquote>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="va">DATABASE_URL</span><span class="op">=</span><span class="st">"postgresql://</span><span class="va">${PG_ADMIN}</span><span class="st">:</span><span class="va">${PG_PASS}</span><span class="st">@</span><span class="va">${PG_SERVER}</span><span class="st">.postgres.database.azure.com:5432/appdb?sslmode=require"</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$DATABASE_URL</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="va">DATABASE_URL</span><span class="op">=</span><span class="st">"postgresql://</span><span class="va">${PG_ADMIN}</span><span class="st">:</span><span class="va">${PG_PASS}</span><span class="st">@</span><span class="va">${PG_SERVER}</span><span class="st">.postgres.database.azure.com:5432/appdb?sslmode=require"</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$DATABASE_URL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Zapisz ten URL (będzie ci potrzebny w kilku miejscach).</p>
 <hr>
 <p><strong>3. Utwórz Storage Account (magazyn na pliki/blob’i)</strong></p>
@@ -1091,35 +1088,35 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <li><code>--kind StorageV2</code> - nowoczesna wersja Storage Account</li>
 </ul>
 </blockquote>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="va">STORAGE_NAME</span><span class="op">=</span>tcstor<span class="va">$RANDOM</span></span>
+<div class="sourceCode" id="cb37"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="va">STORAGE_NAME</span><span class="op">=</span>tcstor<span class="va">$RANDOM</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> storage account create <span class="dt">\</span></span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-g</span> technologie-chmurowe-rg <span class="dt">\</span></span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-n</span> <span class="va">$STORAGE_NAME</span> <span class="dt">\</span></span>
 <span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">-l</span> polandcentral <span class="dt">\</span></span>
 <span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--sku</span> Standard_LRS <span class="dt">\</span></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--kind</span> StorageV2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--kind</span> StorageV2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="2" type="1">
 <li>Pobierz connection string (credentials do Storage Account):</li>
 </ol>
 <blockquote class="blockquote">
 <p>Connection string zawiera wszystkie informacje do podłączenia się do Storage Account (jak DATABASE_URL ale dla plików). Backend będzie go czytać ze zmiennych środowiskowych.</p>
 </blockquote>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="va">AZURE_STORAGE_CONNECTION_STRING</span><span class="op">=</span><span class="va">$(</span><span class="ex">az</span> storage account show-connection-string <span class="dt">\</span></span>
+<div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="va">AZURE_STORAGE_CONNECTION_STRING</span><span class="op">=</span><span class="va">$(</span><span class="ex">az</span> storage account show-connection-string <span class="dt">\</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-g</span> technologie-chmurowe-rg <span class="dt">\</span></span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-n</span> <span class="va">$STORAGE_NAME</span> <span class="dt">\</span></span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--query</span> connectionString <span class="at">-o</span> tsv<span class="va">)</span></span>
 <span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$AZURE_STORAGE_CONNECTION_STRING</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$AZURE_STORAGE_CONNECTION_STRING</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="3" type="1">
 <li>Utwórz kontener (folder) wewnątrz Storage Account:</li>
 </ol>
 <blockquote class="blockquote">
 <p>Kontener to jak folder na dysku - będziemy tam складać uploaded pliki. Backend będzie pisać do kontenera “uploads”.</p>
 </blockquote>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="va">CONTAINER_NAME</span><span class="op">=</span>uploads</span>
+<div class="sourceCode" id="cb39"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="va">CONTAINER_NAME</span><span class="op">=</span>uploads</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> storage container create <span class="dt">\</span></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--name</span> <span class="va">$CONTAINER_NAME</span> <span class="dt">\</span></span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--connection-string</span> <span class="st">"</span><span class="va">$AZURE_STORAGE_CONNECTION_STRING</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--connection-string</span> <span class="st">"</span><span class="va">$AZURE_STORAGE_CONNECTION_STRING</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Zapisz: - AZURE_STORAGE_CONNECTION_STRING (connection string do Storage Account) - AZURE_STORAGE_CONTAINER=uploads (nazwa kontenera)</p>
 <hr>
 <p><strong>4. Utwórz App Service (miejsca gdzie będzie działać konteneryzowana aplikacja)</strong></p>
@@ -1132,31 +1129,31 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <blockquote class="blockquote">
 <p>Plan to “wielkość maszyny” - ile CPU, RAM, itp. B1 to najtańszy tier, wystarczy dla projektu. <code>--is-linux</code> - będziemy uruchamiać kontenery Linuxa (bo nasze Dockery są na Linux)</p>
 </blockquote>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="va">APP_PLAN</span><span class="op">=</span>tc-app-plan</span>
+<div class="sourceCode" id="cb40"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="va">APP_PLAN</span><span class="op">=</span>tc-app-plan</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> appservice plan create <span class="dt">\</span></span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-g</span> technologie-chmurowe-rg <span class="dt">\</span></span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-n</span> <span class="va">$APP_PLAN</span> <span class="dt">\</span></span>
 <span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--is-linux</span> <span class="dt">\</span></span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--sku</span> B1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--sku</span> B1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="2" type="1">
 <li>Utwórz Web App (aplikacja):</li>
 </ol>
 <blockquote class="blockquote">
 <p>To jest sama aplikacja na Azure. <code>-i</code> to initial image (na razie stawiamy domyślny obraz, potem go zamienimy na nasz)</p>
 </blockquote>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="va">WEBAPP_NAME</span><span class="op">=</span>azure-app-cicd-666</span>
+<div class="sourceCode" id="cb41"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="va">WEBAPP_NAME</span><span class="op">=</span>azure-app-cicd-666</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> webapp create <span class="dt">\</span></span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-g</span> technologie-chmurowe-rg <span class="dt">\</span></span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-p</span> <span class="va">$APP_PLAN</span> <span class="dt">\</span></span>
 <span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">-n</span> <span class="va">$WEBAPP_NAME</span> <span class="dt">\</span></span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">-i</span> mcr.microsoft.com/appsvc/staticsite:latest</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">-i</span> mcr.microsoft.com/appsvc/staticsite:latest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <hr>
 <p><strong>5. Skonfiguruj App Service (zmienne środowiskowe)</strong></p>
 <blockquote class="blockquote">
 <p>App Service musi wiedzieć: - Gdzie pobierać obrazy Docker (ACR + credentials) - Jak podłączyć się do bazy danych (DATABASE_URL) - Jak komunikować się ze Storage Account (AZURE_STORAGE_CONNECTION_STRING) Te zmienne będą dostępne dla kontenerów w zmiennych środowiskowych.</p>
 </blockquote>
 <p>Pobranie credentials z ACR i ustawienie ich w App Service:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="va">ACR_LOGIN_SERVER</span><span class="op">=</span><span class="va">$(</span><span class="ex">az</span> acr show <span class="at">-g</span> technologie-chmurowe-rg <span class="at">-n</span> <span class="st">"</span><span class="va">$ACR_NAME</span><span class="st">"</span> <span class="at">--query</span> <span class="st">'loginServer'</span> <span class="at">-o</span> tsv<span class="va">)</span></span>
+<div class="sourceCode" id="cb42"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="va">ACR_LOGIN_SERVER</span><span class="op">=</span><span class="va">$(</span><span class="ex">az</span> acr show <span class="at">-g</span> technologie-chmurowe-rg <span class="at">-n</span> <span class="st">"</span><span class="va">$ACR_NAME</span><span class="st">"</span> <span class="at">--query</span> <span class="st">'loginServer'</span> <span class="at">-o</span> tsv<span class="va">)</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="va">ACR_USERNAME</span><span class="op">=</span><span class="va">$(</span><span class="ex">az</span> acr credential show <span class="at">-n</span> <span class="st">"</span><span class="va">$ACR_NAME</span><span class="st">"</span> <span class="at">--query</span> <span class="st">'username'</span> <span class="at">-o</span> tsv<span class="va">)</span></span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="va">ACR_PASSWORD</span><span class="op">=</span><span class="va">$(</span><span class="ex">az</span> acr credential show <span class="at">-n</span> <span class="st">"</span><span class="va">$ACR_NAME</span><span class="st">"</span> <span class="at">--query</span> <span class="st">'passwords[0].value'</span> <span class="at">-o</span> tsv<span class="va">)</span></span>
 <span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1169,19 +1166,19 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>  DOCKER_REGISTRY_SERVER_PASSWORD=<span class="st">"</span><span class="va">$ACR_PASSWORD</span><span class="st">"</span> <span class="dt">\</span></span>
 <span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>  DATABASE_URL=<span class="st">"</span><span class="va">$DATABASE_URL</span><span class="st">"</span> <span class="dt">\</span></span>
 <span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>  AZURE_STORAGE_CONNECTION_STRING=<span class="st">"</span><span class="va">$AZURE_STORAGE_CONNECTION_STRING</span><span class="st">"</span> <span class="dt">\</span></span>
-<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>  AZURE_STORAGE_CONTAINER=<span class="st">"</span><span class="va">$CONTAINER_NAME</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>  AZURE_STORAGE_CONTAINER=<span class="st">"</span><span class="va">$CONTAINER_NAME</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <hr>
 <p><strong>6. Utwórz Service Principal (tożsamość dla GitHub Actions)</strong></p>
 <blockquote class="blockquote">
 <p>Service Principal to jak “użytkownik” dla GitHub Actions. Azure mu zaufać i pozwoli mu deployować zasoby. Na tym poleceniu wyjdzie JSON z credentials - to jest bardzo wrażliwy plik (jak hasło root’a)! - <code>--role Contributor</code> - Service Principal będzie mieć uprawnienia do tworzenia/usuwania zasobów - <code>--scopes</code> - ograniczamy uprawnienia do naszej Resource Group (nie będzie móc ingerować w inne zasoby) - <code>--sdk-auth</code> - format JSON dla GitHub Actions</p>
 </blockquote>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="va">SUBSCRIPTION_ID</span><span class="op">=</span><span class="va">$(</span><span class="ex">az</span> account show <span class="at">--query</span> id <span class="at">-o</span> tsv<span class="va">)</span></span>
+<div class="sourceCode" id="cb43"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="va">SUBSCRIPTION_ID</span><span class="op">=</span><span class="va">$(</span><span class="ex">az</span> account show <span class="at">--query</span> id <span class="at">-o</span> tsv<span class="va">)</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> ad sp create-for-rbac <span class="dt">\</span></span>
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--name</span> <span class="st">"github-actions-sp-tc"</span> <span class="dt">\</span></span>
 <span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--role</span> Contributor <span class="dt">\</span></span>
 <span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--scopes</span> /subscriptions/<span class="va">$SUBSCRIPTION_ID</span>/resourceGroups/technologie-chmurowe-rg <span class="dt">\</span></span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--sdk-auth</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--sdk-auth</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Skopiuj <strong>cały JSON</strong> z outputu (będzie potrzebny w kroku 7).</p>
 <hr>
 <p><strong>7. Dodaj sekrety do GitHub (aby workflow miał dostęp do Azure)</strong></p>
@@ -1196,7 +1193,7 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <p>To jest plik konfiguracyjny który mówi App Service jakie kontenery uruchomić. Zawiera: - Obrazy do pobrania z ACR - Zmienne środowiskowe dla każdego kontenera - Mapowanie portów - Zależności między usługami</p>
 </blockquote>
 <p>W repo utwórz plik <code>docker-compose.appservice.yml</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">'3.8'</span></span>
+<div class="sourceCode" id="cb44"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">'3.8'</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
 <span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">backend</span><span class="kw">:</span></span>
@@ -1215,7 +1212,7 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">"80:80"</span></span>
 <span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">depends_on</span><span class="kw">:</span></span>
 <span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> backend</span></span>
-<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> frontend</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> frontend</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>Ważne:</strong> Podmień <code>twojunikalnyacr123</code> na nazwę swojego ACR!</p>
 <hr>
 <p><strong>9. Utwórz GitHub Actions workflow - budowanie obrazów</strong></p>
@@ -1223,7 +1220,7 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <p>Ten workflow będzie: 1. Pobierać kod z repo 2. Logować się do ACR 3. Budować 3 obrazy Docker (backend, frontend, nginx) 4. Publikować je do ACR Uruchomi się automatycznie po każdym push do main.</p>
 </blockquote>
 <p>Utwórz plik <code>.github/workflows/docker-build.yml</code> (jeśli nie masz):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Docker Build &amp; Push</span></span>
+<div class="sourceCode" id="cb45"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Docker Build &amp; Push</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
 <span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">push</span><span class="kw">:</span></span>
@@ -1273,14 +1270,14 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <span id="cb45-48"><a href="#cb45-48" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">push</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
 <span id="cb45-49"><a href="#cb45-49" aria-hidden="true" tabindex="-1"></a><span class="fu">          tags</span><span class="kw">: </span><span class="ch">|</span></span>
 <span id="cb45-50"><a href="#cb45-50" aria-hidden="true" tabindex="-1"></a>            ${{ secrets.ACR_LOGIN_SERVER }}/azure-app-nginx:latest</span>
-<span id="cb45-51"><a href="#cb45-51" aria-hidden="true" tabindex="-1"></a>            ${{ secrets.ACR_LOGIN_SERVER }}/azure-app-nginx:${{ github.sha }}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb45-51"><a href="#cb45-51" aria-hidden="true" tabindex="-1"></a>            ${{ secrets.ACR_LOGIN_SERVER }}/azure-app-nginx:${{ github.sha }}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <hr>
 <p><strong>10. Utwórz GitHub Actions workflow - deployment na Azure</strong></p>
 <blockquote class="blockquote">
 <p>Ten workflow będzie: 1. Czekać aż workflow budowania (Docker Build &amp; Push) się skończy 2. Logować się do Azure (przy pomocy Service Principal) 3. Wysyłać docker-compose.appservice.yml do App Service 4. Restartować App Service (żeby zaciągnęło nowe kontenery) Po pierwszym deploycie aplikacja powinna być dostępna pod https://azure-app-cicd-666.azurewebsites.net</p>
 </blockquote>
 <p>Utwórz plik <code>.github/workflows/deploy.yml</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Deploy to Azure App Service</span></span>
+<div class="sourceCode" id="cb46"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Deploy to Azure App Service</span></span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
 <span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">workflow_run</span><span class="kw">:</span></span>
@@ -1319,15 +1316,15 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <span id="cb46-37"><a href="#cb46-37" aria-hidden="true" tabindex="-1"></a><span class="fu">          inlineScript</span><span class="kw">: </span><span class="ch">|</span></span>
 <span id="cb46-38"><a href="#cb46-38" aria-hidden="true" tabindex="-1"></a>            az webapp restart \</span>
 <span id="cb46-39"><a href="#cb46-39" aria-hidden="true" tabindex="-1"></a>              --resource-group ${{ secrets.AZURE_RG }} \</span>
-<span id="cb46-40"><a href="#cb46-40" aria-hidden="true" tabindex="-1"></a>              --name ${{ secrets.AZURE_WEBAPP_NAME }}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb46-40"><a href="#cb46-40" aria-hidden="true" tabindex="-1"></a>              --name ${{ secrets.AZURE_WEBAPP_NAME }}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <hr>
 <p><strong>11. Wrzuć wszystkie pliki na GitHub</strong></p>
 <blockquote class="blockquote">
 <p>To uruchomi automatycznie workflow CI → Docker Build &amp; Push → Deploy to Azure.</p>
 </blockquote>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add docker-compose.appservice.yml .github/workflows/deploy.yml .github/workflows/docker-build.yml</span>
+<div class="sourceCode" id="cb47"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add docker-compose.appservice.yml .github/workflows/deploy.yml .github/workflows/docker-build.yml</span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"CI/CD: build to ACR and deploy compose to App Service"</span></span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <hr>
 <p><strong>12. Sprawdzenie czy wszystko działa</strong></p>
 <blockquote class="blockquote">
@@ -1367,25 +1364,25 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <section id="krok-1-utwórz-lub-użyj-istniejącego-key-vault" class="level3" data-number="6.18.3">
 <h3 data-number="6.18.3" class="anchored" data-anchor-id="krok-1-utwórz-lub-użyj-istniejącego-key-vault"><span class="header-section-number">6.18.3</span> Krok 1: Utwórz lub użyj istniejącego Key Vault</h3>
 <p><strong>WAŻNE:</strong> Ten krok też nadaje Ci uprawnienia do Key Vault’a, żeby uniknąć błędu “Forbidden”.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>  <span class="va">KV_NAME</span><span class="op">=</span>tc-kv-<span class="va">$RANDOM</span></span>
+<div class="sourceCode" id="cb50"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>  <span class="va">KV_NAME</span><span class="op">=</span>tc-kv-<span class="va">$RANDOM</span></span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">az</span> keyvault create <span class="dt">\</span></span>
 <span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">-g</span> technologie-chmurowe-rg <span class="dt">\</span></span>
 <span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">-n</span> <span class="va">$KV_NAME</span> <span class="dt">\</span></span>
 <span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">-l</span> polandcentral <span class="dt">\</span></span>
-<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">--default-action</span> Allow</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">--default-action</span> Allow</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>Teraz daj sobie uprawnienia do Key Vault’a:</strong></p>
 <blockquote class="blockquote">
 <p>Jeśli pominiesz ten krok, będziesz mieć błąd “Forbidden” gdy będziesz próbował dodać sekrety.</p>
 </blockquote>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pobierz swój Object ID</span></span>
+<div class="sourceCode" id="cb51"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pobierz swój Object ID</span></span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="va">MY_OBJECT_ID</span><span class="op">=</span><span class="va">$(</span><span class="ex">az</span> ad signed-in-user show <span class="at">--query</span> id <span class="at">-o</span> tsv<span class="va">)</span></span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Daj sobie rolę Key Vault Secrets Officer</span></span>
 <span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> role assignment create <span class="dt">\</span></span>
 <span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--role</span> <span class="st">"Key Vault Secrets Officer"</span> <span class="dt">\</span></span>
 <span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--assignee</span> <span class="st">"</span><span class="va">$MY_OBJECT_ID</span><span class="st">"</span> <span class="dt">\</span></span>
-<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--scope</span> <span class="st">"/subscriptions/</span><span class="va">$(</span><span class="ex">az</span> account show <span class="at">--query</span> id <span class="at">-o</span> tsv<span class="va">)</span><span class="st">/resourceGroups/technologie-chmurowe-rg/providers/Microsoft.KeyVault/vaults/</span><span class="va">$KV_NAME</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--scope</span> <span class="st">"/subscriptions/</span><span class="va">$(</span><span class="ex">az</span> account show <span class="at">--query</span> id <span class="at">-o</span> tsv<span class="va">)</span><span class="st">/resourceGroups/technologie-chmurowe-rg/providers/Microsoft.KeyVault/vaults/</span><span class="va">$KV_NAME</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <hr>
 </section>
 <section id="krok-2-dodaj-application-secrets-do-key-vault" class="level3" data-number="6.18.4">
@@ -1394,16 +1391,16 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <p>Z ćwiczenia 3 mamy 3 zmienne środowiskowe, które trzymaliśmy w App Service Settings. Teraz je przenosimy do Key Vault.</p>
 </blockquote>
 <p>Najpierw <strong>zweryfikuj zmienne</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb52"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"DATABASE_URL: </span><span class="va">${DATABASE_URL</span><span class="op">:</span><span class="dv">0</span><span class="op">:</span><span class="dv">50</span><span class="va">}</span><span class="st">..."</span> <span class="co"># pokazuje tylko pierwszych 50 znaków</span></span>
+<div class="sourceCode" id="cb52"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"DATABASE_URL: </span><span class="va">${DATABASE_URL</span><span class="op">:</span><span class="dv">0</span><span class="op">:</span><span class="dv">50</span><span class="va">}</span><span class="st">..."</span> <span class="co"># pokazuje tylko pierwszych 50 znaków</span></span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"AZURE_STORAGE_CONNECTION_STRING: </span><span class="va">${AZURE_STORAGE_CONNECTION_STRING</span><span class="op">:</span><span class="dv">0</span><span class="op">:</span><span class="dv">50</span><span class="va">}</span><span class="st">..."</span></span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"CONTAINER_NAME: </span><span class="va">$CONTAINER_NAME</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"CONTAINER_NAME: </span><span class="va">$CONTAINER_NAME</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Jeśli któraś jest pusta, ustaw je (z wartości z ćwiczenia 3):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb53"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Przykład - dostosuj do swoich wartości!</span></span>
+<div class="sourceCode" id="cb53"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Przykład - dostosuj do swoich wartości!</span></span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="va">DATABASE_URL</span><span class="op">=</span><span class="st">"postgresql://pgadminuser:MocneHaslo123!@tcpg28693.postgres.database.azure.com:5432/appdb?sslmode=require"</span></span>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="va">AZURE_STORAGE_CONNECTION_STRING</span><span class="op">=</span><span class="st">"DefaultEndpointsProtocol=https;AccountName=tcstor9798;AccountKey=..."</span></span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="va">CONTAINER_NAME</span><span class="op">=</span><span class="st">"uploads"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="va">CONTAINER_NAME</span><span class="op">=</span><span class="st">"uploads"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Teraz dodaj sekrety:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb54"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> keyvault secret set <span class="dt">\</span></span>
+<div class="sourceCode" id="cb54"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> keyvault secret set <span class="dt">\</span></span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--vault-name</span> <span class="st">"</span><span class="va">$KV_NAME</span><span class="st">"</span> <span class="dt">\</span></span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--name</span> <span class="st">"DatabaseURL"</span> <span class="dt">\</span></span>
 <span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--value</span> <span class="st">"</span><span class="va">$DATABASE_URL</span><span class="st">"</span></span>
@@ -1416,7 +1413,7 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> keyvault secret set <span class="dt">\</span></span>
 <span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">--vault-name</span> <span class="st">"</span><span class="va">$KV_NAME</span><span class="st">"</span> <span class="dt">\</span></span>
 <span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">--name</span> <span class="st">"AzureStorageContainerName"</span> <span class="dt">\</span></span>
-<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">--value</span> <span class="st">"</span><span class="va">$CONTAINER_NAME</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">--value</span> <span class="st">"</span><span class="va">$CONTAINER_NAME</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>Dodanie ręczne przez Portal:</strong> 1. Azure Portal → Key Vault <code>mojekeyvault</code> (lub Twoja nazwa) 2. <strong>“Secrets”</strong> → <strong>“+ Generate/Import”</strong> 3. Dodaj 3 sekrety: - <strong>Name:</strong> DatabaseURL, <strong>Value:</strong> <code>postgresql://...</code> - <strong>Name:</strong> AzureStorageConnectionString, <strong>Value:</strong> <code>DefaultEndpoints...</code> - <strong>Name:</strong> AzureStorageContainerName, <strong>Value:</strong> <code>uploads</code></p>
 <p><strong>Weryfikacja w CLI:</strong> ~<del>bash az keyvault secret list –vault-name $KV_NAME –query “[].name” -o table</del>~</p>
 <p>Powinieneś zobaczyć 3 sekrety: DatabaseURL, AzureStorageConnectionString, AzureStorageContainerName</p>
@@ -1427,7 +1424,7 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <blockquote class="blockquote">
 <p>Managed Identity to tożsamość App Service na Azure. Dzięki niej App Service będzie mieć uprawnienia do Key Vault bez konieczności trzymania haseł.</p>
 </blockquote>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb55"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> webapp identity assign <span class="dt">\</span></span>
+<div class="sourceCode" id="cb55"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> webapp identity assign <span class="dt">\</span></span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--resource-group</span> technologie-chmurowe-rg <span class="dt">\</span></span>
 <span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--name</span> <span class="st">"</span><span class="va">$WEBAPP_NAME</span><span class="st">"</span></span>
 <span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1437,7 +1434,7 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--name</span> <span class="st">"</span><span class="va">$WEBAPP_NAME</span><span class="st">"</span> <span class="dt">\</span></span>
 <span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--query</span> principalId <span class="at">-o</span> tsv<span class="va">)</span></span>
 <span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"App Service Identity Object ID: </span><span class="va">$WEBAPP_IDENTITY_OBJECT_ID</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"App Service Identity Object ID: </span><span class="va">$WEBAPP_IDENTITY_OBJECT_ID</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <hr>
 </section>
 <section id="krok-4-daj-app-service-dostęp-do-key-vault" class="level3" data-number="6.18.6">
@@ -1445,13 +1442,13 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <blockquote class="blockquote">
 <p>App Service musi mieć uprawnienia do odczytania sekretów z Key Vault. Udzielimy mu uprawnień “Get” (czytanie) - nie będzie mógł tworzyć, usuwać czy zmieniać sekretów.</p>
 </blockquote>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb56"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="va">KV_ID</span><span class="op">=</span><span class="va">$(</span><span class="ex">az</span> keyvault show <span class="at">-n</span> <span class="st">"</span><span class="va">$KV_NAME</span><span class="st">"</span> <span class="at">-g</span> technologie-chmurowe-rg <span class="at">--query</span> id <span class="at">-o</span> tsv<span class="va">)</span></span>
+<div class="sourceCode" id="cb56"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="va">KV_ID</span><span class="op">=</span><span class="va">$(</span><span class="ex">az</span> keyvault show <span class="at">-n</span> <span class="st">"</span><span class="va">$KV_NAME</span><span class="st">"</span> <span class="at">-g</span> technologie-chmurowe-rg <span class="at">--query</span> id <span class="at">-o</span> tsv<span class="va">)</span></span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> role assignment create <span class="dt">\</span></span>
 <span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--assignee-object-id</span> <span class="st">"</span><span class="va">$WEBAPP_IDENTITY_OBJECT_ID</span><span class="st">"</span> <span class="dt">\</span></span>
 <span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--assignee-principal-type</span> ServicePrincipal <span class="dt">\</span></span>
 <span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--role</span> <span class="st">"Key Vault Secrets User"</span> <span class="dt">\</span></span>
-<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--scope</span> <span class="st">"</span><span class="va">$KV_ID</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--scope</span> <span class="st">"</span><span class="va">$KV_ID</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>Weryfikacja w Portal:</strong> 1. Key Vault → <strong>“Access control (IAM)”</strong> 2. Wybierz zakładkę “Role assignments” 3. Powiniwneś zobaczyć wiersz z nazwą aplikacji oraz “Managed identity” w kolumne “Type” oraz rolą Key Vault Secrets User</p>
 <hr>
 </section>
@@ -1462,25 +1459,25 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <p>App Service automatycznie rozwiąże te referencje i zlinuje zmienne środowiskowe do wartości z Key Vault.</p>
 </blockquote>
 <p>Najpierw pobierz URI Key Vault:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb57"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="va">KV_URI</span><span class="op">=</span><span class="va">$(</span><span class="ex">az</span> keyvault show <span class="at">--name</span> <span class="va">$KV_NAME</span> <span class="at">--query</span> id <span class="at">-o</span> tsv<span class="va">)</span></span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Key Vault URI: </span><span class="va">$KV_URI</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="va">KV_URI</span><span class="op">=</span><span class="va">$(</span><span class="ex">az</span> keyvault show <span class="at">--name</span> <span class="va">$KV_NAME</span> <span class="at">--query</span> id <span class="at">-o</span> tsv<span class="va">)</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Key Vault URI: </span><span class="va">$KV_URI</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Teraz zaktualizuj App Service Settings (zmiana 3 zmiennych aplikacyjnych):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb58"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> webapp config appsettings set <span class="dt">\</span></span>
+<div class="sourceCode" id="cb58"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> webapp config appsettings set <span class="dt">\</span></span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-g</span> technologie-chmurowe-rg <span class="dt">\</span></span>
 <span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-n</span> <span class="st">"</span><span class="va">$WEBAPP_NAME</span><span class="st">"</span> <span class="dt">\</span></span>
 <span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--settings</span> <span class="dt">\</span></span>
 <span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>  DATABASE_URL=<span class="st">"@Microsoft.KeyVault(VaultName=</span><span class="va">$KV_NAME</span><span class="st">;SecretName=DatabaseURL)"</span> <span class="dt">\</span></span>
 <span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>  AZURE_STORAGE_CONNECTION_STRING=<span class="st">"@Microsoft.KeyVault(VaultName=</span><span class="va">$KV_NAME</span><span class="st">;SecretName=AzureStorageConnectionString)"</span> <span class="dt">\</span></span>
-<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>  AZURE_STORAGE_CONTAINER=<span class="st">"@Microsoft.KeyVault(VaultName=</span><span class="va">$KV_NAME</span><span class="st">;SecretName=AzureStorageContainerName)"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>  AZURE_STORAGE_CONTAINER=<span class="st">"@Microsoft.KeyVault(VaultName=</span><span class="va">$KV_NAME</span><span class="st">;SecretName=AzureStorageContainerName)"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>Co się stało:</strong> - Zamiast wartości: <code>postgresql://user:pass@...</code> - Teraz: <code>@Microsoft.KeyVault(VaultName=tc-kv-xxxxx;SecretName=DatabaseURL)</code> - App Service będzie automatycznie czytać tę referencję i pobierać rzeczywistą wartość z Key Vault</p>
 <p><strong>Weryfikacja w Portal:</strong> 1. App Service → <strong>“Settings”</strong> → <strong>“Environment variables”</strong> 2. Sprawdź 3 zmienne (DATABASE_URL, AZURE_STORAGE_CONNECTION_STRING, AZURE_STORAGE_CONTAINER) 3. Wartości powinny być widoczne jako referencje Key Vault</p>
 <hr>
 </section>
 <section id="krok-6-restart-app-service-żeby-zabrał-nowe-zmienne" class="level3" data-number="6.18.8">
 <h3 data-number="6.18.8" class="anchored" data-anchor-id="krok-6-restart-app-service-żeby-zabrał-nowe-zmienne"><span class="header-section-number">6.18.8</span> Krok 6: Restart App Service żeby zabrał nowe zmienne</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb59"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> webapp restart <span class="dt">\</span></span>
+<div class="sourceCode" id="cb59"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="ex">az</span> webapp restart <span class="dt">\</span></span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--resource-group</span> technologie-chmurowe-rg <span class="dt">\</span></span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--name</span> <span class="st">"</span><span class="va">$WEBAPP_NAME</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--name</span> <span class="st">"</span><span class="va">$WEBAPP_NAME</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>Czekaj 2-3 minuty aż się App Service uruchomi z nowymi ustawieniami.</strong></p>
 <hr>
 </section>
@@ -1507,7 +1504,7 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <p>Zmienia się tylko <strong>gdzie</strong> są przechowywane sekrety: - <strong>Przed (Ćwiczenie 3):</strong> App Service Settings z hardcodowanymi wartościami - <strong>Teraz (Ćwiczenie 4):</strong> Key Vault z referencjami w App Service Settings</p>
 </blockquote>
 <p>Workflow dalej wygląda tak:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb62"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># .github/workflows/deploy.yml (bez zmian!)</span></span>
+<div class="sourceCode" id="cb62"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># .github/workflows/deploy.yml (bez zmian!)</span></span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Deploy to Azure App Service</span></span>
 <span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
@@ -1547,15 +1544,15 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 <span id="cb62-38"><a href="#cb62-38" aria-hidden="true" tabindex="-1"></a><span class="fu">          inlineScript</span><span class="kw">: </span><span class="ch">|</span></span>
 <span id="cb62-39"><a href="#cb62-39" aria-hidden="true" tabindex="-1"></a>            az webapp restart \</span>
 <span id="cb62-40"><a href="#cb62-40" aria-hidden="true" tabindex="-1"></a>              --resource-group ${{ secrets.AZURE_RG }} \</span>
-<span id="cb62-41"><a href="#cb62-41" aria-hidden="true" tabindex="-1"></a>              --name ${{ secrets.AZURE_WEBAPP_NAME }}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb62-41"><a href="#cb62-41" aria-hidden="true" tabindex="-1"></a>              --name ${{ secrets.AZURE_WEBAPP_NAME }}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>Jak przetestować cały workflow od początku:</strong></p>
 <ol type="1">
 <li>Zmień dowolny drobny element w repozytorium, który nie zepsuje aplikacji, np. dopisz komentarz w <code>README.md</code> albo w pliku workflow.</li>
 <li>Zrób commit i push do gałęzi <code>main</code>:</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb63"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
+<div class="sourceCode" id="cb63"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
 <span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Test full workflow after Key Vault migration"</span></span>
-<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="3" type="1">
 <li>Wejdź do GitHub -&gt; <strong>Actions</strong> i obserwuj cały łańcuch workflow:
 <ul>
@@ -1594,243 +1591,236 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-  window.document.addEventListener("DOMContentLoaded", function (event) {
-    const icon = "";
-    const anchorJS = new window.AnchorJS();
-    anchorJS.options = {
-      placement: 'right',
-      icon: icon
-    };
-    anchorJS.add('.anchored');
-    const isCodeAnnotation = (el) => {
-      for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {                     
-          return true;
-        }
-      }
-      return false;
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
     }
-    const onCopySuccess = function(e) {
-      // button target
-      const button = e.trigger;
-      // don't keep focus
-      button.blur();
-      // flash "checked"
-      button.classList.add('code-copy-button-checked');
-      var currentTitle = button.getAttribute("title");
-      button.setAttribute("title", "Copied!");
-      let tooltip;
-      if (window.bootstrap) {
-        button.setAttribute("data-bs-toggle", "tooltip");
-        button.setAttribute("data-bs-placement", "left");
-        button.setAttribute("data-bs-title", "Copied!");
-        tooltip = new bootstrap.Tooltip(button, 
-          { trigger: "manual", 
-            customClass: "code-copy-button-tooltip",
-            offset: [0, -8]});
-        tooltip.show();    
-      }
-      setTimeout(function() {
-        if (tooltip) {
-          tooltip.hide();
-          button.removeAttribute("data-bs-title");
-          button.removeAttribute("data-bs-toggle");
-          button.removeAttribute("data-bs-placement");
-        }
-        button.setAttribute("title", currentTitle);
-        button.classList.remove('code-copy-button-checked');
-      }, 1000);
-      // clear code selection
-      e.clearSelection();
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
     }
-    const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
       for (const childEl of codeEl.children) {
         if (isCodeAnnotation(childEl)) {
           childEl.remove();
         }
       }
       return codeEl.innerText;
-    }
-    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-      text: getTextToCopy
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
     });
-    clipboard.on('success', onCopySuccess);
-    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-        text: getTextToCopy,
-        container: window.document.getElementById('quarto-embedded-source-code-modal')
-      });
-      clipboardModal.on('success', onCopySuccess);
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
-      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
-      var isInternal = (href) => {
-          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-      }
-      // Inspect non-navigation links and adorn them if external
-     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-      for (var i=0; i<links.length; i++) {
-        const link = links[i];
-        if (!isInternal(link.href)) {
-          // undo the damage that might have been done by quarto-nav.js in the case of
-          // links that we want to consider external
-          if (link.dataset.originalHref !== undefined) {
-            link.href = link.dataset.originalHref;
-          }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
         }
       }
-    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-      const config = {
-        allowHTML: true,
-        maxWidth: 500,
-        delay: 100,
-        arrow: false,
-        appendTo: function(el) {
-            return el.parentElement;
-        },
-        interactive: true,
-        interactiveBorder: 10,
-        theme: 'quarto',
-        placement: 'bottom-start',
-      };
-      if (contentFn) {
-        config.content = contentFn;
-      }
-      if (onTriggerFn) {
-        config.onTrigger = onTriggerFn;
-      }
-      if (onUntriggerFn) {
-        config.onUntrigger = onUntriggerFn;
-      }
-      window.tippy(el, config); 
     }
-    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-    for (var i=0; i<noterefs.length; i++) {
-      const ref = noterefs[i];
-      tippyHover(ref, function() {
-        // use id or data attribute instead here
-        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-        try { href = new URL(href).hash; } catch {}
-        const id = href.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note) {
-          return note.innerHTML;
-        } else {
-          return "";
-        }
-      });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
     }
-    const xrefs = window.document.querySelectorAll('a.quarto-xref');
-    const processXRef = (id, note) => {
-      // Strip column container classes
-      const stripColumnClz = (el) => {
-        el.classList.remove("page-full", "page-columns");
-        if (el.children) {
-          for (const child of el.children) {
-            stripColumnClz(child);
-          }
-        }
-      }
-      stripColumnClz(note)
-      if (id === null || id.startsWith('sec-')) {
-        // Special case sections, only their first couple elements
-        const container = document.createElement("div");
-        if (note.children && note.children.length > 2) {
-          container.appendChild(note.children[0].cloneNode(true));
-          for (let i = 1; i < note.children.length; i++) {
-            const child = note.children[i];
-            if (child.tagName === "P" && child.innerText === "") {
-              continue;
-            } else {
-              container.appendChild(child.cloneNode(true));
-              break;
-            }
-          }
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(container);
-          }
-          return container.innerHTML
-        } else {
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(note);
-          }
-          return note.innerHTML;
-        }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
       } else {
-        // Remove any anchor links if they are present
-        const anchorLink = note.querySelector('a.anchorjs-link');
-        if (anchorLink) {
-          anchorLink.remove();
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
         }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        if (note.classList.contains("callout")) {
-          return note.outerHTML;
-        } else {
-          return note.innerHTML;
-        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
       }
     }
-    for (var i=0; i<xrefs.length; i++) {
-      const xref = xrefs[i];
-      tippyHover(xref, undefined, function(instance) {
-        instance.disable();
-        let url = xref.getAttribute('href');
-        let hash = undefined; 
-        if (url.startsWith('#')) {
-          hash = url;
-        } else {
-          try { hash = new URL(url).hash; } catch {}
-        }
-        if (hash) {
-          const id = hash.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          if (note !== null) {
-            try {
-              const html = processXRef(id, note.cloneNode(true));
-              instance.setContent(html);
-            } finally {
-              instance.enable();
-              instance.show();
-            }
-          } else {
-            // See if we can fetch this
-            fetch(url.split('#')[0])
-            .then(res => res.text())
-            .then(html => {
-              const parser = new DOMParser();
-              const htmlDoc = parser.parseFromString(html, "text/html");
-              const note = htmlDoc.getElementById(id);
-              if (note !== null) {
-                const html = processXRef(id, note);
-                instance.setContent(html);
-              } 
-            }).finally(() => {
-              instance.enable();
-              instance.show();
-            });
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
           }
         } else {
-          // See if we can fetch a full url (with no hash to target)
-          // This is a special case and we should probably do some content thinning / targeting
-          fetch(url)
+          // See if we can fetch this
+          fetch(url.split('#')[0])
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.querySelector('main.content');
+            const note = htmlDoc.getElementById(id);
             if (note !== null) {
-              // This should only happen for chapter cross references
-              // (since there is no id in the URL)
-              // remove the first header
-              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-                note.children[0].remove();
-              }
-              const html = processXRef(null, note);
+              const html = processXRef(id, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -1838,161 +1828,185 @@ Developer B: commit → ❌ testy nie przeszły → natychmiastowa naprawa
             instance.show();
           });
         }
-      }, function(instance) {
-      });
-    }
-        let selectedAnnoteEl;
-        const selectorForAnnotation = ( cell, annotation) => {
-          let cellAttr = 'data-code-cell="' + cell + '"';
-          let lineAttr = 'data-code-annotation="' +  annotation + '"';
-          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-          return selector;
-        }
-        const selectCodeLines = (annoteEl) => {
-          const doc = window.document;
-          const targetCell = annoteEl.getAttribute("data-target-cell");
-          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-          const lineIds = lines.map((line) => {
-            return targetCell + "-" + line;
-          })
-          let top = null;
-          let height = null;
-          let parent = null;
-          if (lineIds.length > 0) {
-              //compute the position of the single el (top and bottom and make a div)
-              const el = window.document.getElementById(lineIds[0]);
-              top = el.offsetTop;
-              height = el.offsetHeight;
-              parent = el.parentElement.parentElement;
-            if (lineIds.length > 1) {
-              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-              height = bottom - top;
-            }
-            if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it 
-              let div = window.document.getElementById("code-annotation-line-highlight");
-              if (div === null) {
-                div = window.document.createElement("div");
-                div.setAttribute("id", "code-annotation-line-highlight");
-                div.style.position = 'absolute';
-                parent.appendChild(div);
-              }
-              div.style.top = top - 2 + "px";
-              div.style.height = height + 4 + "px";
-              div.style.left = 0;
-              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-              if (gutterDiv === null) {
-                gutterDiv = window.document.createElement("div");
-                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-                gutterDiv.style.position = 'absolute';
-                const codeCell = window.document.getElementById(targetCell);
-                const gutter = codeCell.querySelector('.code-annotation-gutter');
-                gutter.appendChild(gutterDiv);
-              }
-              gutterDiv.style.top = top - 2 + "px";
-              gutterDiv.style.height = height + 4 + "px";
-            }
-            selectedAnnoteEl = annoteEl;
-          }
-        };
-        const unselectCodeLines = () => {
-          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-          elementsIds.forEach((elId) => {
-            const div = window.document.getElementById(elId);
-            if (div) {
-              div.remove();
-            }
-          });
-          selectedAnnoteEl = undefined;
-        };
-          // Handle positioning of the toggle
-      window.addEventListener(
-        "resize",
-        throttle(() => {
-          elRect = undefined;
-          if (selectedAnnoteEl) {
-            selectCodeLines(selectedAnnoteEl);
-          }
-        }, 10)
-      );
-      function throttle(fn, ms) {
-      let throttle = false;
-      let timer;
-        return (...args) => {
-          if(!throttle) { // first call gets through
-              fn.apply(this, args);
-              throttle = true;
-          } else { // all the others get throttled
-              if(timer) clearTimeout(timer); // cancel #2
-              timer = setTimeout(() => {
-                fn.apply(this, args);
-                timer = throttle = false;
-              }, ms);
-          }
-        };
-      }
-        // Attach click handler to the DT
-        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-        for (const annoteDlNode of annoteDls) {
-          annoteDlNode.addEventListener('click', (event) => {
-            const clickedEl = event.target;
-            if (clickedEl !== selectedAnnoteEl) {
-              unselectCodeLines();
-              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-              if (activeEl) {
-                activeEl.classList.remove('code-annotation-active');
-              }
-              selectCodeLines(clickedEl);
-              clickedEl.classList.add('code-annotation-active');
-            } else {
-              // Unselect the line
-              unselectCodeLines();
-              clickedEl.classList.remove('code-annotation-active');
-            }
-          });
-        }
-    const findCites = (el) => {
-      const parentEl = el.parentElement;
-      if (parentEl) {
-        const cites = parentEl.dataset.cites;
-        if (cites) {
-          return {
-            el,
-            cites: cites.split(' ')
-          };
-        } else {
-          return findCites(el.parentElement)
-        }
       } else {
-        return undefined;
-      }
-    };
-    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-    for (var i=0; i<bibliorefs.length; i++) {
-      const ref = bibliorefs[i];
-      const citeInfo = findCites(ref);
-      if (citeInfo) {
-        tippyHover(citeInfo.el, function() {
-          var popup = window.document.createElement('div');
-          citeInfo.cites.forEach(function(cite) {
-            var citeDiv = window.document.createElement('div');
-            citeDiv.classList.add('hanging-indent');
-            citeDiv.classList.add('csl-entry');
-            var biblioDiv = window.document.getElementById('ref-' + cite);
-            if (biblioDiv) {
-              citeDiv.innerHTML = biblioDiv.innerHTML;
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
             }
-            popup.appendChild(citeDiv);
-          });
-          return popup.innerHTML;
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
         });
       }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
     }
-  });
-  </script>
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./02a-azure.html" class="pagination-link" aria-label="Microsoft Azure - część 2">

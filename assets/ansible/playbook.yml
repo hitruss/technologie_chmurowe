@@ -1,0 +1,20 @@
+- name: Instalacja nginx
+  hosts: azure
+  become: yes
+
+  tasks:
+    - name: Aktualizacja cache (jeśli starszy niż 1h)
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Instaluj nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Upewnij się że nginx działa
+      service:
+        name: nginx
+        state: started
+        enabled: yes

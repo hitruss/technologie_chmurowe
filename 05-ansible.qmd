@@ -95,6 +95,7 @@ Istnieją różne narzędzia, w ramach zajęć będziemy korzystać z
 - Ansible – do zarządzania konfiguracją
 
 Porównanie wybranych narzędzi zarządzania konfiguracją:
+
 | Cecha | Ansible | Chef / Puppet |
 | :--- | :--- | :--- |
 | **Architektura** | Bezagentowa (SSH) | Agentowa (wymaga instalacji na nodach) |
@@ -178,10 +179,10 @@ Przykład (playbook.yml):
 
 Moduły to małe, wysoce wyspecjalizowane programy, które Ansible przesyła na serwery docelowe (managed nodes), wykonuje je tam, a następnie usuwa. To właśnie dzięki modułom Ansible jest tak potężny – nie musisz pisać skomplikowanych skryptów Bash; wystarczy wywołać odpowiedni moduł, który zajmie się szczegółami technicznymi.
 
-
-
 #### Czym są moduły?
+
 Każdy moduł to osobny "narzędzie" do konkretnego zadania:
+
 * **`apt` / `yum`:** Zarządzanie pakietami (instalacja, usuwanie).
 * **`service`:** Zarządzanie usługami systemowymi (start, stop, restart).
 * **`copy` / `template`:** Przesyłanie plików z komputera zarządzającego na serwer.
@@ -193,7 +194,9 @@ Każdy moduł to osobny "narzędzie" do konkretnego zadania:
 Dokumentacja Ansible jest niezwykle bogata i podzielona na tzw. **Kolekcje (Collections)**. Ponieważ modułów są tysiące, najłatwiej szukać ich w następujący sposób:
 
 ##### 1. Oficjalna Dokumentacja (docs.ansible.com)
+
 To Twoje główne źródło wiedzy.
+
 * **Adres:** [https://docs.ansible.com/ansible/latest/collections/index.html](https://docs.ansible.com/ansible/latest/collections/index.html)
 * **Jak szukać:** Użyj paska wyszukiwania i wpisz nazwę technologii, np. "azure", "docker" lub "mysql".
 * **Co znajdziesz:** Pełną listę parametrów, przykłady użycia (w formacie YAML) oraz informacje o tym, czy moduł wspiera idempotentność.
@@ -223,7 +226,8 @@ Kiedy otworzysz stronę konkretnego modułu, zwróć uwagę na trzy sekcje:
 
 * *Examples*: To zwykle najważniejsza (najbardziej przydatna ;) sekcja. Znajdziesz tam gotowe fragmenty kodu YAML, które pokazują, jak moduł jest używany w prawdziwych scenariuszach.
 
-**Wskazówka praktyczna*
+*Wskazówka praktyczna*
+
 Jeśli nie jesteś pewien, jakiego modułu użyć, wpisz w wyszukiwarce: „Ansible [nazwa_technologii] module”.
 Dzięki temu szybko trafisz do odpowiedniej sekcji w dokumentacji kolekcji, która zajmuje się danym oprogramowaniem (np. kolekcja `community.general` zawiera dziesiątki przydatnych modułów ogólnego przeznaczenia).
 
