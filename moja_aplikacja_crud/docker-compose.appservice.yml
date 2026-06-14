@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  backend:
+    image: mojaapliczcr.azurecr.io/app-backend:latest
+    environment:
+      DATABASE_URL: postgresql://dbadmin:Admin123!@moja-db-server.postgres.database.azure.com:5432/crud_db?sslmode=require
+
+  frontend:
+    image: mojaapliczcr.azurecr.io/app-frontend:latest
+
+  nginx:
+    image: mojaapliczcr.azurecr.io/app-nginx:latest
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+      - frontend
