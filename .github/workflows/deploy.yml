@@ -1,0 +1,23 @@
+name: Deploy to Azure App Service
+
+on:
+  workflow_run:
+    workflows: ["Build & Push to ACR"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: moja-checklist-app
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          configuration-file: moja_aplikacja_crud/docker-compose.appservice.yml
