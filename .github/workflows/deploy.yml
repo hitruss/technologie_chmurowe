@@ -20,4 +20,3 @@ jobs:
         with:
           app-name: moja-checklist-app
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          configuration-file: moja_aplikacja_crud/docker-compose.appservice.yml
