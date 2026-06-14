@@ -1,0 +1,41 @@
+name: Build & Push to ACR
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login to ACR
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}
+          username: ${{ secrets.AZURE_REGISTRY_USERNAME }}
+          password: ${{ secrets.AZURE_REGISTRY_PASSWORD }}
+
+      - name: Build & Push Backend
+        uses: docker/build-push-action@v4
+        with:
+          context: ./moja_aplikacja_crud/backend
+          push: true
+          tags: ${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}/app-backend:latest
+
+      - name: Build & Push Frontend
+        uses: docker/build-push-action@v4
+        with:
+          context: ./moja_aplikacja_crud/frontend
+          push: true
+          tags: ${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}/app-frontend:latest
+
+      - name: Build & Push Nginx
+        uses: docker/build-push-action@v4
+        with:
+          context: ./moja_aplikacja_crud/nginx
+          push: true
+          tags: ${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}/app-nginx:latest
