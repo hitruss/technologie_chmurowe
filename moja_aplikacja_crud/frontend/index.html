@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zeszyt</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: Tahoma, Arial, sans-serif;
+            background: #8ed1b3;
+            padding: 20px;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        
+        h1 { 
+            text-align: center; 
+            color: #333; 
+            margin-bottom: 30px;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+        }
+        
+        .tab-btn {
+            padding: 12px 24px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .tab-btn.active {
+            color: #333;
+            border-bottom-color: #333;
+        }
+        
+        .tab-btn:hover {
+            color: #333;
+        }
+        
+        .form-section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+        }
+        
+        .form-section h2 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 18px;
+        }
+        
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
+        input[type="text"], input[type="date"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        textarea { resize: vertical; height: 120px; }
+        
+        .button-group { display: flex; gap: 10px; }
+        button {
+            padding: 10px 20px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .btn-add { 
+            background: #333;
+            color: white;
+            border: none;
+            flex: 1;
+        }
+        .btn-add:hover { background: #555; }
+        
+        .btn-clear { 
+            background: white;
+            color: #666;
+        }
+        .btn-clear:hover { background: #f5f5f5; }
+        
+        .items-section {
+            background: white;
+            padding: 20px;
+            border: 1px solid #ddd;
+        }
+        
+        .items-section h2 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .item:last-child { border-bottom: none; }
+        
+        .item-checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            margin-top: 3px;
+        }
+        
+        .item-content { flex: 1; }
+        .item-text {
+            font-size: 15px;
+            color: #333;
+            word-break: break-word;
+        }
+        
+        .item.checked .item-text {
+            text-decoration: line-through;
+            color: #999;
+        }
+        
+        .item-date {
+            font-size: 13px;
+            color: #999;
+            margin-top: 3px;
+        }
+        
+        .item-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .item-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .btn-edit, .btn-delete {
+            padding: 6px 10px;
+            font-size: 12px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+        }
+        
+        .btn-delete:hover { background: #ffcccc; }
+        .btn-edit:hover { background: #f0f0f0; }
+        
+        .message {
+            padding: 12px;
+            margin-bottom: 15px;
+            border-left: 4px solid #333;
+            background: #f9f9f9;
+        }
+        
+        .message.success { border-left-color: #28a745; }
+        .message.error { border-left-color: #dc3545; }
+        
+        .empty-state {
+            text-align: center;
+            padding: 30px;
+            color: #999;
+        }
+        
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        .note-item {
+            padding: 15px;
+            border: 1px solid #ddd;
+            margin-bottom: 15px;
+            background: #fafafa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Zeszyt</h1>
+        
+        <div id="message"></div>
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('checklist')">Lista</button>
+            <button class="tab-btn" onclick="switchTab('tasks')">Zadania</button>
+            <button class="tab-btn" onclick="switchTab('notes')">Notatki</button>
+        </div>
+        
+        <!-- CHECKLISTA -->
+        <div id="checklist" class="tab-content active">
+            <div class="form-section">
+                <h2>Dodaj do listy</h2>
+                <div class="form-group">
+                    <input type="text" id="checklist-input" placeholder="Wpisz nowy element...">
+                </div>
+                <div class="button-group">
+                    <button class="btn-add" onclick="addChecklistItem()">Dodaj</button>
+                    <button class="btn-clear" onclick="clearChecklistInput()">Wyczyść</button>
+                </div>
+            </div>
+            
+            <div class="items-section">
+                <h2>Moja lista</h2>
+                <div id="checklist-items"></div>
+            </div>
+        </div>
+        
+        <!-- ZADANIA -->
+        <div id="tasks" class="tab-content">
+            <div class="form-section">
+                <h2>Dodaj nowe zadanie</h2>
+                <div class="form-group">
+                    <label>Nazwa zadania:</label>
+                    <input type="text" id="task-name" placeholder="Wpisz tytuł zadania...">
+                </div>
+                <div class="form-group">
+                    <label>Data końcowa:</label>
+                    <input type="date" id="task-date">
+                </div>
+                <div class="button-group">
+                    <button class="btn-add" onclick="addTask()">Dodaj zadanie</button>
+                    <button class="btn-clear" onclick="clearTaskForm()">Wyczyść</button>
+                </div>
+            </div>
+            
+            <div class="items-section">
+                <h2>Moje zadania</h2>
+                <div id="tasks-items"></div>
+            </div>
+        </div>
+        
+        <!-- NOTATKI -->
+        <div id="notes" class="tab-content">
+            <div class="form-section">
+                <h2>Dodaj nową notatkę</h2>
+                <div class="form-group">
+                    <label>Tytuł:</label>
+                    <input type="text" id="note-title" placeholder="Wpisz tytuł notatki...">
+                </div>
+                <div class="form-group">
+                    <label>Tekst:</label>
+                    <textarea id="note-text" placeholder="Wpisz treść notatki..."></textarea>
+                </div>
+                <div class="button-group">
+                    <button class="btn-add" onclick="addNote()">Dodaj notatkę</button>
+                    <button class="btn-clear" onclick="clearNoteForm()">Wyczyść</button>
+                </div>
+            </div>
+            
+            <div class="items-section">
+                <h2>Moje notatki</h2>
+                <div id="notes-items"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tab).classList.add('active');
+            event.target.classList.add('active');
+            
+            if (tab === 'checklist') loadChecklist();
+            else if (tab === 'tasks') loadTasks();
+            else if (tab === 'notes') loadNotes();
+        }
+
+        function showMessage(text, type = 'success') {
+            const msgDiv = document.getElementById('message');
+            msgDiv.innerHTML = `<div class="message ${type}">${text}</div>`;
+            setTimeout(() => msgDiv.innerHTML = '', 4000);
+        }
+
+        // === LISTA
+        
+        async function loadChecklist() {
+            try {
+                const response = await fetch('/api/checklist');
+                const data = await response.json();
+                const container = document.getElementById('checklist-items');
+                
+                if (!data.items || data.items.length === 0) {
+                    container.innerHTML = '<div class="empty-state">Brak elementów na liście</div>';
+                    return;
+                }
+                
+                container.innerHTML = data.items.map(item => `
+                    <div class="item ${item.checked ? 'checked' : ''}">
+                        <input type="checkbox" class="item-checkbox" ${item.checked ? 'checked' : ''} onchange="toggleChecklistItem(${item.id}, this.checked)">
+                        <div class="item-content">
+                            <div class="item-text">${escapeHtml(item.text)}</div>
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn-delete" onclick="deleteChecklistItem(${item.id})">Usuń</button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                showMessage('Błąd podczas ładowania', 'error');
+            }
+        }
+
+        async function addChecklistItem() {
+            const text = document.getElementById('checklist-input').value.trim();
+            if (!text) {
+                showMessage('Wpisz coś!', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/checklist', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text })
+                });
+                
+                if (response.ok) {
+                    document.getElementById('checklist-input').value = '';
+                    loadChecklist();
+                } else {
+                    showMessage('Błąd', 'error');
+                }
+            } catch (error) {
+                showMessage('Błąd sieci', 'error');
+            }
+        }
+
+        async function toggleChecklistItem(id, checked) {
+            try {
+                await fetch(`/api/checklist/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ checked })
+                });
+                loadChecklist();
+            } catch (error) {
+                showMessage('Błąd', 'error');
+            }
+        }
+
+        async function deleteChecklistItem(id) {
+            if (!confirm('Usunąć?')) return;
+            try {
+                await fetch(`/api/checklist/${id}`, { method: 'DELETE' });
+                loadChecklist();
+            } catch (error) {
+                showMessage('Błąd', 'error');
+            }
+        }
+
+        function clearChecklistInput() {
+            document.getElementById('checklist-input').value = '';
+        }
+
+        // === ZADANIA 
+        
+        async function loadTasks() {
+            try {
+                const response = await fetch('/api/tasks');
+                const data = await response.json();
+                const container = document.getElementById('tasks-items');
+                
+                if (!data.tasks || data.tasks.length === 0) {
+                    container.innerHTML = '<div class="empty-state">Brak zadań</div>';
+                    return;
+                }
+                
+                container.innerHTML = data.tasks.map(task => `
+                    <div class="item">
+                        <div class="item-content">
+                            <div class="item-text">${escapeHtml(task.nazwa)}</div>
+                            ${task.data_zakonczenia ? `<div class="item-date">Do: ${task.data_zakonczenia}</div>` : ''}
+                        </div>
+                        <div class="item-actions">
+                            <button class="btn-edit" onclick="editTask(${task.id}, '${escapeHtml(task.nazwa)}', '${task.data_zakonczenia || ''}')">Edytuj</button>
+                            <button class="btn-delete" onclick="deleteTask(${task.id})">Usuń</button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                showMessage('Błąd podczas ładowania', 'error');
+            }
+        }
+
+        async function addTask() {
+            const nazwa = document.getElementById('task-name').value.trim();
+            const data_zakonczenia = document.getElementById('task-date').value;
+            
+            if (!nazwa) {
+                showMessage('Wpisz nazwę zadania!', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/tasks', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nazwa, data_zakonczenia: data_zakonczenia || null })
+                });
+                
+                if (response.ok) {
+                    clearTaskForm();
+                    loadTasks();
+                } else {
+                    showMessage('Błąd', 'error');
+                }
+            } catch (error) {
+                showMessage('Błąd sieci', 'error');
+            }
+        }
+
+        function editTask(id, nazwa, data) {
+            document.getElementById('task-name').value = nazwa;
+            document.getElementById('task-date').value = data;
+            window.scrollTo(0, 0);
+            
+            const btn = document.querySelector('#tasks .btn-add');
+            btn.textContent = 'Aktualizuj zadanie';
+            btn.onclick = () => updateTask(id);
+        }
+
+        async function updateTask(id) {
+            const nazwa = document.getElementById('task-name').value.trim();
+            const data_zakonczenia = document.getElementById('task-date').value;
+            
+            try {
+                await fetch(`/api/tasks/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nazwa, data_zakonczenia: data_zakonczenia || null })
+                });
+                
+                clearTaskForm();
+                const btn = document.querySelector('#tasks .btn-add');
+                btn.textContent = 'Dodaj zadanie';
+                btn.onclick = addTask;
+                loadTasks();
+            } catch (error) {
+                showMessage('Błąd', 'error');
+            }
+        }
+
+        async function deleteTask(id) {
+            if (!confirm('Usunąć zadanie?')) return;
+            try {
+                await fetch(`/api/tasks/${id}`, { method: 'DELETE' });
+                loadTasks();
+            } catch (error) {
+                showMessage('Błąd', 'error');
+            }
+        }
+
+        function clearTaskForm() {
+            document.getElementById('task-name').value = '';
+            document.getElementById('task-date').value = '';
+            const btn = document.querySelector('#tasks .btn-add');
+            btn.textContent = 'Dodaj zadanie';
+            btn.onclick = addTask;
+        }
+
+        // === NOTATKI 
+        
+        async function loadNotes() {
+            try {
+                const response = await fetch('/api/notes');
+                const data = await response.json();
+                const container = document.getElementById('notes-items');
+                
+                if (!data.notes || data.notes.length === 0) {
+                    container.innerHTML = '<div class="empty-state">Brak notatek</div>';
+                    return;
+                }
+                
+                container.innerHTML = data.notes.map(note => `
+                    <div class="note-item">
+                        <div class="item-title">${escapeHtml(note.tytul)}</div>
+                        <div class="item-text" style="white-space: pre-wrap; margin-bottom: 10px;">${escapeHtml(note.tekst)}</div>
+                        <div class="item-actions">
+                            <button class="btn-edit" onclick="editNote(${note.id}, '${escapeHtml(note.tytul)}', '${escapeHtml(note.tekst)}')">Edytuj</button>
+                            <button class="btn-delete" onclick="deleteNote(${note.id})">Usuń</button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                showMessage('Błąd podczas ładowania', 'error');
+            }
+        }
+
+        async function addNote() {
+            const tytul = document.getElementById('note-title').value.trim();
+            const tekst = document.getElementById('note-text').value.trim();
+            
+            if (!tytul) {
+                showMessage('Wpisz tytuł!', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/notes', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ tytul, tekst })
+                });
+                
+                if (response.ok) {
+                    clearNoteForm();
+                    loadNotes();
+                } else {
+                    showMessage('Błąd', 'error');
+                }
+            } catch (error) {
+                showMessage('Błąd sieci', 'error');
+            }
+        }
+
+        function editNote(id, tytul, tekst) {
+            document.getElementById('note-title').value = tytul;
+            document.getElementById('note-text').value = tekst;
+            window.scrollTo(0, 0);
+            
+            const btn = document.querySelector('#notes .btn-add');
+            btn.textContent = 'Aktualizuj notatkę';
+            btn.onclick = () => updateNote(id);
+        }
+
+        async function updateNote(id) {
+            const tytul = document.getElementById('note-title').value.trim();
+            const tekst = document.getElementById('note-text').value.trim();
+            
+            try {
+                await fetch(`/api/notes/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ tytul, tekst })
+                });
+                
+                clearNoteForm();
+                const btn = document.querySelector('#notes .btn-add');
+                btn.textContent = 'Dodaj notatkę';
+                btn.onclick = addNote;
+                loadNotes();
+            } catch (error) {
+                showMessage('Błąd', 'error');
+            }
+        }
+
+        async function deleteNote(id) {
+            if (!confirm('Usunąć notatkę?')) return;
+            try {
+                await fetch(`/api/notes/${id}`, { method: 'DELETE' });
+                loadNotes();
+            } catch (error) {
+                showMessage('Błąd', 'error');
+            }
+        }
+
+        function clearNoteForm() {
+            document.getElementById('note-title').value = '';
+            document.getElementById('note-text').value = '';
+            const btn = document.querySelector('#notes .btn-add');
+            btn.textContent = 'Dodaj notatkę';
+            btn.onclick = addNote;
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        // Załaduj checklistę na start
+        loadChecklist();
+    </script>
+</body>
+</html>
